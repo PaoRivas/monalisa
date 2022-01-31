@@ -1,0 +1,1 @@
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_PID=developer" -e "SA_PASSWORD=M0nalistanbul25" --name sqlMonalisa -p 1434:1433 -v sqlvolume:/var/opt/mssql -d mcr.microsoft.com/mssql/server:2019-latest
