@@ -4,8 +4,9 @@ const express = require('express');
 const router = express.Router();
 
 const pool = require('../database');
+const {isLoggedIn} = require('../lib/auth')
 
-router.get('/add', async (req, res) => {
+router.get('/add', isLoggedIn, async (req, res) => {
     res.render('links/add');
     /* const connection = await pool.connect();
     const result = await connection.query('SELECT * FROM users');
@@ -13,13 +14,14 @@ router.get('/add', async (req, res) => {
     res.send(result); */
 })
 
-router.post('/add', async (req, res) => {
+router.post('/add', isLoggedIn, async (req, res) => {
     const {business_name, bd_name} = req.body;
     /*const newLink = {
         business_name, 
         bd_name
     };
     console.log(newLink);*/
+    //const userid = req.user.id;
     const connection = await pool.connect();
     const request = await pool.request();
     request.input('firstName', mssql.VarChar(50), business_name);
@@ -44,7 +46,7 @@ router.post('/add', async (req, res) => {
     //res.send('received');
 })
 
-router.get('/', async (req, res) => {
+router.get('/', isLoggedIn, async (req, res) => {
   const connection = await pool.connect();
   const request = await pool.request();
   const result = await request.query('SELECT * FROM users');
@@ -55,7 +57,7 @@ router.get('/', async (req, res) => {
   connection.close();
 })
 
-router.get('/delete/:id', async (req, res) => {
+router.get('/delete/:id', isLoggedIn, async (req, res) => {
   const connection = await pool.connect();
   const request = await pool.request();
   const { id } = req.params;
@@ -66,7 +68,7 @@ router.get('/delete/:id', async (req, res) => {
   connection.close();
 })
 
-router.get('/edit/:id', async (req, res) => {
+router.get('/edit/:id', isLoggedIn, async (req, res) => {
   const connection = await pool.connect();
   const request = await pool.request();
   const { id } = req.params;
@@ -77,7 +79,7 @@ router.get('/edit/:id', async (req, res) => {
   connection.close();
 })
 
-router.post('/edit/:id', async (req, res) => {
+router.post('/edit/:id', isLoggedIn, async (req, res) => {
   const {business_name, bd_name} = req.body;
   const connection = await pool.connect();
   const request = await pool.request();
