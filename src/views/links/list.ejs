@@ -1,25 +1,20 @@
-<%- include('../partials/head') %>
-
-        <%- include('../partials/navigation') %>
-        <%- include('../partials/message') %>
-        <div class="container p-4">
-            <div class="row">
-                <% for (let user of users) { %>
-                    <div class="col-md-3">
-                        <div class="card text-center">
-                            <div class="card-body">
-                                <h3 class="card-title text-uppercase">
-                                    <%= user.first_name %> 
-                                </h3>
-                                <p class="m-2"><%= user.last_name %></p>
-                                <p><%= time.timeago(user.created) %></p>
-                                <a href="/links/delete/<%= user.id %>" class="btn btn-danger">Delete</a>
-                                <a href="/links/edit/<%= user.id %>" class="btn btn-secondary">Edit</a>
-                            </div>
-                        </div>
+<%- include('../partials/message') %>
+<div class="container p-4">
+    <div class="row">
+        <% for (let user of users) { %>
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="card-title text-uppercase">
+                            <%= user.first_name %> 
+                        </h3>
+                        <p class="m-2"><%= user.last_name %></p>
+                        <p><%= time.timeago(user.created) %></p>
+                        <a href="/links/delete/<%= user.id %>" class="btn btn-danger">Delete</a>
+                        <a href="/links/edit/<%= user.id %>" class="btn btn-secondary">Edit</a>
                     </div>
-                <% } %> 
+                </div>
             </div>
-        </div>
-
-<%- include('../partials/footer') %>
+        <% } %> 
+    </div>
+</div>

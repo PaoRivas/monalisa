@@ -4,6 +4,7 @@ const path = require('path');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
+const expressLayouts = require('express-ejs-layouts');
 
 //inizialitations
 const app = express();
@@ -27,6 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(expressLayouts);
 
 //global variables
 app.use((req, res, next) => {
