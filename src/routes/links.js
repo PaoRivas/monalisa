@@ -1,9 +1,9 @@
-const mssql = require('mssql'); 
+//const mssql = require('mssql'); 
 const time = require('../lib/time')
 const express = require('express');
 const router = express.Router();
 
-const pool = require('../database');
+const {getConnection, mssql} = require('../database');
 const {isLoggedIn} = require('../lib/auth')
 
 router.get('/add', isLoggedIn, async (req, res) => {
@@ -22,7 +22,7 @@ router.post('/add', isLoggedIn, async (req, res) => {
     };
     console.log(newLink);*/
     //const userid = req.user.id;
-    const connection = await pool.connect();
+    const pool = await getConnection();
     const request = await pool.request();
     request.input('firstName', mssql.VarChar(50), business_name);
     request.input('lastName', mssql.VarChar(50), bd_name);
@@ -42,46 +42,46 @@ router.post('/add', isLoggedIn, async (req, res) => {
         res.status(500).send(ex);
     }
     //console.log('Happy monday');  
-    connection.close();
+    //connection.close();
     //res.send('received');
 })
 
 router.get('/', isLoggedIn, async (req, res) => {
-  const connection = await pool.connect();
+  const pool = await getConnection();
   const request = await pool.request();
   const result = await request.query('SELECT * FROM users');
   const users = result.recordset;
   //console.log(users);
   //res.send('lista aqui');
   res.render('links/list', {users, time});
-  connection.close();
+  //connection.close();
 })
 
 router.get('/delete/:id', isLoggedIn, async (req, res) => {
-  const connection = await pool.connect();
+  const pool = await getConnection();
   const request = await pool.request();
   const { id } = req.params;
   request.input('idos', mssql.Int, id);
   await request.query('DELETE FROM users WHERE id = @idos');
   req.flash('success', 'Link Removed Successfully');
   res.redirect('/links');
-  connection.close();
+  //connection.close();
 })
 
 router.get('/edit/:id', isLoggedIn, async (req, res) => {
-  const connection = await pool.connect();
+  const pool = await getConnection();
   const request = await pool.request();
   const { id } = req.params;
   request.input('idos', mssql.Int, id);
   const result = await request.query('SELECT * FROM users WHERE id = @idos');
   const user = result.recordset;
   res.render('links/edit', {user: user[0]});
-  connection.close();
+  //connection.close();
 })
 
 router.post('/edit/:id', isLoggedIn, async (req, res) => {
   const {business_name, bd_name} = req.body;
-  const connection = await pool.connect();
+  const pool = await getConnection();
   const request = await pool.request();
   const { id } = req.params;
   request.input('idos', mssql.Int, id);
@@ -90,7 +90,7 @@ router.post('/edit/:id', isLoggedIn, async (req, res) => {
   await request.query('UPDATE users SET first_name = @firstName, last_name = @lastName WHERE id = @idos');
   req.flash('success', 'Link Updated Successfully');
   res.redirect('/links');
-  connection.close();
+  //connection.close();
 })
 
 module.exports = router;

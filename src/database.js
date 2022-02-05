@@ -1,17 +1,20 @@
-const sql = require('mssql'); 
+const mssql = require('mssql'); 
 const { sqlConnectionConfig } = require('./keys');
 
-const pool = new sql.ConnectionPool(sqlConnectionConfig);
+//const pool = new sql.ConnectionPool(sqlConnectionConfig);
 
-// export const getConnection = async () => {
-//   try {
-//     const pool = await sql.connect(sqlConnectionConfig);
-//     return pool;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
+const getConnection = async () => {
+  try {
+    const pool = await mssql.connect(sqlConnectionConfig);
+    return pool;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-// export { sql };
+//export { sql };
 
-module.exports = pool;
+module.exports = {
+    mssql,
+    getConnection
+};

@@ -1,8 +1,8 @@
-const mssql = require('mssql');
+//const mssql = require('mssql');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
-const pool = require('../database');
+const {getConnection, mssql} = require('../database');
 const helpers = require('./helpers')
 
 passport.use('local.signin', new LocalStrategy({
@@ -11,7 +11,7 @@ passport.use('local.signin', new LocalStrategy({
     passReqToCallback: true
 }, async (req, username, password, done) => {
     
-    await pool.connect();
+    const pool = await getConnection();
     const request = await pool.request();
     request.input('username', mssql.VarChar(100), username);
     const rows = await request.query('SELECT * FROM usuarios WHERE username = @username');
@@ -40,7 +40,7 @@ passport.use('local.signup', new LocalStrategy({
         password,
         fullname
     };
-    await pool.connect();
+    const pool = await getConnection();
     const request = await pool.request();
     password = await helpers.encryptPassword(password);
     request.input('username', mssql.VarChar(100), username);
@@ -56,6 +56,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
+    const pool = await getConnection();
     const request = await pool.request();
     request.input('idos', mssql.Int, id);
     const rows = await request.query('SELECT * FROM usuarios WHERE id = @idos');
