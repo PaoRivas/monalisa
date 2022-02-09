@@ -1,6 +1,7 @@
 module.exports = {
     isLoggedIn (req, res, next) {
-        if (req.isAuthenticated()) {
+        const nonSecurePaths = ['/signup', '/signin', '/logout', '/favicon.ico'];
+        if (req.isAuthenticated() || nonSecurePaths.includes(req.path)) {
             return next();
         }
         return res.redirect('/signin');

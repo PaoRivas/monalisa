@@ -4,9 +4,8 @@ const express = require('express');
 const router = express.Router();
 
 const {getConnection, mssql} = require('../database');
-const {isLoggedIn} = require('../lib/auth')
 
-router.get('/add', isLoggedIn, async (req, res) => {
+router.get('/add', async (req, res) => {
     res.render('links/add');
     /* const connection = await pool.connect();
     const result = await connection.query('SELECT * FROM users');
@@ -14,7 +13,7 @@ router.get('/add', isLoggedIn, async (req, res) => {
     res.send(result); */
 })
 
-router.post('/add', isLoggedIn, async (req, res) => {
+router.post('/add', async (req, res) => {
     const {business_name, bd_name} = req.body;
     /*const newLink = {
         business_name, 
@@ -46,7 +45,7 @@ router.post('/add', isLoggedIn, async (req, res) => {
     //res.send('received');
 })
 
-router.get('/', isLoggedIn, async (req, res) => {
+router.get('/', async (req, res) => {
   const pool = await getConnection();
   const request = await pool.request();
   const result = await request.query('SELECT * FROM users');
@@ -57,7 +56,7 @@ router.get('/', isLoggedIn, async (req, res) => {
   //connection.close();
 })
 
-router.get('/delete/:id', isLoggedIn, async (req, res) => {
+router.get('/delete/:id', async (req, res) => {
   const pool = await getConnection();
   const request = await pool.request();
   const { id } = req.params;
@@ -68,7 +67,7 @@ router.get('/delete/:id', isLoggedIn, async (req, res) => {
   //connection.close();
 })
 
-router.get('/edit/:id', isLoggedIn, async (req, res) => {
+router.get('/edit/:id', async (req, res) => {
   const pool = await getConnection();
   const request = await pool.request();
   const { id } = req.params;
@@ -79,7 +78,7 @@ router.get('/edit/:id', isLoggedIn, async (req, res) => {
   //connection.close();
 })
 
-router.post('/edit/:id', isLoggedIn, async (req, res) => {
+router.post('/edit/:id', async (req, res) => {
   const {business_name, bd_name} = req.body;
   const pool = await getConnection();
   const request = await pool.request();

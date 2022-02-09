@@ -5,6 +5,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const expressLayouts = require('express-ejs-layouts');
+const {isLoggedIn} = require('./lib/auth')
 
 //inizialitations
 const app = express();
@@ -30,6 +31,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(expressLayouts);
 
+//public
+app.use(express.static(path.join(__dirname, 'public')));
+
+//Check user log in
+app.use(isLoggedIn);
+
 //global variables
 app.use((req, res, next) => {
   app.locals.message = req.flash('message')[0];
@@ -39,12 +46,9 @@ app.use((req, res, next) => {
 });
 
 //routes, urls de nuestro servidor
-app.use(require('./routes'));
-app.use(require('./routes/authentication'));
-app.use('/links', require('./routes/links'));
+app.use('/', require('./routes'));
 
-//public
-app.use(express.static(path.join(__dirname, 'public')));
+
 
 //starting the server
 app.listen(app.get('port'), () => {

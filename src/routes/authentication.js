@@ -26,7 +26,7 @@ router.post('/signin', (req, res, next) => {
     })(req, res, next);
 });
 
-router.get('/profile', isLoggedIn, (req, res) => {
+router.get('/profile', (req, res) => {
     res.render('profile');
 })
 
