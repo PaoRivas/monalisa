@@ -46,8 +46,15 @@ app.use((req, res, next) => {
 });
 
 //routes, urls de nuestro servidor
+<<<<<<< HEAD
 app.use('/', require('./routes'));
 
+=======
+app.use(require('./routes'));
+app.use(require('./routes/authentication'));
+app.use('/links', require('./routes/links'));
+app.use(require('./routes/table'));
+>>>>>>> 65274ca52b98dbd49b16637bca14de1b4139134d
 
 
 //starting the server
