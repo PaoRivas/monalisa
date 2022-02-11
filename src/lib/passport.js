@@ -14,12 +14,12 @@ passport.use('local.signin', new LocalStrategy({
     const pool = await getConnection();
     const request = await pool.request();
     request.input('username', mssql.VarChar(100), username);
-    const rows = await request.query('SELECT * FROM usuarios WHERE username = @username');
+    const rows = await request.query('SELECT * FROM users WHERE email = @username');
     if (rows.recordset.length > 0){
         const user = rows.recordset[0];
         const validPassword = await helpers.matchPassword(password, user.password);
         if(validPassword){
-            done(null, user, req.flash('success', 'Welcome' + user.username));
+            done(null, user, req.flash('success', 'Welcome' + user.name));
         }else{
             done(null, false, req.flash('message', 'incorrect password'));
         }
@@ -34,11 +34,13 @@ passport.use('local.signup', new LocalStrategy({
     passReqToCallback: true
 }, async (req, username, password, done) => {
     
-    const {fullname} = req.body;
+    const {fullname, cellphone, identity} = req.body;
     newUser = {
         username,
         password,
-        fullname
+        fullname,
+        cellphone,
+        identity
     };
     const pool = await getConnection();
     const request = await pool.request();
@@ -46,7 +48,13 @@ passport.use('local.signup', new LocalStrategy({
     request.input('username', mssql.VarChar(100), username);
     request.input('password', mssql.VarChar(100), password);
     request.input('fullname', mssql.VarChar(45), fullname);
-    const result_id = await request.query('INSERT INTO [dbo].[usuarios] (username, fullname, password)  OUTPUT inserted.id VALUES (@username, @fullname, @password)');
+    request.input('cellphone', mssql.VarChar(15), cellphone);
+    request.input('identity', mssql.VarChar(15), identity);
+    request.input('requestDate', mssql.DateTime, new Date());
+    const result_id = await request.query(
+        `INSERT INTO [dbo].[users] (name, email, password, cellphone, identityCard, lastChangePwd, created, modified)  
+        OUTPUT inserted.id VALUES (@fullname, @username, @password, @cellphone, @identity, @requestDate, @requestDate, @requestDate)`
+    );
     newUser.id = result_id.recordset[0].id;
     return done(null, newUser);
 }));
@@ -59,7 +67,7 @@ passport.deserializeUser(async (id, done) => {
     const pool = await getConnection();
     const request = await pool.request();
     request.input('idos', mssql.Int, id);
-    const rows = await request.query('SELECT * FROM usuarios WHERE id = @idos');
+    const rows = await request.query('SELECT * FROM users WHERE id = @idos');
     done(null, rows.recordset[0]);
 })
 

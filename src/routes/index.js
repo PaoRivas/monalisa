@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
 })
 
 router.use(require('./authentication'));
-router.use('/links', require('./links'));
+router.use('/user', require('./user'));
 
 
 module.exports = router;
