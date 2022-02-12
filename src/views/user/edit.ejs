@@ -5,20 +5,20 @@
         <div class="card-body">
           <form action="/user/edit/<%= user.id %>" method="POST">
             <div class="mb-3">
-              <input type="text" value= "<%= user.email %>" class="form-control" name="email" placeholder="Email" autofocus>
+              <input type="text" value= "<%= user.nombre %>" class="form-control" name="fullname" placeholder="Nombre" autofocus>
             </div>
             <div class="mb-3">
-              <input type="text" value= "<%= user.name %>" class="form-control" name="fullname" placeholder="Fullname" >
+              <input type="text" value= "<%= user.email %>" class="form-control" name="email" placeholder="Correo electrónico">
             </div>
             <div class="mb-3">
-                <input type="text" value= "<%= user.cellphone %>" name="cellphone" placeholder="Cellphone" class="form-control">
+                <input type="text" value= "<%= user.celular %>" class="form-control" name="cellphone" placeholder="Celular">
             </div>
             <div class="mb-3">
-                <input type="text" value= "<%= user.identityCard %>" name="identity" placeholder="ID" class="form-control">
+                <input type="text" value= "<%= user.c_identidad %>" class="form-control" name="identity" placeholder="Carnet de identidad">
             </div>
             <div class="mb-3">
               <button class="btn btn-success btn-block">
-                SAVE
+                Guardar
               </button>
             </div>
           </form>

@@ -1,17 +1,17 @@
 <%- include('../partials/message') %>
 <div class="container p-4">
     <div class="row">
-        <% for (let us of users) { %>
+        <% for (let user of users) { %>
             <div class="col-md-3">
                 <div class="card text-center">
                     <div class="card-body">
                         <h3 class="card-title text-uppercase">
-                            <%= us.name %> 
+                            <%= user.nombre %> 
                         </h3>
-                        <p class="m-2"><%= us.email %></p>
-                        <p><%= time.timeago(us.created) %></p>
-                        <a href="/user/delete/<%= us.id %>" class="btn btn-danger">Delete</a>
-                        <a href="/user/edit/<%= us.id %>" class="btn btn-secondary">Edit</a>
+                        <p class="m-2"><%= user.email %></p>
+                        <p><%= time.timeago(user.creado) %></p>
+                        <a href="/user/delete/<%= user.id %>" class="btn btn-danger">Delete</a>
+                        <a href="/user/edit/<%= user.id %>" class="btn btn-secondary">Edit</a>
                     </div>
                 </div>
             </div>

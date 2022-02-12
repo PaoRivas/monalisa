@@ -6,7 +6,7 @@ class UsersRepo {
   static async getUsers() {
     try {
       const pool = await getConnection();
-      const users = await pool.request().query('SELECT * FROM users');
+      const users = await pool.request().query('SELECT * FROM usuarios');
       return users.recordset;
     }
     catch (error) {
@@ -19,8 +19,8 @@ class UsersRepo {
     try {
       const pool = await getConnection();
       const request = await pool.request();
-      request.input('idos', mssql.Int, id);
-      const user = await request.query('SELECT * FROM users WHERE id = @idos');
+      request.input('id', mssql.Int, id);
+      const user = await request.query('SELECT * FROM usuarios WHERE id = @id');
       return user.recordset;
     }
     catch (error) {
@@ -36,17 +36,17 @@ class UsersRepo {
       const pool = await getConnection();
       const request = await pool.request();
       password = await helpers.encryptPassword(password);
-      request.input('name', mssql.VarChar(50), fullname);
+      request.input('fullname', mssql.VarChar(50), fullname);
       request.input('email', mssql.VarChar(50), email);
       request.input('password', mssql.VarChar(100), password);
       request.input('cellphone', mssql.VarChar(15), cellphone);
       request.input('identity', mssql.VarChar(15), identity);
       request.input('requestDate', mssql.DateTime, new Date());
       const result = await request.query(
-        `INSERT INTO [dbo].[users] 
-        (name, email, password, cellphone, identityCard, lastChangePwd, created, modified)  
-        VALUES 
-        (@name, @email, @password, @cellphone, @identity, @requestDate, @requestDate, @requestDate)`
+        `INSERT INTO [dbo].[usuarios] 
+        (rol_id, nombre, email, password, celular, c_identidad, intentos, inactivo, fecha_password, creado, creador, modificado, modificador)  
+        OUTPUT inserted.id VALUES 
+        (1, @fullname, @email, @password, @cellphone, @identity, 1, 0, @requestDate, @requestDate, 1, @requestDate, 1)`
       );
       return result.recordsets;
     }
@@ -61,8 +61,8 @@ class UsersRepo {
     try {
       const pool = await getConnection();
       const request = await pool.request();
-      request.input('idos', mssql.Int, id);
-      await request.query('DELETE FROM users WHERE id = @idos');
+      request.input('id', mssql.Int, id);
+      await request.query('DELETE FROM usuarios WHERE id = @id');
 
     } catch (error) {
       console.log(error);
@@ -74,15 +74,15 @@ class UsersRepo {
     try {
       const pool = await getConnection();
       const request = await pool.request();
-      request.input('idos', mssql.Int, user.id);
+      request.input('id', mssql.Int, user.id);
       request.input('name', mssql.VarChar(50), user.fullname);
       request.input('email', mssql.VarChar(50), user.email);
       request.input('cellphone', mssql.VarChar(15), user.cellphone);
       request.input('identity', mssql.VarChar(15), user.identity);
       await request.query(
-        `UPDATE users SET 
-        name = @name, email = @email, cellphone = @cellphone, identityCard = @identity 
-        WHERE id = @idos`
+        `UPDATE usuarios SET 
+        nombre = @name, email = @email, celular = @cellphone, c_identidad = @identity 
+        WHERE id = @id`
       );
     } catch (error) {
       console.log(error);
