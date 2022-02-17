@@ -19,7 +19,7 @@ router.post('/add', async (req, res) => {
 
 router.get('/', async (req, res) => {
   const users = await UsersRepo.getUsers()
-  res.render('user/list', {users, time});
+  res.render('user/index', {users, time});
 })
 
 router.get('/delete/:id', async (req, res) => {
@@ -32,7 +32,7 @@ router.get('/delete/:id', async (req, res) => {
 router.get('/edit/:id', async (req, res) => {
   const { id } = req.params;
   const user = await UsersRepo.getUser(id)
-  res.render('user/edit', {user: user[0]});
+  res.render('user/edit', {user: user[0], layout: false});
 })
 
 router.post('/edit/:id', async (req, res) => {

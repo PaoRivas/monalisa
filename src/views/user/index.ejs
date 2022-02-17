@@ -5,12 +5,14 @@
         <li class="breadcrumb-item active">Usuarios</li>
     </ol>
     <div class="card mb-4">
-        <div class="card-header">
+        <!-- <div class="card-header">
             <i class="fas fa-table me-1"></i>
             DataTable Users
-        </div>
+        </div> -->
         <div class="card-body">
-            <%- include('./partials/modal') %>
+            <button type="button" class="btn btn-primary btn-header" data-bs-toggle="modal" data-bs-target="#addModal">
+                Añadir usuario
+            </button>
             <table id="datatablesSimple">
                 <thead>
                     <tr>
@@ -50,6 +52,13 @@
                             <td><%= user.creador %></td>
                             <td><%= user.modificado.toLocaleString() %></td>
                             <td><%= user.modificador%></td>
+                            <td>
+                                <button id="<%= user.id %>" type="button" class="btn btn-primary editbtn" data-bs-toggle="modal" data-bs-target="#editModal">
+                                    Editar
+                                </button>
+                                
+                            </td>
+                            <td><a href="/user/delete/<%= user.id %>" class="btn btn-danger">Delete</a></td>
                         </tr>
                     <% } %> 
                 </tbody>
@@ -57,3 +66,5 @@
         </div>
     </div>
 </div>
+<%- include('./add_modal') %>
+<%- include('./edit_modal') %>
