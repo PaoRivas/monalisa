@@ -7,19 +7,28 @@
         </div>
         <div class="card-body">
             <form action="/signup" method="POST">
-            <div class="form-group">
-                <input type="type" name="fullname" placeholder="Full Name" class="form-control" autofocus>
+            <div class="mb-3">
+                <input type="type" name="fullname" placeholder="Nombre" class="form-control" autofocus>
             </div>
-            <div class="form-group">
-                <input type="text" name="username" placeholder="Username" class="form-control">
+            <div class="mb-3">
+                <input type="text" name="email" placeholder="Correo electrónico" class="form-control">
             </div>
-            <div class="form-group">
-                <input type="password" name="password" placeholder="Password" class="form-control">
+            <div class="mb-3">
+                <input type="password" name="password" placeholder="Contraseña" class="form-control">
             </div>
-            <div class="form-group">
+            <div class="mb-3">
+                <input type="text" name="cellphone" placeholder="Celular" class="form-control">
+            </div>
+            <div class="mb-3">
+                <input type="text" name="identity" placeholder="Carnet de Identidad" class="form-control">
+            </div>
+            <div class="mb-3">
                 <button class="btn btn-success btn-block">
                 SingUp
                 </button>
+                <a href="/signin" class="btn btn-block">
+                SingIn
+                </a>
             </div>
             </form>
         </div>

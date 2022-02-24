@@ -32,3 +32,28 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+
+CREATE TABLE [dbo].[users](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[roleId] [int] NOT NULL,
+	[role2Id] [int] NULL,
+	[name] [nvarchar](max) NOT NULL,
+	[email] [nvarchar](50) NOT NULL,
+	[password] [nvarchar](max) NOT NULL,
+	[cellphone] [nvarchar](15) NULL,
+	[identityCard] [nvarchar](15) NULL,
+	[nit] [nvarchar](15) NULL,
+	[billName] [nvarchar](50) NULL,
+	[data] [nvarchar](max) NULL,
+	[attempts] [int] NOT NULL,
+	[inactive] [bit] NOT NULL,
+	[lastChangePwd] [datetime] NOT NULL,
+	[created] [datetime] NOT NULL,
+	[creator] [int] NOT NULL,
+	[modified] [datetime] NOT NULL,
+	[modifier] [int] NOT NULL,
+ CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]

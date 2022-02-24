@@ -1,0 +1,9 @@
+.dataTable-wrapper {
+    top: -40px;
+    position: relative;
+}
+
+.btn-header {
+    position: relative;
+    z-index: 1;
+}

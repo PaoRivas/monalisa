@@ -47,7 +47,7 @@ app.use((req, res, next) => {
 
 //routes, urls de nuestro servidor
 app.use('/', require('./routes'));
-app.use(require('./routes/table'));
+app.use(require('./routes/list'));
 
 
 //starting the server

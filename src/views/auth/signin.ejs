@@ -4,21 +4,24 @@
         <div class="col-md-4 mx-auto">
             <div class="card text-center">
             <div class="card-header">
-                <h3>SignIn</h3>
+                <h3>Iniciar Sesión</h3>
             </div>
             <div class="card-body">
                 <img src="/img/logo.png" alt="Logo Fazt" class="card-img-top mx-auto m-2 rounded-circle w-50">
                 <form action="/signin" method="POST">
                     <div class="mb-3">
-                        <input type="text" name="username" placeholder="Username" class="form-control">
+                        <input type="text" name="email" placeholder="Correo electrónico" class="form-control">
                     </div>
                     <div class="mb-3">
-                        <input type="password" name="password" placeholder="Password" class="form-control">
+                        <input type="password" name="password" placeholder="Contraseña" class="form-control">
                     </div>
                     <div class="mb-3">
                         <button class="btn btn-success btn-block">
-                        SingIn
+                        Iniciar
                         </button>
+                        <a href="/signup" class="btn btn-block">
+                        Registrarse
+                        </a>
                     </div>
                 </form>
             </div>

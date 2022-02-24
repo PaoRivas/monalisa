@@ -1,0 +1,70 @@
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Usuarios</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+        <li class="breadcrumb-item active">Usuarios</li>
+    </ol>
+    <div class="card mb-4">
+        <!-- <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            DataTable Users
+        </div> -->
+        <div class="card-body">
+            <button type="button" class="btn btn-primary btn-header" data-bs-toggle="modal" data-bs-target="#addModal">
+                Añadir usuario
+            </button>
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Celular</th>
+                        <th>Carnet de identidad</th>
+                        <th>Cambio de contraseña</th>
+                        <th>Creado</th>
+                        <th>Creador</th>
+                        <th>Modificado</th>
+                        <th>Modificador</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Celular</th>
+                        <th>Carnet de identidad</th>
+                        <th>Cambio de contraseña</th>
+                        <th>Creado</th>
+                        <th>Creador</th>
+                        <th>Modificado</th>
+                        <th>Modificador</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <% for (let user of users) { %>
+                        <tr>
+                            <td><%= user.nombre %></td>
+                            <td><%= user.email %></td>
+                            <td><%= user.celular %></td>
+                            <td><%= user.c_identidad %></td>
+                            <td><%= user.fecha_password.toLocaleString() %></td>
+                            <td><%= user.creado.toLocaleString() %></td>
+                            <td><%= user.creador %></td>
+                            <td><%= user.modificado.toLocaleString() %></td>
+                            <td><%= user.modificador%></td>
+                            <td>
+                                <button id="<%= user.id %>" type="button" class="btn btn-primary editbtn" data-bs-toggle="modal" data-bs-target="#editModal">
+                                    Editar
+                                </button>
+                                
+                            </td>
+                            <td><a href="/user/delete/<%= user.id %>" class="btn btn-danger">Delete</a></td>
+                        </tr>
+                    <% } %> 
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<%- include('./add_modal') %>
+<%- include('./edit_modal') %>
