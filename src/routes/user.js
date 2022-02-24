@@ -27,12 +27,13 @@ router.get('/delete/:id', async (req, res) => {
   await UsersRepo.deleteUser(id);
   req.flash('success', 'Link Removed Successfully');
   res.redirect('/user');
+
 })
 
 router.get('/edit/:id', async (req, res) => {
   const { id } = req.params;
   const user = await UsersRepo.getUser(id)
-  res.render('user/edit', {user: user[0], layout: false});
+  res.render('user/edit_form', {user: user[0], layout: false});
 })
 
 router.post('/edit/:id', async (req, res) => {
