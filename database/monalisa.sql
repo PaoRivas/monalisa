@@ -62,9 +62,8 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[funciones](
 	[id] [int] IDENTITY(1,1) NOT NULL,
-	[controlador] [nvarchar](max) NULL,
-	[accion] [nvarchar](max) NULL,
- CONSTRAINT [PK_Funciones] PRIMARY KEY CLUSTERED 
+	[path] [nvarchar](max) NULL
+ CONSTRAINT [PK_funciones] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -81,7 +80,7 @@ CREATE TABLE [dbo].[permisos](
 	[funcion_id] [int] NOT NULL,
  CONSTRAINT [PK_permisos] PRIMARY KEY CLUSTERED 
 (
-	[permiso_id] ASC
+	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -95,7 +94,7 @@ CREATE TABLE [dbo].[roles](
 	[descripcion] [nvarchar](max) NULL,
  CONSTRAINT [PK_roles] PRIMARY KEY CLUSTERED 
 (
-	[rol_id] ASC
+	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
@@ -107,7 +106,7 @@ GO
 CREATE TABLE [dbo].[tipo_casos](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[tipo] [nchar](15) NULL,
- CONSTRAINT [PK_TipoCasos] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_tipo_casos] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -143,7 +142,7 @@ CREATE TABLE [dbo].[usuarios](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-SET IDENTITY_INSERT [dbo].[Funciones] ON 
+SET IDENTITY_INSERT [dbo].[funciones] ON 
 GO
 INSERT [dbo].[funciones] ([id], [controlador], [accion]) VALUES (1, N'Home', N'Index')
 GO
@@ -177,7 +176,7 @@ SET IDENTITY_INSERT [dbo].[usuarios] ON
 GO
 INSERT [dbo].[usuarios] ([id], [rol_id], [rol2_id], [nombre], [email], [password], [celular], [c_identidad], [nit_factura], [nombre_factura], [datos], [intentos], [inactivo], [fecha_password], [creado], [creador], [modificado], [modificador]) VALUES (6, 2, NULL, N'Carlos Frias', N'info@algoritmos.com.bo', N'123', N'77439447', N'3007773', NULL, NULL, NULL, 0, 0, CAST(N'2022-01-01T00:00:00.000' AS DateTime), CAST(N'2022-01-01T00:00:00.000' AS DateTime), 1, CAST(N'2022-01-01T00:00:00.000' AS DateTime), 1)
 GO
-SET IDENTITY_INSERT [dbo].[Usuarios] OFF
+SET IDENTITY_INSERT [dbo].[usuarios] OFF
 GO
 
 USE [monalisa_inicio]
