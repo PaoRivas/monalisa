@@ -5,18 +5,18 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Actividades](
-	[ActividadID] [int] IDENTITY(1,1) NOT NULL,
-	[CasoID] [int] NOT NULL,
-	[UsuarioID] [int] NOT NULL,
-	[EstadoID] [int] NOT NULL,
-	[Fecha] [datetime] NOT NULL,
-	[Actividad] [nvarchar](max) NOT NULL,
-	[FecProximoPaso] [datetime] NOT NULL,
-	[ProximoPaso] [nvarchar](max) NOT NULL,
+CREATE TABLE [dbo].[actividades](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[casoID] [int] NOT NULL,
+	[usuarioID] [int] NOT NULL,
+	[estadoID] [int] NOT NULL,
+	[fecha] [datetime] NOT NULL,
+	[actividad] [nvarchar](max) NOT NULL,
+	[fecProximoPaso] [datetime] NOT NULL,
+	[proximoPaso] [nvarchar](max) NOT NULL,
  CONSTRAINT [PK_Actividades] PRIMARY KEY CLUSTERED 
 (
-	[ActividadID] ASC
+	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
@@ -25,13 +25,13 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Bitacora](
-	[BitacoraID] [int] NOT NULL,
-	[UsuarioID] [int] NOT NULL,
-	[DiaHora] [datetime] NOT NULL,
-	[Entidad] [nvarchar](max) NULL,
-	[Valor] [int] NOT NULL,
-	[Action] [varchar](200) NULL
+CREATE TABLE [dbo].[bitacora](
+	[id] [int] NOT NULL,
+	[usuario_id] [int] NOT NULL,
+	[dia_hora] [datetime] NOT NULL,
+	[entidad] [nvarchar](max) NULL,
+	[valor] [int] NOT NULL,
+	[action] [varchar](200) NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 /****** Object:  Table [dbo].[Casos]    Script Date: 28/ene./2022 17:26:24 p. m. ******/
@@ -39,19 +39,19 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Casos](
-	[CasoID] [int] IDENTITY(1,1) NOT NULL,
-	[TipoCasoID] [int] NOT NULL,
-	[UsuarioClienteID] [int] NOT NULL,
-	[Asunto] [nvarchar](50) NOT NULL,
-	[Descripcion] [nvarchar](max) NOT NULL,
-	[Creado] [datetime] NOT NULL,
-	[UsuarioCreadorID] [int] NOT NULL,
-	[Modificado] [datetime] NOT NULL,
-	[UsuarioModificadorID] [int] NOT NULL,
- CONSTRAINT [PK_Casos] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[casos](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[tipo_caso_id] [int] NOT NULL,
+	[usuario_cliente_id] [int] NOT NULL,
+	[asunto] [nvarchar](50) NOT NULL,
+	[descripcion] [nvarchar](max) NOT NULL,
+	[creado] [datetime] NOT NULL,
+	[usuarioCreadorID] [int] NOT NULL,
+	[modificado] [datetime] NOT NULL,
+	[usuarioModificadorID] [int] NOT NULL,
+ CONSTRAINT [PK_casos] PRIMARY KEY CLUSTERED 
 (
-	[CasoID] ASC
+	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
@@ -60,13 +60,12 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Funciones](
-	[FuncionID] [int] IDENTITY(1,1) NOT NULL,
-	[Controlador] [nvarchar](max) NULL,
-	[Accion] [nvarchar](max) NULL,
- CONSTRAINT [PK_Funciones] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[funciones](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[path] [nvarchar](max) NULL
+ CONSTRAINT [PK_funciones] PRIMARY KEY CLUSTERED 
 (
-	[FuncionID] ASC
+	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
@@ -75,13 +74,13 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Permisos](
-	[PermisoID] [int] IDENTITY(1,1) NOT NULL,
-	[RolID] [int] NOT NULL,
-	[FuncionID] [int] NOT NULL,
- CONSTRAINT [PK_Permisos] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[permisos](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[rol_id] [int] NOT NULL,
+	[funcion_id] [int] NOT NULL,
+ CONSTRAINT [PK_permisos] PRIMARY KEY CLUSTERED 
 (
-	[PermisoID] ASC
+	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -90,12 +89,12 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Roles](
-	[RolID] [int] IDENTITY(1,1) NOT NULL,
-	[Descripcion] [nvarchar](max) NULL,
- CONSTRAINT [PK_Roles] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[roles](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[descripcion] [nvarchar](max) NULL,
+ CONSTRAINT [PK_roles] PRIMARY KEY CLUSTERED 
 (
-	[RolID] ASC
+	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
@@ -104,12 +103,12 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[TipoCasos](
-	[TipoCasoID] [int] IDENTITY(1,1) NOT NULL,
-	[Tipo] [nchar](15) NULL,
- CONSTRAINT [PK_TipoCasos] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[tipo_casos](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[tipo] [nchar](15) NULL,
+ CONSTRAINT [PK_tipo_casos] PRIMARY KEY CLUSTERED 
 (
-	[TipoCasoID] ASC
+	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -143,41 +142,41 @@ CREATE TABLE [dbo].[usuarios](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-SET IDENTITY_INSERT [dbo].[Funciones] ON 
+SET IDENTITY_INSERT [dbo].[funciones] ON 
 GO
-INSERT [dbo].[Funciones] ([FuncionID], [Controlador], [Accion]) VALUES (1, N'Home', N'Index')
+INSERT [dbo].[funciones] ([id], [controlador], [accion]) VALUES (1, N'Home', N'Index')
 GO
-INSERT [dbo].[Funciones] ([FuncionID], [Controlador], [Accion]) VALUES (2, N'Authentication', N'Index')
+INSERT [dbo].[funciones] ([id], [controlador], [accion]) VALUES (2, N'Authentication', N'Index')
 GO
-INSERT [dbo].[Funciones] ([FuncionID], [Controlador], [Accion]) VALUES (3, N'Authentication', N'Validate')
+INSERT [dbo].[funciones] ([id], [controlador], [accion]) VALUES (3, N'Authentication', N'Validate')
 GO
-SET IDENTITY_INSERT [dbo].[Funciones] OFF
+SET IDENTITY_INSERT [dbo].[funciones] OFF
 GO
-SET IDENTITY_INSERT [dbo].[Permisos] ON 
+SET IDENTITY_INSERT [dbo].[permisos] ON 
 GO
-INSERT [dbo].[Permisos] ([PermisoID], [RolID], [FuncionID]) VALUES (1, 1, 1)
+INSERT [dbo].[permisos] ([id], [rol_id], [funcion_id]) VALUES (1, 1, 1)
 GO
-INSERT [dbo].[Permisos] ([PermisoID], [RolID], [FuncionID]) VALUES (2, 2, 1)
+INSERT [dbo].[permisos] ([id], [rol_id], [funcion_id]) VALUES (2, 2, 1)
 GO
-INSERT [dbo].[Permisos] ([PermisoID], [RolID], [FuncionID]) VALUES (3, 2, 2)
+INSERT [dbo].[permisos] ([id], [rol_id], [funcion_id]) VALUES (3, 2, 2)
 GO
-INSERT [dbo].[Permisos] ([PermisoID], [RolID], [FuncionID]) VALUES (4, 2, 3)
+INSERT [dbo].[permisos] ([id], [rol_id], [funcion_id]) VALUES (4, 2, 3)
 GO
-SET IDENTITY_INSERT [dbo].[Permisos] OFF
+SET IDENTITY_INSERT [dbo].[permisos] OFF
 GO
-SET IDENTITY_INSERT [dbo].[Roles] ON 
+SET IDENTITY_INSERT [dbo].[roles] ON 
 GO
-INSERT [dbo].[Roles] ([RolID], [Descripcion]) VALUES (1, N'Administrador')
+INSERT [dbo].[roles] ([id], [descripcion]) VALUES (1, N'Administrador')
 GO
-INSERT [dbo].[Roles] ([RolID], [Descripcion]) VALUES (2, N'Contador')
+INSERT [dbo].[roles] ([id], [descripcion]) VALUES (2, N'Contador')
 GO
-SET IDENTITY_INSERT [dbo].[Roles] OFF
+SET IDENTITY_INSERT [dbo].[roles] OFF
 GO
-SET IDENTITY_INSERT [dbo].[Usuarios] ON 
+SET IDENTITY_INSERT [dbo].[usuarios] ON 
 GO
-INSERT [dbo].[Usuarios] ([UsuarioID], [RolID], [Rol2ID], [Nombre], [Email], [Password], [Celular], [CIdentidad], [NitFactura], [NombreFactura], [Datos], [Intentos], [Inactivo], [UltCambioPwd], [Creado], [Creador], [Modificado], [Modificador]) VALUES (6, 2, NULL, N'Carlos Frias', N'info@algoritmos.com.bo', N'123', N'77439447', N'3007773', NULL, NULL, NULL, 0, 0, CAST(N'2022-01-01T00:00:00.000' AS DateTime), CAST(N'2022-01-01T00:00:00.000' AS DateTime), 1, CAST(N'2022-01-01T00:00:00.000' AS DateTime), 1)
+INSERT [dbo].[usuarios] ([id], [rol_id], [rol2_id], [nombre], [email], [password], [celular], [c_identidad], [nit_factura], [nombre_factura], [datos], [intentos], [inactivo], [fecha_password], [creado], [creador], [modificado], [modificador]) VALUES (6, 2, NULL, N'Carlos Frias', N'info@algoritmos.com.bo', N'123', N'77439447', N'3007773', NULL, NULL, NULL, 0, 0, CAST(N'2022-01-01T00:00:00.000' AS DateTime), CAST(N'2022-01-01T00:00:00.000' AS DateTime), 1, CAST(N'2022-01-01T00:00:00.000' AS DateTime), 1)
 GO
-SET IDENTITY_INSERT [dbo].[Usuarios] OFF
+SET IDENTITY_INSERT [dbo].[usuarios] OFF
 GO
 
 USE [monalisa_inicio]
