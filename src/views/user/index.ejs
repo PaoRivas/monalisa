@@ -60,7 +60,7 @@
                                 
                             </td>
                             <td>
-                                <a href="/user/delete/<%= user.id %>" class="btn btn-danger">Eliminar</a>
+                                <a href="/user/delete/<%= user.id %>" class="btn btn-danger btn-delete" data-id="<%= user.id %>">Eliminar</a>
                             </td>
                         </tr>
                     <% } %> 
@@ -69,5 +69,6 @@
         </div>
     </div>
 </div>
+<script src="/js/user.js"></script>
 <%- include('./add_modal') %>
 <%- include('./edit_modal') %>

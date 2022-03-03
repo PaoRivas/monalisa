@@ -15,6 +15,7 @@ require("./lib/passport");
 app.set('port', process.env.PORT || 4000);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
+app.set("layout extractScripts", true);
 
 //middlewares, se ejecutan cuando un cliente envia una peticion al servidor
 

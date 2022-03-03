@@ -144,11 +144,11 @@ CREATE TABLE [dbo].[usuarios](
 GO
 SET IDENTITY_INSERT [dbo].[funciones] ON 
 GO
-INSERT [dbo].[funciones] ([id], [controlador], [accion]) VALUES (1, N'Home', N'Index')
+INSERT [dbo].[funciones] ([id], [path]) VALUES (1, N'/user')
 GO
-INSERT [dbo].[funciones] ([id], [controlador], [accion]) VALUES (2, N'Authentication', N'Index')
+INSERT [dbo].[funciones] ([id], [path]) VALUES (2, N'/user/add')
 GO
-INSERT [dbo].[funciones] ([id], [controlador], [accion]) VALUES (3, N'Authentication', N'Validate')
+INSERT [dbo].[funciones] ([id], [path]) VALUES (3, N'/user/delete')
 GO
 SET IDENTITY_INSERT [dbo].[funciones] OFF
 GO

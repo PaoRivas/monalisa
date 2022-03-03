@@ -1,5 +1,5 @@
 const mssql = require('mssql'); 
-const { sqlConnectionConfig } = require('./keys');
+const sqlConnectionConfig = require('./keys');
 
 //const pool = new sql.ConnectionPool(sqlConnectionConfig);
 
