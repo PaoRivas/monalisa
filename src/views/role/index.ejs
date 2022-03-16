@@ -1,0 +1,51 @@
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Roles</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="#" class="addbtn">Dashboard</a></li>
+        <li class="breadcrumb-item active">Roles</li>
+    </ol>
+    <%- include('../partials/message') %>
+    <div class="card mb-4">
+        <!-- <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            DataTable Users
+        </div> -->
+        <div id="card-body" class="card-body">
+            <button type="button" data-name="role" class="addbtn btn btn-primary btn-header" data-bs-toggle="modal" data-bs-target="#addModal">
+                Añadir rol
+            </button>
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Descripción</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <% for (let role of roles) { %>
+                        <tr>
+                            <td><%= role.descripcion %></td>
+                            <td>
+                                <button data-id="<%= role.id %>" data-name="role" type="button" class="btn btn-primary editbtn" data-bs-toggle="modal" data-bs-target="#editModal">
+                                    Editar
+                                </button>
+                                
+                            </td>
+                            <td>
+                                <a href="/role/delete/<%= role.id %>" data-id="<%= role.id %>" data-name="role" class="btn btn-danger btn-delete">Eliminar</a>
+                            </td>
+                        </tr>
+                    <% } %> 
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="/js/user.js"></script>
+<script src="/js/role.js"></script>
+<%- include('./add_modal') %>
+<%- include('./edit_modal') %>

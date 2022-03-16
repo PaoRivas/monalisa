@@ -1,15 +1,15 @@
 const tbody = document.querySelector("tbody");
 const formdiv = document.getElementById("formdiv");
 
-const editUser = async (id) => {
-    const data = await fetch(`user/edit/${id}`, {
+const editData = async (page, id) => {
+    const data = await fetch(`${page}/edit/${id}`, {
       method: "GET",
     });
     const response = await data.text();
     formdiv.innerHTML = response;
 };
 
-const deleteUser = async (id) => {
+const deleteData = async (page, id) => {
 
   const result = await Swal.fire({
     title: 'Are you sure?',
@@ -22,26 +22,23 @@ const deleteUser = async (id) => {
   });
 
   if (result.isConfirmed) {
+    await fetch(`${page}/delete/${id}`, {
+      method: "GET",
+    });
     Swal.fire(
       'Deleted!',
       'Your file has been deleted.',
       'success'
     )
   }
-
-
-  // const data = await fetch(`user/delete/${id}`, {
-  //   method: "GET",
-  // });
-  // const response = await data.text();
-  // formdiv.innerHTML = response;
 };
 
 tbody.addEventListener("click", (e) => {
   if (e.target && e.target.matches(".editbtn")) {
     e.preventDefault();
-    let id = e.target.getAttribute("id");
-    editUser(id);
+    let id = e.target.getAttribute("data-id");
+    let data = e.target.getAttribute("data-name");
+    editData(data, id);
   }
 });
 
@@ -49,6 +46,7 @@ tbody.addEventListener("click", (e) => {
   if (e.target && e.target.matches(".btn-delete")) {
     e.preventDefault();
     let id = e.target.getAttribute("data-id");
-    deleteUser(id);
+    let data = e.target.getAttribute("data-name");
+    deleteData(data, id);
   }
 });

@@ -31,11 +31,12 @@ class UsersRepo {
 
   static async addUser(user) {
     try {
-      const {fullname, email, cellphone, identity} = user;
+      const {role, fullname, email, cellphone, identity} = user;
       let {password} = user;
       const pool = await getConnection();
       const request = await pool.request();
       password = await helpers.encryptPassword(password);
+      request.input('role_id',  mssql.Int, role);
       request.input('fullname', mssql.VarChar(50), fullname);
       request.input('email', mssql.VarChar(50), email);
       request.input('password', mssql.VarChar(100), password);
@@ -46,7 +47,7 @@ class UsersRepo {
         `INSERT INTO [dbo].[usuarios] 
         (rol_id, nombre, email, password, celular, c_identidad, intentos, inactivo, fecha_password, creado, creador, modificado, modificador)  
         OUTPUT inserted.id VALUES 
-        (1, @fullname, @email, @password, @cellphone, @identity, 1, 0, @requestDate, @requestDate, 1, @requestDate, 1)`
+        (@role_id, @fullname, @email, @password, @cellphone, @identity, 1, 0, @requestDate, @requestDate, 1, @requestDate, 1)`
       );
       return result.recordsets;
     }
@@ -75,13 +76,14 @@ class UsersRepo {
       const pool = await getConnection();
       const request = await pool.request();
       request.input('id', mssql.Int, user.id);
+      request.input('role_id',  mssql.Int, user.role);
       request.input('name', mssql.VarChar(50), user.fullname);
       request.input('email', mssql.VarChar(50), user.email);
       request.input('cellphone', mssql.VarChar(15), user.cellphone);
       request.input('identity', mssql.VarChar(15), user.identity);
       await request.query(
         `UPDATE usuarios SET 
-        nombre = @name, email = @email, celular = @cellphone, c_identidad = @identity 
+        rol_id = @role_id, nombre = @name, email = @email, celular = @cellphone, c_identidad = @identity 
         WHERE id = @id`
       );
     } catch (error) {

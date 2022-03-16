@@ -10,13 +10,14 @@
             <i class="fas fa-table me-1"></i>
             DataTable Users
         </div> -->
-        <div class="card-body">
-            <button type="button" class="btn btn-primary btn-header" data-bs-toggle="modal" data-bs-target="#addModal">
+        <div id="card-body" class="card-body">
+            <button type="button" data-name="user" class="addbtn btn btn-primary btn-header" data-bs-toggle="modal" data-bs-target="#addModal">
                 Añadir usuario
             </button>
             <table id="datatablesSimple">
                 <thead>
                     <tr>
+                        <th>Tipo de Caso</th>
                         <th>Nombre</th>
                         <th>Email</th>
                         <th>Celular</th>
@@ -30,6 +31,7 @@
                 </thead>
                 <tfoot>
                     <tr>
+                        <th>Tipo de Caso</th>
                         <th>Nombre</th>
                         <th>Email</th>
                         <th>Celular</th>
@@ -44,6 +46,7 @@
                 <tbody>
                     <% for (let user of users) { %>
                         <tr>
+                            <td><%= user.rol_id %></td>
                             <td><%= user.nombre %></td>
                             <td><%= user.email %></td>
                             <td><%= user.celular %></td>
@@ -54,13 +57,13 @@
                             <td><%= user.modificado.toLocaleString() %></td>
                             <td><%= user.modificador%></td>
                             <td>
-                                <button id="<%= user.id %>" type="button" class="btn btn-primary editbtn" data-bs-toggle="modal" data-bs-target="#editModal">
+                                <button data-id="<%= user.id %>" data-name="user" type="button" class="btn btn-primary editbtn" data-bs-toggle="modal" data-bs-target="#editModal">
                                     Editar
                                 </button>
                                 
                             </td>
                             <td>
-                                <a href="/user/delete/<%= user.id %>" class="btn btn-danger btn-delete" data-id="<%= user.id %>">Eliminar</a>
+                                <a href="/user/delete/<%= user.id %>" data-id="<%= user.id %>" data-name="user" class="btn btn-danger btn-delete">Eliminar</a>
                             </td>
                         </tr>
                     <% } %> 
@@ -69,6 +72,7 @@
         </div>
     </div>
 </div>
+<script src="/js/role.js"></script>
 <script src="/js/user.js"></script>
 <%- include('./add_modal') %>
 <%- include('./edit_modal') %>

@@ -1,0 +1,25 @@
+<form action="/role/edit/<%= role.id %>" method="POST">
+    <div class="mb-3">
+      <input type="text" value= "<%= role.descripcion %>" class="form-control" name="description" placeholder="Descripción">
+    </div>
+    <div class="mb-3">
+      <% for (let funcion of functions) { %>
+        <% if ( arr.includes(funcion.id)) { %> 
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="check" value="<%= funcion.id %>" checked>
+            <label class="form-check-label" for="inlineCheckbox1"><%= funcion.path %> </label>
+          </div>
+        <%  } else { %>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="check" value="<%= funcion.id %>">
+            <label class="form-check-label" for="inlineCheckbox1"><%= funcion.path %> </label>
+          </div>
+        <%  } %>
+      <% } %> 
+    </div>
+    <div class="mb-3">
+      <button class="btn btn-success btn-block">
+        Guardar
+      </button>
+    </div>
+  </form>

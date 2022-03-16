@@ -6,7 +6,7 @@ let env = {
   dbPassword: process.env.DB_PASSWORD || "",
   dbServer: process.env.DB_SERVER || "",
   dbDatabase: process.env.DB_DATABASE || "",
-  dbport: parseInt(process.env.DB_PORT) || 1434
+  dbport: parseInt(process.env.DB_PORT) || 1433
 };
 
 const dbSettings = {

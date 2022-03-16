@@ -1,0 +1,37 @@
+<form action="/cases/edit/<%= caso.id %>" method="POST">
+    <div class="mb-3">
+      <div class="mb-3">
+        <select class="form-select" name="type" aria-label="Default select example">
+            <% for (let type of types) { %>
+              <% if (type.id === caso.tipo_caso_id) { %>
+                <option value="<%= type.id %>" selected><%= type.tipo %></option>
+              <% } else { %> 
+                <option value="<%= type.id %>"><%= type.tipo %></option>
+              <% } %> 
+            <% } %> 
+        </select>
+    </div>
+    <div class="mb-3">
+        <select class="form-select" name="user" aria-label="Default select example">
+            <% for (let user of users) { %>
+              <% if (user.id === caso.usuario_id) { %>
+                <option value="<%= user.id %>" selected><%= user.nombre %></option>
+              <% } else { %> 
+                <option value="<%= user.id %>"><%= user.nombre %></option>
+              <% } %> 
+            <% } %> 
+        </select>
+    </div>
+    </div>
+    <div class="mb-3">
+        <input type="text" value= "<%= caso.asunto %>" class="form-control" name="subject" placeholder="Asunto">
+    </div>
+    <div class="mb-3">
+        <input type="text" value= "<%= caso.descripcion %>" class="form-control" name="description" placeholder="Descripción">
+    </div>
+    <div class="mb-3">
+      <button class="btn btn-success btn-block">
+        Guardar
+      </button>
+    </div>
+  </form>

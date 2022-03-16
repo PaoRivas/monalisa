@@ -7,6 +7,10 @@ router.get('/', (req, res) => {
 
 router.use(require('./authentication'));
 router.use('/user', require('./user'));
-
+router.use('/role', require('./role'));
+// router.use('/function', require('./function'));
+// router.use('/permission', require('./permission'));
+router.use('/types', require('./typesofcases'));
+router.use('/cases', require('./cases'));
 
 module.exports = router;

@@ -1,5 +1,16 @@
 <form action="/user/edit/<%= user.id %>" method="POST">
   <div class="mb-3">
+    <select class="form-select" name="role" aria-label="Default select example">
+      <% for (let role of roles) { %>
+        <% if (user.rol_id === role.id) { %>
+          <option value="<%= role.id %>" selected><%= role.descripcion %></option>
+        <% } else { %> 
+          <option value="<%= role.id %>"><%= role.descripcion %></option>
+        <% } %>
+      <% } %> 
+    </select>
+  </div>
+  <div class="mb-3">
     <input type="text" value= "<%= user.nombre %>" class="form-control" name="fullname" placeholder="Nombre">
   </div>
   <div class="mb-3">

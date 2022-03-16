@@ -1,0 +1,50 @@
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Funciones</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+        <li class="breadcrumb-item active">Funciones</li>
+    </ol>
+    <%- include('../partials/message') %>
+    <div class="card mb-4">
+        <!-- <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            DataTable Users
+        </div> -->
+        <div class="card-body">
+            <button type="button" class="btn btn-primary btn-header" data-bs-toggle="modal" data-bs-target="#addModal">
+                Añadir función
+            </button>
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Path</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Path</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <% for (let funcion of funcions) { %>
+                        <tr>
+                            <td><%= funcion.path %></td>
+                            <td>
+                                <button data-id="<%= funcion.id %>" data-name="function" type="button" class="btn btn-primary editbtn" data-bs-toggle="modal" data-bs-target="#editModal">
+                                    Editar
+                                </button>
+                                
+                            </td>
+                            <td>
+                                <a href="/function/delete/<%= funcion.id %>" data-id="<%= funcion.id %>" data-name="function" class="btn btn-danger btn-delete">Eliminar</a>
+                            </td>
+                        </tr>
+                    <% } %> 
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="/js/user.js"></script>
+<%- include('./add_modal') %>
+<%- include('./edit_modal') %>

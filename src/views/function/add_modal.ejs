@@ -1,0 +1,22 @@
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addModalLabel">Añadir función</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/role/add" method="POST">
+              <div class="mb-3">
+                <input type="text" class="form-control" name="path" placeholder="Nombre Path">
+              </div>
+              <div class="mb-3">
+                <button class="btn btn-success btn-block">
+                  Guardar
+                </button>
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>

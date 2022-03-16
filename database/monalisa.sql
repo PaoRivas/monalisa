@@ -7,13 +7,13 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[actividades](
 	[id] [int] IDENTITY(1,1) NOT NULL,
-	[casoID] [int] NOT NULL,
-	[usuarioID] [int] NOT NULL,
-	[estadoID] [int] NOT NULL,
+	[caso_id] [int] NOT NULL,
+	[usuario_id] [int] NOT NULL,
+	[estado_id] [int] NOT NULL,
 	[fecha] [datetime] NOT NULL,
 	[actividad] [nvarchar](max) NOT NULL,
-	[fecProximoPaso] [datetime] NOT NULL,
-	[proximoPaso] [nvarchar](max) NOT NULL,
+	[fecha_proximo] [datetime] NOT NULL,
+	[proximo_paso] [nvarchar](max) NOT NULL,
  CONSTRAINT [PK_Actividades] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -31,7 +31,7 @@ CREATE TABLE [dbo].[bitacora](
 	[dia_hora] [datetime] NOT NULL,
 	[entidad] [nvarchar](max) NULL,
 	[valor] [int] NOT NULL,
-	[action] [varchar](200) NULL
+	[accion] [varchar](200) NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 /****** Object:  Table [dbo].[Casos]    Script Date: 28/ene./2022 17:26:24 p. m. ******/
@@ -42,13 +42,13 @@ GO
 CREATE TABLE [dbo].[casos](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[tipo_caso_id] [int] NOT NULL,
-	[usuario_cliente_id] [int] NOT NULL,
+	[usuario_id] [int] NOT NULL,
 	[asunto] [nvarchar](50) NOT NULL,
 	[descripcion] [nvarchar](max) NOT NULL,
 	[creado] [datetime] NOT NULL,
-	[usuarioCreadorID] [int] NOT NULL,
+	[creador] [int] NOT NULL,
 	[modificado] [datetime] NOT NULL,
-	[usuarioModificadorID] [int] NOT NULL,
+	[modificador] [int] NOT NULL,
  CONSTRAINT [PK_casos] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -120,7 +120,6 @@ GO
 CREATE TABLE [dbo].[usuarios](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[rol_id] [int] NOT NULL,
-	[rol2_id] [int] NULL,
 	[nombre] [nvarchar](max) NOT NULL,
 	[email] [nvarchar](50) NOT NULL,
 	[password] [nvarchar](max) NOT NULL,

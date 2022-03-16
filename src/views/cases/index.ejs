@@ -1,0 +1,66 @@
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Casos</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+        <li class="breadcrumb-item active">Casos</li>
+    </ol>
+    <%- include('../partials/message') %>
+    <div class="card mb-4">
+        <!-- <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            DataTable Users
+        </div> -->
+        <div id="card-body" class="card-body">
+            <button type="button" data-name="cases" class="addbtn btn btn-primary btn-header" data-bs-toggle="modal" data-bs-target="#addModal">
+                Añadir caso
+            </button>
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Usuario</th>
+                        <th>Asunto</th>
+                        <th>Descripción</th>
+                        <th>Creado</th>
+                        <th>Modificado</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Usuario</th>
+                        <th>Asunto</th>
+                        <th>Descripción</th>
+                        <th>Creado</th>
+                        <th>Modificado</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <% for (let caso of cases) { %>
+                        <tr>
+                            <td><%= caso.tipo_caso_id %></td>
+                            <td><%= caso.usuario_id %></td>
+                            <td><%= caso.asunto %></td>
+                            <td><%= caso.descripcion %></td>
+                            <td><%= caso.creado.toLocaleString() %></td>
+                            <td><%= caso.modificado.toLocaleString() %></td>
+                            <td>
+                                <button data-id="<%= caso.id %>" data-name="cases" type="button" class="btn btn-primary editbtn" data-bs-toggle="modal" data-bs-target="#editModal">
+                                    Editar
+                                </button>
+                                
+                            </td>
+                            <td>
+                                <a data-id="<%= caso.id %>" data-name="cases" class="btn btn-danger btn-delete">Eliminar</a>
+                            </td>
+                        </tr>
+                    <% } %> 
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="/js/user.js"></script>
+<script src="/js/role.js"></script>
+<%- include('./add_modal') %>
+<%- include('./edit_modal') %>

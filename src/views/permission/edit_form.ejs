@@ -1,0 +1,13 @@
+<form action="/permission/edit/<%= permission.id %>" method="POST">
+    <div class="mb-3">
+      <input type="text" value= "<%= permission.rol_id %>" class="form-control" name="roleId" placeholder="Rol">
+    </div>
+    <div class="mb-3">
+        <input type="text" value= "<%= permission.funcion_id %>" class="form-control" name="functionId" placeholder="Función">
+      </div>
+    <div class="mb-3">
+      <button class="btn btn-success btn-block">
+        Guardar
+      </button>
+    </div>
+  </form>
