@@ -23,11 +23,13 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/delete/:id', async (req, res) => {
-  const { id } = req.params;
-  await UsersRepo.deleteUser(id);
-  req.flash('success', 'Link Removed Successfully');
-  res.redirect('/user');
-
+  try {
+    const { id } = req.params;
+    await UsersRepo.deleteUser(id);
+    res.json({ok: "Se elimino el registro."});
+  } catch (error) {
+    res.json({error: "Ocurrio un error al eliminar el registro."});
+  }
 })
 
 router.get('/edit/:id', async (req, res) => {
