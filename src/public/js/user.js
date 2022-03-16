@@ -16,20 +16,31 @@ const deleteData = async (page, id) => {
     text: "You won't be able to revert this!",
     icon: 'warning',
     showCancelButton: true,
+    showLoaderOnConfirm: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
     confirmButtonText: 'Yes, delete it!'
   });
 
   if (result.isConfirmed) {
-    await fetch(`${page}/delete/${id}`, {
+    const data = await fetch(`user/delete/${id}`, {
       method: "GET",
     });
-    Swal.fire(
-      'Deleted!',
-      'Your file has been deleted.',
-      'success'
-    )
+    const response = await data.json();
+    setTimeout(function () { location.reload() }, 3000);
+    if (response.ok) {
+      Swal.fire(
+        'Deleted!',
+        response.ok,
+        'success'
+      )
+    } else if (response.error) {
+      Swal.fire(
+        'Error!',
+        response.error,
+        'error'
+      )
+    }  
   }
 };
 
