@@ -29,6 +29,22 @@ class CasesRepo {
     }
   }
 
+  static async getAllCases() {
+    try {
+      const pool = await getConnection();
+      const cases = await pool.request().query(
+        `SELECT c.*, u.nombre, t.tipo FROM casos c 
+        INNER JOIN usuarios u ON c.usuario_id = u.id 
+        INNER JOIN tipo_casos t ON c.tipo_caso_id = t.id`
+        );
+      return cases.recordset;
+    }
+    catch (error) {
+      console.log(error);
+      throw(error);
+    }
+  }
+
   static async addCase(caso) {
     try {
       const {type, user, subject, description} = caso;
@@ -94,6 +110,27 @@ class CasesRepo {
       console.log(error);
       throw(error);
     }    
+  }
+
+  static async addFile(file) {
+    try {
+      const {id, name} = file;
+      const pool = await getConnection();
+      const request = await pool.request();
+      request.input('case_id',  mssql.Int, id);
+      request.input('name', mssql.VarChar(50), name);
+      const result = await request.query(
+        `INSERT INTO [dbo].[archivos]
+        ([caso_id],[nombre])
+        VALUES
+        (@case_id,@name)`
+      );
+      return result.recordsets;
+    }
+    catch (error) {
+      console.log(error);
+      throw (error);
+    }
   }
 }
 

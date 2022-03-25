@@ -12,5 +12,6 @@ router.use('/role', require('./role'));
 // router.use('/permission', require('./permission'));
 router.use('/types', require('./typesofcases'));
 router.use('/cases', require('./cases'));
+router.use('/activities', require('./activities'));
 
 module.exports = router;

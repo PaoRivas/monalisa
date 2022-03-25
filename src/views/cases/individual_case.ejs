@@ -1,0 +1,44 @@
+<div class="container-fluid px-4">
+  <form class="mt-4 row g-3">
+    <label for="inputEmail4" class="col-md-1 form-label">Tipo</label>
+    <div class="col-md-4">
+      <input readonly type="email" class="form-control" id="inputEmail4">
+    </div>
+    <label for="inputPassword4" class="col-md-1 form-label">Usuario</label>
+    <div class="col-md-4">
+      <input readonly type="password" class="form-control" id="inputPassword4">
+    </div>
+    <div class="col-12">
+      <label for="inputAddress" class="form-label">Asunto</label>
+      <input readonly type="text" class="form-control" id="inputAddress" value="<%= caso.asunto %> ">
+    </div>
+    <div class="col-12">
+      <label for="inputAddress2" class="form-label">Descripción</label>
+      <input readonly type="text" class="form-control" id="inputAddress2" value="<%= caso.descripcion %> ">
+    </div>
+    <div class="col-md-6">
+      <label for="inputCity" class="form-label">Creado</label>
+      <input readonly type="text" class="form-control" id="inputCity" value="<%= caso.creado.toLocaleString() %> ">
+    </div>
+    <div class="col-md-6">
+      <label for="inputZip" class="form-label">Modificado</label>
+      <input readonly type="text" class="form-control" id="inputZip" value="<%= caso.modificado.toLocaleString() %> ">
+    </div>
+  </form>
+  <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Actividades</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"><%- include('../activities/index', activities, cases, users, states) %></div>
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+  </div>
+</div>

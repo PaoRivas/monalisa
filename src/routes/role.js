@@ -5,7 +5,6 @@ const FunctionsRepo = require('../db/functions.repo');
 const PermissionsRepo = require('../db/permissions.repo');
 
 router.get('/add', async (req, res) => {
-  const functions = await FunctionsRepo.getFunctions();
   res.render('role/add_form', {functions, layout: false});
 })
 
@@ -23,7 +22,8 @@ router.post('/add', async (req, res) => {
 
 router.get('/', async (req, res) => {
   const roles = await RolesRepo.getRoles();
-  res.render('role/index', {roles});
+  const functions = await FunctionsRepo.getFunctions();
+  res.render('role/index', {roles, functions});
 })
 
 router.get('/delete/:id', async (req, res) => {
@@ -42,7 +42,7 @@ router.get('/edit/:id', async (req, res) => {
   const arr = permissions.map(x => {
     return x.funcion_id;
   } )
-  res.render('role/edit_form', {role: role[0], functions, arr, layout: false});
+  res.render('role/edit_modal', {role: role[0], functions, arr, layout: false});
 })
 
 router.post('/edit/:id', async (req, res) => {

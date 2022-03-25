@@ -29,6 +29,23 @@ class UsersRepo {
     }
   }
 
+  static async getRolUsers() {
+    try {
+      const pool = await getConnection();
+      const users = await pool.request().query(
+        `SELECT us.*, r.descripcion
+        FROM usuarios us 
+        LEFT JOIN roles r 
+        ON us.rol_id = r.id `
+        );
+      return users.recordset;
+    }
+    catch (error) {
+      console.log(error);
+      throw(error);
+    }
+  }
+
   static async addUser(user) {
     try {
       const {role, fullname, email, cellphone, identity} = user;

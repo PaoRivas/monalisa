@@ -29,7 +29,7 @@ router.get('/delete/:id', async (req, res) => {
 router.get('/edit/:id', async (req, res) => {
   const { id } = req.params;
   const type = await TypesofCasesRepo.getType(id);
-  res.render('typesofcases/edit_form', {type: type[0], layout: false});
+  res.render('typesofcases/edit_modal', {type: type[0], layout: false});
 })
 
 router.post('/edit/:id', async (req, res) => {

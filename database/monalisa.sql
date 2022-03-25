@@ -14,7 +14,7 @@ CREATE TABLE [dbo].[actividades](
 	[actividad] [nvarchar](max) NOT NULL,
 	[fecha_proximo] [datetime] NOT NULL,
 	[proximo_paso] [nvarchar](max) NOT NULL,
- CONSTRAINT [PK_Actividades] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_actividades] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -182,10 +182,37 @@ USE [monalisa_inicio]
 
 CREATE TABLE [dbo].[nombres_db](
        [nit] [nchar](25) NOT NULL,
-       [name_db] [nchar](10) NULL,
+       [nombre] [nchar](10) NULL,
 CONSTRAINT [PK_nombres_db] PRIMARY KEY CLUSTERED 
 (
        [nit] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+GO
+CREATE TABLE archivos (
+    id INT PRIMARY KEY IDENTITY (1, 1),
+		caso_id INT NOT NULL,
+    nombre VARCHAR (50) NOT NULL
+    FOREIGN KEY (caso_id) REFERENCES casos (id)
+);
+GO
+CREATE TABLE estados (
+    id INT PRIMARY KEY IDENTITY (1, 1),
+    nombre VARCHAR (50) NOT NULL
+);
+GO
+INSERT INTO [dbo].[estados]
+           ([nombre])
+     VALUES
+           ('ACTIVO')
+GO
+INSERT INTO [dbo].[estados]
+           ([nombre])
+     VALUES
+           ('SUSPENDIDO')
+GO
+INSERT INTO [dbo].[estados]
+           ([nombre])
+     VALUES
+           ('CONCLUIDO')
 GO

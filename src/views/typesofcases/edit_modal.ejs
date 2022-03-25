@@ -1,13 +1,10 @@
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addModalLabel">Editar tipo</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div id="formdiv" class="modal-body">
-                
-            </div>
-        </div>
+<form action="/types/edit/<%= type.id %>" method="POST">
+    <div class="mb-3">
+      <input type="text" value= "<%= type.tipo %>" class="form-control" name="name" placeholder="Nombre Tipo">
     </div>
-</div>
+    <div class="mb-3">
+      <button class="btn btn-success btn-block">
+        Guardar
+      </button>
+    </div>
+</form>

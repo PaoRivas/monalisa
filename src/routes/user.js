@@ -20,9 +20,17 @@ router.post('/add', async (req, res) => {
 })
 
 router.get('/', async (req, res) => {
-  const users = await UsersRepo.getUsers();
-  const role = await RolesRepo.getRoles();
-  res.render('user/index', {users, time});
+  //const users = await UsersRepo.getRolUsers();
+  const roles = await RolesRepo.getRoles();
+  const usersU = await UsersRepo.getUsers();
+  const users = usersU.map((user) => {
+    const descripcion = roles.filter(x => x.id === user.rol_id)[0]?.descripcion;
+    return {
+      ...user,
+      descripcion
+    }
+  });
+  res.render('user/index', {users, roles, time});
 })
 
 router.get('/delete/:id', async (req, res) => {
@@ -39,7 +47,7 @@ router.get('/edit/:id', async (req, res) => {
   const { id } = req.params;
   const user = await UsersRepo.getUser(id);
   const roles = await RolesRepo.getRoles();
-  res.render('user/edit_form', {user: user[0], roles, layout: false});
+  res.render('user/edit_modal', {user: user[0], roles, layout: false});
 })
 
 router.post('/edit/:id', async (req, res) => {

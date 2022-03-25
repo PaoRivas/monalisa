@@ -10,8 +10,13 @@
               <div class="mb-3">
                 <input type="text" class="form-control" name="description" placeholder="Nombre Rol">
               </div>
-              <div id="formSection" class="mb-3">
-                
+              <div class="mb-3">
+                <% for (let funcion of functions) { %>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="check" value="<%= funcion.id %>">
+                    <label class="form-check-label" for="inlineCheckbox1"><%= funcion.path %> </label>
+                  </div>
+                <% } %> 
               </div>
               <div class="mb-3">
                 <button class="btn btn-success btn-block">
@@ -22,4 +27,4 @@
         </div>
       </div>
     </div>
-  </div>
+</div>

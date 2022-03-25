@@ -5,6 +5,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const expressLayouts = require('express-ejs-layouts');
+const fileUpload = require('express-fileupload');
 const {isLoggedIn} = require('./lib/auth')
 
 //inizialitations
@@ -31,6 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(expressLayouts);
+app.use(fileUpload());
 
 //public
 app.use(express.static(path.join(__dirname, 'public')));
@@ -48,7 +50,6 @@ app.use((req, res, next) => {
 
 //routes, urls de nuestro servidor
 app.use('/', require('./routes'));
-app.use(require('./routes/list'));
 
 
 //starting the server

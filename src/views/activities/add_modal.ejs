@@ -1,0 +1,57 @@
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">Añadir actividad</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/activities/add" method="POST">
+            <div class="mb-3">
+              <select class="form-select" name="case_id" aria-label="Default select example"> 
+                <option selected>Caso</option>
+                <% for (let caso of cases) { %>
+                <option value="<%= caso.id %>"><%= caso.asunto %></option>
+                <% } %> 
+              </select>
+            </div>
+            <div class="mb-3">
+              <select class="form-select" name="user_id" aria-label="Default select example"> 
+                <option selected>Usuario</option>
+                <% for (let user of users) { %>
+                <option value="<%= user.id %>"><%= user.nombre %></option>
+                <% } %> 
+              </select>
+            </div>
+            <div class="mb-3">
+              <select class="form-select" name="state_id" aria-label="Default select example"> 
+                <option selected>Estado</option>
+                <% for (let state of states) { %>
+                <option value="<%= state.id %>"><%= state.nombre %></option>
+                <% } %> 
+              </select>
+            </div>
+            <div class="mb-3">
+              <input type="text" class="form-control" name="activity" placeholder="Actividad">
+            </div>
+            <div class="mb-3 input-group date" id="datepicker">
+              <input type="text" class="form-control" id="date" name="nextDate" placeholder="Fecha Próximo Paso"/>
+              <span class="input-group-append">
+                <span class="input-group-text bg-light d-block">
+                  <i class="fa fa-calendar"></i>
+                </span>
+              </span>
+            </div>
+            <div class="mb-3">
+              <input type="text" class="form-control" name="nextStep" placeholder="Próximo Paso" >
+            </div>
+            <div class="mb-3">
+              <button class="btn btn-success btn-block">
+                Guardar
+              </button>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -11,7 +11,7 @@
             DataTable Users
         </div> -->
         <div id="card-body" class="card-body">
-            <button type="button" data-name="role" class="addbtn btn btn-primary btn-header" data-bs-toggle="modal" data-bs-target="#addModal">
+            <button type="button" class="btn btn-primary btn-header" data-bs-toggle="modal" data-bs-target="#addModal">
                 Añadir rol
             </button>
             <table id="datatablesSimple">
@@ -45,7 +45,19 @@
         </div>
     </div>
 </div>
-<script src="/js/user.js"></script>
-<script src="/js/role.js"></script>
-<%- include('./add_modal') %>
-<%- include('./edit_modal') %>
+<script src="/js/crud.js"></script>
+<%- include('./add_modal', functions) %>
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">Editar rol</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="editModalBody" class="modal-body">
+                
+            </div>
+        </div>
+    </div>
+</div>

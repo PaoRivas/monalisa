@@ -7,8 +7,21 @@
         </div>
         <div class="modal-body">
           <form action="/cases/add" method="POST">
-              <div id="formSection" class="mb-3">
-                
+              <div class="mb-3">
+                <select class="form-select" name="type" aria-label="Default select example"> 
+                    <option selected>Tipo de Caso</option>
+                    <% for (let type of types) { %>
+                    <option value="<%= type.id %>"><%= type.tipo %></option>
+                    <% } %> 
+                </select>
+              </div>
+              <div class="mb-3">
+                  <select class="form-select" name="user" aria-label="Default select example"> 
+                      <option selected>Usuario</option>
+                      <% for (let user of users) { %>
+                      <option value="<%= user.id %>"><%= user.nombre %></option>
+                      <% } %> 
+                  </select>
               </div>
               <div class="mb-3">
                 <input type="text" class="form-control" name="subject" placeholder="Asunto">
