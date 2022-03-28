@@ -4,7 +4,8 @@
   "description": "Sistema de facturación - Proyecto de grado UPB",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src"
+    "dev": "nodemon src",
+    "start": "node src"
   },
   "repository": {
     "type": "git",
