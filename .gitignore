@@ -131,4 +131,5 @@ dist
 
 # keys
 
-#src/keys.js
+#uploads
+src/public/files/*
