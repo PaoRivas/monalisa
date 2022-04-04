@@ -6,7 +6,6 @@ const CasesRepo = require('../db/cases.repo');
 const TypesofCasesRepo = require('../db/typesofcases.repo');
 const UsersRepo = require('../db/users.repo');
 const ActivitiesRepo = require('../db/activities.repo');
-const StatesRepo = require('../db/states.repo');
 const RolesRepo = require('../db/roles.repo');
 
 router.get('/add', async (req, res) => {

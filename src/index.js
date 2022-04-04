@@ -39,7 +39,7 @@ app.use(fileUpload());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Check user log in
-app.use(isLoggedIn);
+//app.use(isLoggedIn);
 
 //global variables
 app.use((req, res, next) => {
