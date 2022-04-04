@@ -29,31 +29,27 @@ class ActivitiesRepo {
     }
   }
 
-  // static async getRolUsers() {
-  //   try {
-  //     const pool = await getConnection();
-  //     const users = await pool.request().query(
-  //       `SELECT us.*, r.descripcion
-  //       FROM usuarios us 
-  //       LEFT JOIN roles r 
-  //       ON us.rol_id = r.id `
-  //       );
-  //     return users.recordset;
-  //   }
-  //   catch (error) {
-  //     console.log(error);
-  //     throw(error);
-  //   }
-  // }
+  static async getActivitiesbyCase(id) {
+    try {
+      const pool = await getConnection();
+      const request = await pool.request();
+      request.input('id', mssql.Int, id);
+      const activities = await request.query('SELECT * FROM actividades WHERE caso_id = @id');
+      return activities.recordset;
+    }
+    catch (error) {
+      console.log(error);
+      throw(error);
+    }
+  }
 
   static async addActivity(actividad) {
     try {
-      const {case_id, user_id, state_id, activity, nextDate, nextStep} = actividad;
+      const {activity, nextDate, nextStep, id, caseid} = actividad;
       const pool = await getConnection();
       const request = await pool.request();
-      request.input('case_id',  mssql.Int, case_id);
-      request.input('user_id',  mssql.Int, user_id);
-      request.input('estado_id',  mssql.Int, state_id);
+      request.input('case_id',  mssql.Int, caseid);
+      request.input('user_id',  mssql.Int, id);
       request.input('requestDate', mssql.DateTime, new Date());
       request.input('activity', mssql.VarChar(100), activity);
       const date = helpers.toDate(nextDate);
@@ -63,7 +59,7 @@ class ActivitiesRepo {
         `INSERT INTO [dbo].[actividades]
         ([caso_id] ,[usuario_id], [estado_id], [fecha], [actividad], [fecha_proximo], [proximo_paso])
         VALUES
-        (@case_id, @user_id, @estado_id, @requestDate, @activity, @nextDate, @nextStep)`
+        (@case_id, @user_id, 1, @requestDate, @activity, @nextDate, @nextStep)`
       );
       return result.recordsets;
     }

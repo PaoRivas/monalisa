@@ -7,9 +7,14 @@ const TypesofCasesRepo = require('../db/typesofcases.repo');
 const UsersRepo = require('../db/users.repo');
 const ActivitiesRepo = require('../db/activities.repo');
 const StatesRepo = require('../db/states.repo');
+const RolesRepo = require('../db/roles.repo');
 
 router.get('/add', async (req, res) => {
-  res.render('cases/add_form', {types, users, layout: false});
+  const caso = '';
+  const roles = await RolesRepo.getRoles();
+  const types = await TypesofCasesRepo.getTypes();
+  const users = await UsersRepo.getUsers();
+  res.render('cases/add_edit_case', {caso, roles, types, users});
 })
 
 router.post('/add', async (req, res) => {
@@ -26,17 +31,18 @@ router.get('/', async (req, res) => {
   const cases = await CasesRepo.getAllCases();
   const types = await TypesofCasesRepo.getTypes();
   const users = await UsersRepo.getUsers();
-  res.render('cases/index', {cases, types, users, time});
+  const roles = await RolesRepo.getRoles();
+  res.render('cases/index', {cases, types, users, roles});
 })
 
 router.get('/case/:id', async (req, res) => {
   const { id } = req.params;
   const caso = await CasesRepo.getCase(id);
-  const activities = await ActivitiesRepo.getActivities();
-  const cases = await CasesRepo.getCases();
+  const activities = await ActivitiesRepo.getActivitiesbyCase(id);
+  const roles = await RolesRepo.getRoles();
+  const types = await TypesofCasesRepo.getTypes();
   const users = await UsersRepo.getUsers();
-  const states = await StatesRepo.getStates();
-  res.render('cases/individual_case', {caso:caso[0], activities, cases, users, states});
+  res.render('cases/add_edit_case', {caso:caso[0], activities, roles, types, users});
 })
 
 router.get('/delete/:id', async (req, res) => {
@@ -61,7 +67,7 @@ router.post('/edit/:id', async (req, res) => {
   const caso = {type, user, subject, description, id};
   await CasesRepo.updateCase(caso);
   req.flash('success', 'Updated Successfully');
-  res.redirect('/cases');
+  res.redirect(`/cases/case/${id}`);
 })
 
 router.post('/upload/:id', async (req, res) => {
@@ -88,7 +94,7 @@ router.post('/upload/:id', async (req, res) => {
   });
 
   await CasesRepo.addFile(file);
-  res.redirect('/cases');
+  res.redirect(`/cases/case/${id}`);
 })
 
 module.exports = router;

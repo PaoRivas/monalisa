@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const UsersRepo = require('../db/users.repo');
 const RolesRepo = require('../db/roles.repo');
+const CasesRepo = require('../db/cases.repo');
+const TypesofCasesRepo = require('../db/typesofcases.repo');
 
 router.get('/add', async (req, res) => {
     const roles = await RolesRepo.getRoles();
@@ -31,6 +33,15 @@ router.get('/', async (req, res) => {
     }
   });
   res.render('user/index', {users, roles, time});
+})
+
+router.get('/cases/:id', async (req, res) => {
+  const { id } = req.params;
+  const cases = await CasesRepo.getCasesbyUser(id);
+  const types = await TypesofCasesRepo.getTypes();
+  const users = await UsersRepo.getUsers();
+  const roles = await RolesRepo.getRoles();
+  res.render('cases/index', {cases, types, users, roles});
 })
 
 router.get('/delete/:id', async (req, res) => {

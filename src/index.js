@@ -10,6 +10,7 @@ const {isLoggedIn} = require('./lib/auth')
 
 //inizialitations
 const app = express();
+// Here runs the database.js and then keys.js
 require("./lib/passport");
 
 //settings
@@ -38,7 +39,7 @@ app.use(fileUpload());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Check user log in
-//app.use(isLoggedIn);
+app.use(isLoggedIn);
 
 //global variables
 app.use((req, res, next) => {

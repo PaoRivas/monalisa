@@ -2,16 +2,16 @@ const time = require('../lib/time');
 const express = require('express');
 const router = express.Router();
 const ActivitiesRepo = require('../db/activities.repo');
-const CasesRepo = require('../db/cases.repo');
-const UsersRepo = require('../db/users.repo');
-const StatesRepo = require('../db/states.repo');
 
-router.post('/add', async (req, res) => {
+router.post('/add/:caseid', async (req, res) => {
     try {
-      console.log(req.body);
-      await ActivitiesRepo.addActivity(req.body)
+      const { caseid } = req.params;
+      const {activity, nextDate, nextStep} = req.body;
+      const { id } = req.user;
+      const actividad = {activity, nextDate, nextStep, id, caseid};
+      await ActivitiesRepo.addActivity(actividad);
       req.flash('success', 'Saved Successfully');
-      res.redirect('/activities');
+      res.redirect(`/cases/case/${caseid}`);
     } catch (ex) {
       res.status(500).send(ex);
     }

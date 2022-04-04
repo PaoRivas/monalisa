@@ -1,5 +1,7 @@
+<% const action = caso ? 'edit/'+caso.id : 'add' %> 
 <div class="container-fluid px-4">
-  <form id="formIndividual" class="mt-4 row g-3" action="/cases/add" method="POST">
+  <%- include('../partials/message') %>
+  <form id="formIndividual" class="mt-4 row g-3" action="/cases/<%= action %> " method="POST">
     <label class="col-md-1 form-label">Tipo</label>
     <div class="col-md-4">
       <select class="form-select" name="type" aria-label="Default select example"> 
@@ -38,7 +40,7 @@
     </div>
     <label class="col-md-1 form-label">Descripción</label>
     <div class="col-md-6">
-      <textarea type="text" class="form-control" name="description" value="<%= caso?.descripcion %>"></textarea>
+      <textarea type="text" class="form-control" name="description" value="<%= caso?.descripcion %>"><%= caso?.descripcion %></textarea>
     </div>
     <% if (caso) {%> 
     <label for="inputCity" class="col-md-1 form-label">Creado</label>
@@ -56,7 +58,7 @@
     </div> 
     <% } %>
     <div class="col-md-1">
-      <button type="button" class="btn btn-success btn-block">
+      <button class="btn btn-success btn-block">
         Guardar
       </button>
     </div>

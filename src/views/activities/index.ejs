@@ -1,5 +1,4 @@
 <div class="container-fluid px-4">
-  <%- include('../partials/message') %>
   <div class="card mb-4 mt-4">
       <!-- <div class="card-header">
           <i class="fas fa-table me-1"></i>
@@ -12,21 +11,15 @@
           <table id="datatablesSimple">
               <thead>
                   <tr>
-                      <th>Caso</th>
-                      <th>Usuario</th>
-                      <th>Estado</th>
-                      <th>Fecha</th>
-                      <th>Actividad</th>
-                      <th>Fecha próximo paso</th>
-                      <th>Próximo paso</th>
+                    <th>Fecha creación</th>
+                    <th>Actividad</th>
+                    <th>Fecha próximo paso</th>
+                    <th>Próximo paso</th>
                   </tr>
               </thead>
               <tfoot>
                   <tr>
-                    <th>Caso</th>
-                    <th>Usuario</th>
-                    <th>Estado</th>
-                    <th>Fecha</th>
+                    <th>Fecha creación</th>
                     <th>Actividad</th>
                     <th>Fecha próximo paso</th>
                     <th>Próximo paso</th>
@@ -35,9 +28,6 @@
               <tbody>
                   <% for (let activity of activities) { %>
                       <tr>
-                          <td><%=  %></td>
-                          <td><%=  %></td>
-                          <td><%=  %></td>
                           <td><%= activity.fecha.toLocaleString() %></td>
                           <td><%= activity.actividad %></td>
                           <td><%= activity.fecha_proximo.toLocaleString() %></td>
@@ -60,7 +50,7 @@
 </div>
 
 <script src="/js/crud.js"></script>
-<%- include('./add_modal', cases, users, states) %>
+<%- include('./add_modal', caso.id) %>
 <!-- Edit Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">

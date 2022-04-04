@@ -16,26 +16,30 @@
                 </select>
               </div>
               <div class="mb-3">
-                  <select class="form-select" name="user" aria-label="Default select example"> 
-                      <option selected>Usuario</option>
-                      <% for (let user of users) { %>
-                      <option value="<%= user.id %>"><%= user.nombre %></option>
-                      <% } %> 
-                  </select>
+                <input class="form-control" name="user" list="datalistOptions" id="exampleDataList" placeholder="Cliente">
+                <datalist id="datalistOptions">
+                  <% for (let user of users) { %>
+                  <option value="<%= user.id %>"><%= user.nombre %></option>
+                  <% } %>
+                </datalist>
               </div>
               <div class="mb-3">
                 <input type="text" class="form-control" name="subject" placeholder="Asunto">
               </div>
               <div class="mb-3">
-                <input type="text" class="form-control" name="description" placeholder="Descripción">
+                <textarea type="text" class="form-control" name="description" placeholder="Descripción"></textarea>
               </div>
               <div class="mb-3">
-                <button class="btn btn-success btn-block">
+                <button class="btn btn-success btn-block" data-bs-dismiss="modal">
                   Guardar
+                </button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModaluser">
+                  Añadir usuario
                 </button>
               </div>
             </form>
         </div>
       </div>
     </div>
-  </div>
+</div>
+<%- include('../user/add_modal', roles) %>

@@ -96,22 +96,28 @@
                           Dashboard
                       </a>
                       <div class="sb-sidenav-menu-heading">Interface</div>
-                      <a class="nav-link" href="/user">
+                      <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSecurity" aria-expanded="false" aria-controls="collapseSecurity">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                        Users
+                        Seguridad
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                       </a>
-                      <a class="nav-link" href="/role">
-                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                        Roles
+                      <div class="collapse" id="collapseSecurity" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                          <nav class="sb-sidenav-menu-nested nav">
+                              <a class="nav-link" href="/user">Usuarios</a>
+                              <a class="nav-link" href="/role">Roles</a>
+                          </nav>
+                      </div>
+                      <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseParams" aria-expanded="false" aria-controls="collapseParams">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        Parámetros
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                       </a>
-                      <a class="nav-link" href="/types">
-                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                        Tipos de casos
-                      </a>
-                      <a class="nav-link" href="/cases">
-                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                        Casos
-                      </a>
+                      <div class="collapse" id="collapseParams" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                          <nav class="sb-sidenav-menu-nested nav">
+                              <a class="nav-link" href="/cases">Casos</a>
+                              <a class="nav-link" href="/types">Tipos de Casos</a>
+                          </nav>
+                      </div>
                       <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                           <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                           Pages

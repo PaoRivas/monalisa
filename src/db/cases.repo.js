@@ -35,8 +35,28 @@ class CasesRepo {
       const cases = await pool.request().query(
         `SELECT c.*, u.nombre, t.tipo FROM casos c 
         INNER JOIN usuarios u ON c.usuario_id = u.id 
-        INNER JOIN tipo_casos t ON c.tipo_caso_id = t.id`
+        INNER JOIN tipo_casos t ON c.tipo_caso_id = t.id
+        ORDER BY c.id DESC`
         );
+      return cases.recordset;
+    }
+    catch (error) {
+      console.log(error);
+      throw(error);
+    }
+  }
+
+  static async getCasesbyUser(id) {
+    try {
+      const pool = await getConnection();
+      const request = await pool.request();
+      request.input('id', mssql.Int, id);
+      const cases = await request.query(
+        `SELECT c.*, u.nombre, t.tipo FROM casos c 
+        INNER JOIN usuarios u ON c.usuario_id = @id
+        INNER JOIN tipo_casos t ON c.tipo_caso_id = t.id
+        WHERE c.usuario_id = @id ORDER BY c.id DESC`
+      );
       return cases.recordset;
     }
     catch (error) {

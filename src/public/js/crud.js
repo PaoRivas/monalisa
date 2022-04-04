@@ -1,8 +1,9 @@
 const tbody = document.querySelector("tbody");
 const formdiv = document.getElementById("editModalBody");
+const formcase = document.getElementById("formIndividual");
 
 const editData = async (page, id) => {
-    const data = await fetch(`${page}/edit/${id}`, {
+    const data = await fetch(`/${page}/edit/${id}`, {
       method: "GET",
     });
     const response = await data.text();
@@ -62,7 +63,7 @@ tbody.addEventListener("click", (e) => {
   }
 });
 
-tbody.addEventListener("click", (e) => {
+formcase.addEventListener("click", (e) => {
   if (e.target && e.target.matches(".upldbtn")) {
     e.preventDefault();
     let id = e.target.getAttribute("data-id");

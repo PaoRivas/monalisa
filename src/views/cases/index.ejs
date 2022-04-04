@@ -11,14 +11,15 @@
             DataTable Users
         </div> -->
         <div id="card-body" class="card-body">
-            <button type="button" class="btn btn-primary btn-header" data-bs-toggle="modal" data-bs-target="#addModal">
+            <a href="/cases/add" type="button" class="btn btn-primary btn-header">
                 Añadir caso
-            </button>
+            </a>
             <table id="datatablesSimple">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Tipo</th>
-                        <th>Usuario</th>
+                        <th>Cliente</th>
                         <th>Asunto</th>
                         <th>Descripción</th>
                         <th>Creado</th>
@@ -27,8 +28,9 @@
                 </thead>
                 <tfoot>
                     <tr>
+                        <th></th>
                         <th>Tipo</th>
-                        <th>Usuario</th>
+                        <th>Cliente</th>
                         <th>Asunto</th>
                         <th>Descripción</th>
                         <th>Creado</th>
@@ -39,7 +41,7 @@
                     <% for (let caso of cases) { %>
                         <tr>
                             <td>
-                                <a href="cases/case/<%= caso.id %>" type="button" class="btn btn-primary">Ver</a>    
+                                <a href="/cases/case/<%= caso.id %>" type="button" class="btn btn-primary">Abrir</a>    
                             </td>
                             <td><%= caso.tipo %></td>
                             <td><%= caso.nombre %></td>
@@ -51,7 +53,6 @@
                                 <button data-id="<%= caso.id %>" type="button" class="btn btn-primary upldbtn" data-bs-toggle="modal" data-bs-target="#uploadModal">
                                     Upload
                                 </button>
-                                
                             </td>
                             <td>
                                 <button data-id="<%= caso.id %>" data-name="cases" type="button" class="btn btn-primary editbtn" data-bs-toggle="modal" data-bs-target="#editModal">
@@ -70,7 +71,7 @@
     </div>
 </div>
 <script src="/js/crud.js"></script>
-<%- include('./add_modal', types, users) %>
+<%- include('./add_modal', types, users, roles) %>
 <%- include('./upload_modal') %>
 
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">

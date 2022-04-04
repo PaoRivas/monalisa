@@ -133,3 +133,4 @@ dist
 
 #uploads
 src/public/files/*
+!src/public/files/.placeholder

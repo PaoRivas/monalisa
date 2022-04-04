@@ -1,5 +1,5 @@
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Usuarios</h1>
+    <h1 class="mt-4">Usuarios/Clientes</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
         <li class="breadcrumb-item active">Usuarios</li>
@@ -11,13 +11,13 @@
             DataTable Users
         </div> -->
         <div id="card-body" class="card-body">
-            <button type="button" class="btn btn-primary btn-header" data-bs-toggle="modal" data-bs-target="#addModal">
+            <button type="button" class="btn btn-primary btn-header" data-bs-toggle="modal" data-bs-target="#addModaluser">
                 Añadir usuario
             </button>
             <table id="datatablesSimple">
                 <thead>
                     <tr>
-                        <th>Tipo de Caso</th>
+                        <th>Rol</th>
                         <th>Nombre</th>
                         <th>Email</th>
                         <th>Celular</th>
@@ -31,7 +31,7 @@
                 </thead>
                 <tfoot>
                     <tr>
-                        <th>Tipo de Caso</th>
+                        <th>Rol</th>
                         <th>Nombre</th>
                         <th>Email</th>
                         <th>Celular</th>
@@ -56,6 +56,9 @@
                             <td><%= user.creador %></td>
                             <td><%= user.modificado.toLocaleString() %></td>
                             <td><%= user.modificador%></td>
+                            <td>
+                                <a href="/user/cases/<%= user.id %>" class="btn btn-primary">Casos</a>
+                            </td>
                             <td>
                                 <button data-id="<%= user.id %>" data-name="user" type="button" class="btn btn-primary editbtn" data-bs-toggle="modal" data-bs-target="#editModal">
                                     Editar

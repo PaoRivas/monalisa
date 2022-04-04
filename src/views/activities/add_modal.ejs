@@ -6,31 +6,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="/activities/add" method="POST">
-            <div class="mb-3">
-              <select class="form-select" name="case_id" aria-label="Default select example"> 
-                <option selected>Caso</option>
-                <% for (let caso of cases) { %>
-                <option value="<%= caso.id %>"><%= caso.asunto %></option>
-                <% } %> 
-              </select>
-            </div>
-            <div class="mb-3">
-              <select class="form-select" name="user_id" aria-label="Default select example"> 
-                <option selected>Usuario</option>
-                <% for (let user of users) { %>
-                <option value="<%= user.id %>"><%= user.nombre %></option>
-                <% } %> 
-              </select>
-            </div>
-            <div class="mb-3">
-              <select class="form-select" name="state_id" aria-label="Default select example"> 
-                <option selected>Estado</option>
-                <% for (let state of states) { %>
-                <option value="<%= state.id %>"><%= state.nombre %></option>
-                <% } %> 
-              </select>
-            </div>
+        <form action="/activities/add/<%= caso.id %>" method="POST">
             <div class="mb-3">
               <input type="text" class="form-control" name="activity" placeholder="Actividad">
             </div>
