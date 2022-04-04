@@ -94,6 +94,7 @@ router.post('/upload/:id', async (req, res) => {
   });
 
   await CasesRepo.addFile(file);
+  req.flash('success', 'Updated Successfully');
   res.redirect(`/cases/case/${id}`);
 })
 
