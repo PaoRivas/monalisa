@@ -5,7 +5,7 @@
     <label class="col-md-1 form-label">Tipo</label>
     <div class="col-md-4">
       <select class="form-select" name="type" aria-label="Default select example"> 
-        <option selected>--- Elige ---</option>
+        <option selected>--- Elige el tipo de caso ---</option>
         <% for (let type of types) { %>
           <% if (type.id === caso.tipo_caso_id) { %>
             <option value="<%= type.id %>" selected><%= type.tipo %></option>
@@ -17,7 +17,8 @@
     </div>
     <label class="col-md-1 form-label">Usuario</label>
     <div class="col-md-4">
-      <select class="form-select" name="user" aria-label="Default select example">
+      <select class="form-select" id="selectUser" name="user" aria-label="Default select example">
+        <option selected>--- Elige un usuario ---</option>
         <% for (let user of users) { %>
           <% if (user.id === caso.usuario_id) { %>
             <option value="<%= user.id %>" selected><%= user.nombre %></option>
@@ -84,3 +85,5 @@
 </div>
 <%- include('../user/add_modal', roles) %>
 <%- include('./upload_modal') %>
+<script src="/js/upload.js"></script>
+<script src="/js/cases.js"></script>

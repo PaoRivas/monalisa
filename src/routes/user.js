@@ -13,11 +13,13 @@ router.get('/add', async (req, res) => {
 
 router.post('/add', async (req, res) => {
     try {
-      await UsersRepo.addUser(req.body)
+      const user_id = await UsersRepo.addUser(req.body)
+      const data = user_id[0][0].id
+      const {fullname} = req.body
       req.flash('success', 'Saved Successfully');
-      res.redirect('/user');
+      res.json({ok: "Se creó el registro.", data, fullname});
     } catch (ex) {
-      res.status(500).send(ex);
+      res.json({error: ex});
     }
 })
 

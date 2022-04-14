@@ -53,7 +53,7 @@ class CasesRepo {
       request.input('id', mssql.Int, id);
       const cases = await request.query(
         `SELECT c.*, u.nombre, t.tipo FROM casos c 
-        INNER JOIN usuarios u ON c.usuario_id = @id
+        INNER JOIN usuarios u ON c.usuario_id = u.id
         INNER JOIN tipo_casos t ON c.tipo_caso_id = t.id
         WHERE c.usuario_id = @id ORDER BY c.id DESC`
       );

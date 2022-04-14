@@ -1,6 +1,5 @@
 const tbody = document.querySelector("tbody");
 const formdiv = document.getElementById("editModalBody");
-const formcase = document.getElementById("formIndividual");
 
 const editData = async (page, id) => {
     const data = await fetch(`/${page}/edit/${id}`, {
@@ -17,14 +16,13 @@ const deleteData = async (page, id) => {
     text: "You won't be able to revert this!",
     icon: 'warning',
     showCancelButton: true,
-    showLoaderOnConfirm: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
     confirmButtonText: 'Yes, delete it!'
   });
 
   if (result.isConfirmed) {
-    const data = await fetch(`user/delete/${id}`, {
+    const data = await fetch(`${page}/delete/${id}`, {
       method: "GET",
     });
     const response = await data.json();
@@ -63,13 +61,10 @@ tbody.addEventListener("click", (e) => {
   }
 });
 
-formcase.addEventListener("click", (e) => {
-  if (e.target && e.target.matches(".upldbtn")) {
-    e.preventDefault();
-    let id = e.target.getAttribute("data-id");
-    var frm = document.getElementById('uploadForm') || null;
-    if(frm) {
-      frm.action = frm.action+"/"+id;
-    }
-  }
-});
+// addModal.addEventListener('show.bs.modal', function (event) {
+//   const button = event.relatedTarget
+//   const recipient = button.getAttribute('data-bs')
+//   const modalBodyInput = exampleModal.querySelector('.modal-hidden')
+
+//   modalBodyInput.value = recipient
+// })

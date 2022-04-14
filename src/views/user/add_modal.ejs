@@ -6,7 +6,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="/user/add" method="POST">
+        <form id="userForm">
             <div class="mb-3">
               <select class="form-select" name="role" aria-label="Default select example"> 
                 <option selected>Rol</option>
@@ -31,7 +31,7 @@
                 <input type="text" class="form-control" name="identity" placeholder="Carnet de identidad">
             </div>
             <div class="mb-3">
-              <button class="btn btn-success btn-block">
+              <button class="btn btn-success btn-block save-user">
                 Guardar
               </button>
             </div>

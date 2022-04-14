@@ -66,7 +66,7 @@
                                 
                             </td>
                             <td>
-                                <a href="/user/delete/<%= user.id %>" data-id="<%= user.id %>" data-name="user" class="btn btn-danger btn-delete">Eliminar</a>
+                                <button data-id="<%= user.id %>" data-name="user" type="button" class="btn btn-danger btn-delete">Eliminar</button>
                             </td>
                         </tr>
                     <% } %> 
@@ -77,6 +77,7 @@
 </div>
 
 <script src="/js/crud.js"></script>
+<script src="/js/user.js"></script>
 <%- include('./add_modal', roles) %>
 <!-- Edit Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
