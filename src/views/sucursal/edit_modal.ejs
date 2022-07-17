@@ -1,0 +1,13 @@
+<form action="/sucursal/edit/<%= resultado.id %>" method="POST">
+  <div class="mb-3">
+    <input type="text" value= "<%= resultado.nombre %>" class="form-control" name="nombre" placeholder="Nombre Sucursal">
+  </div>
+  <div class="mb-3">
+    <textarea type="text" class="form-control" name="descripcion" placeholder="Descripción"><%= resultado.descripcion %></textarea>
+  </div>
+  <div class="mb-3">
+    <button class="btn btn-success btn-block">
+      Guardar
+    </button>
+  </div>
+</form>

@@ -13,5 +13,7 @@ router.use('/role', require('./role'));
 router.use('/types', require('./typesofcases'));
 router.use('/cases', require('./cases'));
 router.use('/activities', require('./activities'));
+router.use('/sucursal', require('./sucursal'));
+router.use('/puntoventa', require('./pventa'))
 
 module.exports = router;

@@ -1,0 +1,44 @@
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">Añadir punto de venta</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/puntoventa/add" method="POST">
+          <div class="mb-3">
+            <select name='codigoSucursal' class="form-select">
+                <option selected hidden>Seleccione Sucursal</option>
+                <% for (let sucursal of sucursales) { %>
+                <option value="<%= sucursal.codigo %>"><%= sucursal.nombre %></option>
+                <% } %>
+            </select>
+          </div>
+          <div class="mb-3">
+            <select name='codigoTipoPuntoVenta' class="form-select" placeholder="Nombre Sucursal">
+                <option selected hidden>Seleccione Tipo de Venta</option>
+                <option value="1" disabled>PUNTO VENTA COMISIONISTA</option>
+                <option value="2">PUNTO VENTA VENTANILLA DE COBRANZA</option>
+                <option value="3">PUNTO DE VENTA MOVILES</option>
+                <option value="4">PUNTO DE VENTA YPFB</option>
+                <option value="5">PUNTO DE VENTA CAJEROS</option>
+                <option value="6">PUNTO DE VENTA CONJUNTA</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <input type="text" name='nombrePuntoVenta' class="form-control" placeholder="Nombre Punto de venta">
+          </div>
+          <div class="mb-3">
+            <textarea type="text" name='descripcion' class="form-control" placeholder="Descripción"></textarea>
+          </div>
+          <div class="mb-3">
+            <button class="btn btn-success btn-block">
+              Guardar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

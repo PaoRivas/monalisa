@@ -1,0 +1,10 @@
+<form action="/puntoventa/edit/<%= resultado.id %>" method="POST">
+  <div class="mb-3">
+    <textarea type="text" name='descripcion' class="form-control" placeholder="Descripción"><%= resultado.descripcion %></textarea>
+  </div>
+  <div class="mb-3">
+    <button class="btn btn-success btn-block">
+      Guardar
+    </button>
+  </div>
+</form>
