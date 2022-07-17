@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const {closeConnection} = require('../database')
 
 router.get('/signup', (req, res) => {
     res.render('auth/signup', { layout: 'layout_login' });
@@ -29,6 +30,7 @@ router.get('/profile', (req, res) => {
 })
 
 router.get('/logout', (req, res) => {
+    closeConnection();
     req.logOut();
     res.redirect('/signin');
 })

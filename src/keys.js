@@ -13,6 +13,18 @@ const dbSettings = {
   user: env.dbUser,
   password: env.dbPassword,
   server: env.dbServer,
+  database: null,
+  port: env.dbport,
+  options: {
+    encrypt: true, // for azure
+    trustServerCertificate: true, // change to true for local dev / self-signed certs
+  },
+};
+
+const dbSettingsInicio = {
+  user: env.dbUser,
+  password: env.dbPassword,
+  server: env.dbServer,
   database: env.dbDatabase,
   port: env.dbport,
   options: {
@@ -21,7 +33,10 @@ const dbSettings = {
   },
 };
 
-module.exports = dbSettings;
+module.exports = {
+  dbSettings,
+  dbSettingsInicio
+}
 
 // module.exports = {
 

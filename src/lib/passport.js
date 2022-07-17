@@ -2,7 +2,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
-const {getConnection, mssql} = require('../database');
+const {getConnection, mssql, getDatabaseName} = require('../database');
 const helpers = require('./helpers')
 
 passport.use('local.signin', new LocalStrategy({
@@ -10,8 +10,9 @@ passport.use('local.signin', new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, async (req, email, password, done) => {
-    
-    const pool = await getConnection();
+    const {nit} = req.body;
+    const dbName = await getDatabaseName(nit);
+    const pool = await getConnection(dbName);
     const request = await pool.request();
     request.input('email', mssql.VarChar(100), email);
     const rows = await request.query('SELECT * FROM usuarios WHERE email = @email');
@@ -19,9 +20,9 @@ passport.use('local.signin', new LocalStrategy({
         const user = rows.recordset[0];
         const validPassword = await helpers.matchPassword(password, user.password);
         if(validPassword){
-            done(null, user, req.flash('success', 'Welcome' + user.name));
+            done(null, {...user, dbName}, req.flash('success', 'Welcome' + user.name));
         }else{
-            done(null, false, req.flash('message', 'incorrect password'));
+            done(null, false, req.flash('message', 'Incorrect password'));
         }
     }else{
         return done(null, false, req.flash('message', 'username doesnt exist'));
@@ -62,14 +63,14 @@ passport.use('local.signup', new LocalStrategy({
 }));
 
 passport.serializeUser((user, done) => {
-    done(null, user.id);
+    done(null, {id:user.id, dbName:user.dbName});
 });
 
-passport.deserializeUser(async (id, done) => {
-    const pool = await getConnection();
+passport.deserializeUser(async ({id, dbName}, done) => {
+    const pool = await getConnection(dbName);
     const request = await pool.request();
     request.input('id', mssql.Int, id);
     const rows = await request.query('SELECT * FROM usuarios WHERE id = @id');
-    done(null, rows.recordset[0]);
+    done(null, {...rows.recordset[0], dbName});
 })
 

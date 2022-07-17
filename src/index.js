@@ -6,7 +6,8 @@ const session = require('express-session');
 const passport = require('passport');
 const expressLayouts = require('express-ejs-layouts');
 const fileUpload = require('express-fileupload');
-const {isLoggedIn} = require('./lib/auth')
+const {isLoggedIn} = require('./lib/auth');
+const {setDataBaseName} = require('./database');
 
 //inizialitations
 const app = express();
@@ -39,13 +40,14 @@ app.use(fileUpload());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Check user log in
-//app.use(isLoggedIn);
+app.use(isLoggedIn);
 
 //global variables
 app.use((req, res, next) => {
   app.locals.message = req.flash('message')[0];
   app.locals.success = req.flash('success')[0];
   app.locals.user = req.user;
+  setDataBaseName(req?.user?.dbName)
   next();
 });
 
