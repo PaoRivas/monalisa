@@ -5,7 +5,7 @@ class FunctionsRepo {
   static async getFunctions() {
     try {
       const pool = await getConnection();
-      const paths = await pool.request().query('SELECT * FROM funciones');
+      const paths = await pool.request().query('SELECT * FROM rutas');
       return paths.recordset;
     }
     catch (error) {

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const {checkPermisos} = require('../lib/auth');
 const RolesRepo = require('../db/roles.repo');
 const FunctionsRepo = require('../db/functions.repo');
 const PermissionsRepo = require('../db/permissions.repo');
@@ -20,7 +21,7 @@ router.post('/add', async (req, res) => {
     }
 })
 
-router.get('/', async (req, res) => {
+router.get('/',checkPermisos , async (req, res) => {
   const roles = await RolesRepo.getRoles();
   const functions = await FunctionsRepo.getFunctions();
   res.render('role/index', {roles, functions});

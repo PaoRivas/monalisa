@@ -2,7 +2,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
-const {getConnection, mssql, getDatabaseName} = require('../database');
+const {getConnection, createConnectionConfig, mssql, getDatabaseByNit, getPool} = require('../database');
 const helpers = require('./helpers')
 
 passport.use('local.signin', new LocalStrategy({
@@ -11,8 +11,9 @@ passport.use('local.signin', new LocalStrategy({
     passReqToCallback: true
 }, async (req, email, password, done) => {
     const {nit} = req.body;
-    const dbName = await getDatabaseName(nit);
-    const pool = await getConnection(dbName);
+    const dbInfo = await getDatabaseByNit(nit);
+    const config = createConnectionConfig(dbInfo);
+    const pool = await getPool(dbInfo.db_name, config);
     const request = await pool.request();
     request.input('email', mssql.VarChar(100), email);
     const rows = await request.query('SELECT * FROM usuarios WHERE email = @email');
@@ -20,7 +21,7 @@ passport.use('local.signin', new LocalStrategy({
         const user = rows.recordset[0];
         const validPassword = await helpers.matchPassword(password, user.password);
         if(validPassword){
-            done(null, {...user, dbName}, req.flash('success', 'Welcome' + user.name));
+            done(null, {...user, dbName: dbInfo.db_name}, req.flash('success', 'Welcome' + user.name));
         }else{
             done(null, false, req.flash('message', 'Incorrect password'));
         }
@@ -67,7 +68,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async ({id, dbName}, done) => {
-    const pool = await getConnection(dbName);
+    const pool = await getPool(dbName);
     const request = await pool.request();
     request.input('id', mssql.Int, id);
     const rows = await request.query('SELECT * FROM usuarios WHERE id = @id');

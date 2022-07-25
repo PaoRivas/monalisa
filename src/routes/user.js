@@ -1,6 +1,7 @@
 const time = require('../lib/time');
 const express = require('express');
 const router = express.Router();
+const {checkPermisos} = require('../lib/auth');
 const UsersRepo = require('../db/users.repo');
 const RolesRepo = require('../db/roles.repo');
 const CasesRepo = require('../db/cases.repo');
@@ -23,8 +24,7 @@ router.post('/add', async (req, res) => {
     }
 })
 
-router.get('/', async (req, res) => {
-  //const users = await UsersRepo.getRolUsers();
+router.get('/', checkPermisos, async (req, res) => {
   const roles = await RolesRepo.getRoles();
   const usersU = await UsersRepo.getUsers();
   const users = usersU.map((user) => {

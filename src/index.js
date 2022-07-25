@@ -6,10 +6,11 @@ const session = require('express-session');
 const passport = require('passport');
 const expressLayouts = require('express-ejs-layouts');
 const fileUpload = require('express-fileupload');
-const {isLoggedIn} = require('./lib/auth');
-const {setDataBaseName} = require('./database');
+const {isLoggedIn, checkPermisos} = require('./lib/auth');
+const storage = require('./lib/storage');
 
 //inizialitations
+//initDB();
 const app = express();
 // Here runs the database.js and then keys.js
 require("./lib/passport");
@@ -39,16 +40,21 @@ app.use(fileUpload());
 //public
 app.use(express.static(path.join(__dirname, 'public')));
 
-//Check user log in
+//Check user log in and permitions
 app.use(isLoggedIn);
+//app.use(checkPermisos);
 
-//global variables
+//global variables and set db connection
 app.use((req, res, next) => {
   app.locals.message = req.flash('message')[0];
   app.locals.success = req.flash('success')[0];
   app.locals.user = req.user;
-  setDataBaseName(req?.user?.dbName)
-  next();
+  // Run the application in the defined namespace. It will contextualize every underlying function calls.
+  if (!req.user?.dbName) {
+    next();
+  } else {
+    storage.run(req.user.dbName, next);
+  }
 });
 
 //routes, urls de nuestro servidor

@@ -22,7 +22,7 @@ class PermissionsRepo {
       const pool = await getConnection();
       const request = await pool.request();
       request.input('id', mssql.Int, id);
-      const permissions = await request.query(`SELECT funcion_id FROM permisos WHERE rol_id = @id`);
+      const permissions = await request.query(`SELECT ruta_id FROM permisos WHERE rol_id = @id`);
       return permissions.recordset;
     }
     catch (error) {
@@ -55,9 +55,9 @@ class PermissionsRepo {
         request.input(`function_id${functionId}`, mssql.Int, functionId);
         await request.query(
           `INSERT INTO permisos
-          (rol_id, funcion_id)
+          (rol_id, ruta_id)
           VALUES
-          (@role_id, @function_id${functionId})`
+          (@role_id, @ruta_id${functionId})`
         );
       }
       //return result.recordsets;
