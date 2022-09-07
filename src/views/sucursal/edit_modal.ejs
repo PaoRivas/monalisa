@@ -1,9 +1,15 @@
-<form action="/sucursal/edit/<%= resultado.id %>" method="POST">
+<form action="/sucursales/edit/<%= resultado.id %>" method="POST">
+  <div class="mb-3">
+    <input type="text" value= "<%= resultado.numero %>" class="form-control" name="codigosucursal" placeholder="Número de Sucursal">
+  </div>
   <div class="mb-3">
     <input type="text" value= "<%= resultado.nombre %>" class="form-control" name="nombre" placeholder="Nombre Sucursal">
   </div>
   <div class="mb-3">
-    <textarea type="text" class="form-control" name="descripcion" placeholder="Descripción"><%= resultado.descripcion %></textarea>
+    <input type="text" value= "<%= resultado.municipio %>" class="form-control" name="municipio" placeholder="Municipio">
+  </div>
+  <div class="mb-3">
+    <input type="text" value= "<%= resultado.telefono %>" class="form-control" name="telefono" placeholder="Teléfono">
   </div>
   <div class="mb-3">
     <button class="btn btn-success btn-block">

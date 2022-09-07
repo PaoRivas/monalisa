@@ -8,8 +8,8 @@
       <div class="modal-body">
         <form id="userForm">
             <div class="mb-3">
-              <select class="form-select" name="role" aria-label="Default select example"> 
-                <option selected>Rol</option>
+              <select class="form-select" name="role"> 
+                <option selected hidden>Rol</option>
                 <% for (let role of roles) { %>
                 <option value="<%= role.id %>"><%= role.descripcion %></option>
                 <% } %> 
@@ -29,6 +29,20 @@
             </div>
             <div class="mb-3">
                 <input type="text" class="form-control" name="identity" placeholder="Carnet de identidad">
+            </div>
+            <div class="mb-3">
+              <input type="text" class="form-control" name="nit" placeholder="NIT">
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" name="razon_social" placeholder="Razón Social">
+            </div>
+            <div class="mb-3">
+              <select class="form-select" name="sucursal"> 
+                <option selected value="">Sucursal</option>
+                <% for (let sucursal of sucursales) { %>
+                <option value="<%= sucursal.id %>"><%= sucursal.nombre %></option>
+                <% } %> 
+              </select>
             </div>
             <div class="mb-3">
               <button class="btn btn-success btn-block save-user">

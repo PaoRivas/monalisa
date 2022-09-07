@@ -1,0 +1,54 @@
+<div class="container-fluid px-4">
+  <h1 class="mt-4">Recepción de Factura</h1>
+  <ol class="breadcrumb mb-4">
+      <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+      <li class="breadcrumb-item active">Recepción de Factura</li>
+  </ol>
+  <div class="mt-4 row g-3">
+    <div class="col-md-3">
+        <label class="form-label">Fecha</label>
+        <input type="text" class="form-control" name="date" readonly>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">NIT</label>
+        <input type="text" class="form-control" name="nit">
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Razón Social</label>
+        <div class="mb-3">
+            <select class="form-select" name="users"> 
+              <option selected hidden>Cliente</option>
+              <% for (let user of users) { %>
+              <option value="<%= user.id %>"><%= user.razon_social %></option>
+              <% } %> 
+            </select>
+         </div>
+    </div>
+</div>
+  <div class="card mt-4">
+      <div class="card-body">
+          <table class="table table-bordered">
+              <thead>
+                  <tr>
+                      <th>Código</th>
+                      <th>Descripción</th>
+                      <th>Precio</th>
+                      <th>Acción</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                    <td><input type="text" class="form-control" /></td>
+                    <td><input type="text" class="form-control" /></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+              </tbody>
+          </table>
+          <!-- <button type="button" class="btn btn-primary btn-header">
+            Añadir producto
+          </button> -->
+      </div>
+  </div>
+</div>
+<script src="/js/crud.js"></script>

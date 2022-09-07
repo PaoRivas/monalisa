@@ -7,6 +7,7 @@ class UsersRepo {
     try {
       const pool = await getConnection();
       const users = await pool.request().query('SELECT * FROM usuarios');
+      //console.log(users.recordset)
       return users.recordset;
     }
     catch (error) {
@@ -46,9 +47,22 @@ class UsersRepo {
     }
   }
 
+  static async getUsersbyRazon() {
+    try {
+      const pool = await getConnection();
+      const users = await pool.request().query("SELECT * FROM usuarios where razon_social <> ''");
+      //console.log(users.recordset)
+      return users.recordset;
+    }
+    catch (error) {
+      console.log(error);
+      throw(error);
+    }
+  }
+
   static async addUser(user) {
     try {
-      const {role, fullname, email, cellphone, identity} = user;
+      const {role, fullname, email, cellphone, identity, sucursal, creador, nit, razon_social} = user;
       let {password} = user;
       const pool = await getConnection();
       const request = await pool.request();
@@ -59,12 +73,16 @@ class UsersRepo {
       request.input('password', mssql.VarChar(100), password);
       request.input('cellphone', mssql.VarChar(15), cellphone);
       request.input('identity', mssql.VarChar(15), identity);
+      request.input('nit', mssql.VarChar(15), nit);
+      request.input('razon_social', mssql.VarChar(15), razon_social);
       request.input('requestDate', mssql.DateTime, new Date());
+      request.input('creador', mssql.Int, creador);
+      request.input('sucursal',  mssql.Int, sucursal);
       const result = await request.query(
         `INSERT INTO [dbo].[usuarios] 
-        (rol_id, nombre, email, password, celular, c_identidad, intentos, inactivo, fecha_password, creado, creador, modificado, modificador)  
+        (rol_id, nombre, email, password, celular, c_identidad, intentos, inactivo, fecha_password, creado, creador, modificado, modificador, sucursal_id)  
         OUTPUT inserted.id VALUES 
-        (@role_id, @fullname, @email, @password, @cellphone, @identity, 1, 0, @requestDate, @requestDate, 1, @requestDate, 1)`
+        (@role_id, @fullname, @email, @password, @cellphone, @identity, 1, 0, @requestDate, @requestDate, @creador, @requestDate, @creador, @sucursal)`
       );
       return result.recordsets;
     }
@@ -98,9 +116,15 @@ class UsersRepo {
       request.input('email', mssql.VarChar(50), user.email);
       request.input('cellphone', mssql.VarChar(15), user.cellphone);
       request.input('identity', mssql.VarChar(15), user.identity);
+      request.input('nit', mssql.VarChar(15), user.nit);
+      request.input('razon_social', mssql.VarChar(15), user.razon_social);
+      request.input('modificado', mssql.DateTime, new Date());
+      request.input('modificador', mssql.Int, user.modificador);
+      request.input('sucursal',  mssql.Int, user.sucursal);
       await request.query(
         `UPDATE usuarios SET 
-        rol_id = @role_id, nombre = @name, email = @email, celular = @cellphone, c_identidad = @identity 
+        rol_id = @role_id, nombre = @name, email = @email, celular = @cellphone, c_identidad = @identity, nit = @nit,
+        razon_social = @razon_social, sucursal_id = @sucursal, modificado = @modificado, modificador = @modificador
         WHERE id = @id`
       );
     } catch (error) {

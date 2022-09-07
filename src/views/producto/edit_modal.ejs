@@ -1,0 +1,24 @@
+<form action="/productos/edit/<%= resultado.id %>" method="POST">
+  <div class="mb-3">
+    <input type="text" class="form-control" name="codigo" placeholder="Código producto">
+  </div>
+  <div class="mb-3">
+    <input type="text" class="form-control" name="descripcion" placeholder="Descripción">
+  </div>
+  <div class="mb-3">
+    <input type="text" class="form-control" name="precio" placeholder="Precio">
+  </div>
+  <div class="mb-3">
+    <select class="form-select" name="catalogo_id"> 
+      <option selected value="">Código catálogo</option>
+      <% for (let codigo of codigos) { %>
+      <option value="<%= codigo.id %>"><%= codigo.codigo_producto %></option>
+      <% } %> 
+    </select>
+  </div>
+  <div class="mb-3">
+    <button class="btn btn-success btn-block">
+      Guardar
+    </button>
+  </div>
+</form>

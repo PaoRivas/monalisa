@@ -4,9 +4,9 @@ const storage = require('./lib/storage')
 
 const pools = new Map();
 
-const initDB = () => {
-  //getPool("monalisa_inicio", dbSettingsInicio);
-}
+// const initDB = () => {
+//   //getPool("monalisa_inicio", dbSettingsInicio);
+// }
 
 const getDatabaseByNit = async (nit) => {
   try {
@@ -21,25 +21,6 @@ const getDatabaseByNit = async (nit) => {
     }
   } catch (error) {
     console.error(error);
-  }
-};
-
-const getDatabaseName = async (nit) => {
-  try {
-    const pool = await mssql.connect(dbSettingsInicio);
-    const request = await pool.request();
-    request.input('nit', mssql.VarChar(100), nit);
-    const rows = await request.query('SELECT * FROM nombres_db WHERE nit = @nit');
-    if (rows.recordset.length > 0){
-        const name = rows.recordset[0];       
-        return name.name_db
-    } else {
-      console.error('NIT does not have DB');
-    }
-  } catch (error) {
-    console.error(error);
-  } finally {
-    mssql.close();
   }
 };
 
@@ -93,5 +74,5 @@ module.exports = {
     getDatabaseByNit,
     getPool,
     createConnectionConfig,
-    initDB
+    //initDB
 };

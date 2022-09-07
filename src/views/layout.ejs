@@ -23,43 +23,6 @@
 
 <body class="sb-nav-fixed">
 
-    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/">Monalisa</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <% if (user) { %>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Users
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="/links">All users</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="/links/add#">Add user</a></li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/profile">Profile</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/logout">Logout</a>
-              </li>
-            <% } else { %>
-              <li class="nav-item">
-                <a class="nav-link" href="/signin">SignIn</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/signup">SignUp</a>
-              </li>  
-            <% } %> 
-          </ul>
-        </div>
-      </div>
-    </nav> -->
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
       <!-- Navbar Brand-->
       <a class="navbar-brand ps-3" href="/">Start Bootstrap</a>
@@ -98,8 +61,8 @@
                       </a>
                       <div class="collapse" id="collapseSecurity" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                           <nav class="sb-sidenav-menu-nested nav">
-                              <a class="nav-link" href="/user">Usuarios</a>
-                              <a class="nav-link" href="/role">Roles</a>
+                              <a class="nav-link" href="/usuarios">Usuarios</a>
+                              <a class="nav-link" href="/roles">Roles</a>
                           </nav>
                       </div>
                       <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseParams" aria-expanded="false" aria-controls="collapseParams">
@@ -109,11 +72,10 @@
                       </a>
                       <div class="collapse" id="collapseParams" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                           <nav class="sb-sidenav-menu-nested nav">
-                              <a class="nav-link" href="/sucursal">Sucursales</a>
-                              <a class="nav-link" href="/puntoventa">Puntos de venta</a>
-                              <a class="nav-link" href="/cuis">CUIS</a>
-                              <a class="nav-link" href="/cases">Casos</a>
-                              <a class="nav-link" href="/types">Tipos de Casos</a>
+                              <a class="nav-link" href="/productos">Productos</a>
+                              <a class="nav-link" href="/sucursales">Sucursales</a>
+                              <a class="nav-link" href="/casos">Casos</a>
+                              <a class="nav-link" href="/tipos">Tipos de Casos</a>
                           </nav>
                       </div>
                       <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseFacturacion" aria-expanded="false" aria-controls="collapseFacturacion">
@@ -123,8 +85,7 @@
                       </a>
                       <div class="collapse" id="collapseFacturacion" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                           <nav class="sb-sidenav-menu-nested nav">
-                              <a class="nav-link" href="">A</a>
-                              <a class="nav-link" href="">B</a>
+                              <a class="nav-link" href="/recepcion">Emitir Factura</a>
                               <a class="nav-link" href="">C</a>
                               <a class="nav-link" href="">D</a>
                           </nav>

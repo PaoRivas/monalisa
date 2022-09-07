@@ -1,6 +1,6 @@
-<form action="/user/edit/<%= user.id %>" method="POST">
+<form action="/usuarios/edit/<%= user.id %>" method="POST">
     <div class="mb-3">
-        <select class="form-select" name="role" aria-label="Default select example">
+        <select class="form-select" name="role">
         <% for (let role of roles) { %>
             <% if (user.rol_id === role.id) { %>
             <option value="<%= role.id %>" selected><%= role.descripcion %></option>
@@ -11,16 +11,34 @@
         </select>
     </div>
     <div class="mb-3">
-        <input type="text" value= "<%= user.nombre %>" class="form-control" name="fullname" placeholder="Nombre">
+        <input type="text" value="<%= user.nombre %>" class="form-control" name="fullname" placeholder="Nombre">
     </div>
     <div class="mb-3">
-        <input type="text" value= "<%= user.email %>" class="form-control" name="email" placeholder="Correo electrónico">
+        <input type="text" value="<%= user.email %>" class="form-control" name="email" placeholder="Correo electrónico">
     </div>
     <div class="mb-3">
-        <input type="text" value= "<%= user.celular %>" class="form-control" name="cellphone" placeholder="Celular">
+        <input type="text" value="<%= user.celular %>" class="form-control" name="cellphone" placeholder="Celular">
     </div>
     <div class="mb-3">
-        <input type="text" value= "<%= user.c_identidad %>" class="form-control" name="identity" placeholder="Carnet de identidad">
+        <input type="text" value="<%= user.c_identidad %>" class="form-control" name="identity" placeholder="Carnet de identidad">
+    </div>
+    <div class="mb-3">
+        <input type="text" value="<%= user.nit %>" class="form-control" name="nit" placeholder="NIT">
+    </div>
+    <div class="mb-3">
+        <input type="text" value="<%= user.razon_social %>" class="form-control" name="razon_social" placeholder="Razón Social">
+    </div>
+    <div class="mb-3">
+        <select class="form-select" name="sucursal">
+            <option selected value="">Sucursal</option>
+        <% for (let sucursal of sucursales) { %>
+            <% if (user.sucursal_id === sucursal.id) { %>
+            <option value="<%= sucursal.id %>" selected><%= sucursal.nombre %></option>
+            <% } else { %> 
+            <option value="<%= sucursal.id %>"><%= sucursal.nombre %></option>
+            <% } %>
+        <% } %> 
+        </select>
     </div>
     <div class="mb-3">
         <button class="btn btn-success btn-block">

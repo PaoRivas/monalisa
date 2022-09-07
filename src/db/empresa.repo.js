@@ -2,7 +2,7 @@ const { getConnection, mssql } = require('../database');
 
 class EmpresaRepo {
 
-  static async getEmpresa() {
+  static async getEmpresas() {
     try {
       const pool = await getConnection();
       const result = await pool.request().query('SELECT * FROM empresa');

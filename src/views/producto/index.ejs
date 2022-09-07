@@ -1,0 +1,67 @@
+<div class="container-fluid px-4">
+  <h1 class="mt-4">Productos</h1>
+  <ol class="breadcrumb mb-4">
+      <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+      <li class="breadcrumb-item active">Productos</li>
+  </ol>
+  <%- include('../partials/message') %>
+  <div class="card mb-4">
+      <div class="card-body">
+          <button type="button" class="btn btn-primary btn-header" data-bs-toggle="modal" data-bs-target="#addModal">
+              Añadir producto
+          </button>
+          <table id="datatablesSimple">
+              <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Código catálogo</th>
+                    </tr>
+              </thead>
+              <tfoot>
+                    <tr>
+                        <th>Código</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Código catálogo</th>
+                    </tr>
+              </tfoot>
+              <tbody>
+                  <% for (let resultado of resultados) { %>
+                        <tr>
+                            <td><%= resultado.codigo %></td>
+                            <td><%= resultado.descripcion %></td>
+                            <td><%= resultado.precio %></td>
+                            <td><%= resultado.catalogo_id %></td>
+                            <td>
+                                <button data-id="<%= resultado.id %>" data-name="productos" type="button" class="btn btn-primary editbtn" data-bs-toggle="modal" data-bs-target="#editModal">
+                                    Editar
+                                </button>
+                            </td>
+                            <td>
+                                <button data-id="<%= resultado.id %>" data-name="productos" type="button" class="btn btn-danger btn-delete">Eliminar</button>
+                            </td>
+                        </tr>
+                  <% } %> 
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
+<script src="/js/crud.js"></script>
+<%- include('./add_modal', {codigos}) %>
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="addModalLabel">Editar producto</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div id="editModalBody" class="modal-body">
+              
+          </div>
+      </div>
+  </div>
+</div>

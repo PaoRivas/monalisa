@@ -1,7 +1,7 @@
 <div class="container-fluid px-4">
     <h1 class="mt-4">Tipos de casos</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
         <li class="breadcrumb-item active">Tipos de casos</li>
     </ol>
     <%- include('../partials/message') %>
@@ -30,13 +30,13 @@
                         <tr>
                             <td><%= type.tipo %></td>
                             <td>
-                                <button data-id="<%= type.id %>" data-name="types" type="button" class="btn btn-primary editbtn" data-bs-toggle="modal" data-bs-target="#editModal">
+                                <button data-id="<%= type.id %>" data-name="tipos" type="button" class="btn btn-primary editbtn" data-bs-toggle="modal" data-bs-target="#editModal">
                                     Editar
                                 </button>
                                 
                             </td>
                             <td>
-                                <a data-id="<%= type.id %>" data-name="types" class="btn btn-danger btn-delete">Eliminar</a>
+                                <a data-id="<%= type.id %>" data-name="tipos" class="btn btn-danger btn-delete">Eliminar</a>
                             </td>
                         </tr>
                     <% } %> 

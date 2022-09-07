@@ -1,7 +1,7 @@
 <div class="container-fluid px-4">
     <h1 class="mt-4">Roles</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="#" class="addbtn">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
         <li class="breadcrumb-item active">Roles</li>
     </ol>
     <%- include('../partials/message') %>
@@ -30,13 +30,13 @@
                         <tr>
                             <td><%= role.descripcion %></td>
                             <td>
-                                <button data-id="<%= role.id %>" data-name="role" type="button" class="btn btn-primary editbtn" data-bs-toggle="modal" data-bs-target="#editModal">
+                                <button data-id="<%= role.id %>" data-name="roles" type="button" class="btn btn-primary editbtn" data-bs-toggle="modal" data-bs-target="#editModal">
                                     Editar
                                 </button>
                                 
                             </td>
                             <td>
-                                <a href="/role/delete/<%= role.id %>" data-id="<%= role.id %>" data-name="role" class="btn btn-danger btn-delete">Eliminar</a>
+                                <a href="/role/delete/<%= role.id %>" data-id="<%= role.id %>" data-name="roles" class="btn btn-danger btn-delete">Eliminar</a>
                             </td>
                         </tr>
                     <% } %> 
@@ -46,7 +46,7 @@
     </div>
 </div>
 <script src="/js/crud.js"></script>
-<%- include('./add_modal', functions) %>
+<%- include('./add_modal', rutas) %>
 
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

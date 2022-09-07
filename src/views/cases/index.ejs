@@ -1,17 +1,16 @@
 <div class="container-fluid px-4">
     <h1 class="mt-4">Casos</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
         <li class="breadcrumb-item active">Casos</li>
     </ol>
-    <%- include('../partials/message') %>
     <div class="card mb-4">
         <!-- <div class="card-header">
             <i class="fas fa-table me-1"></i>
             DataTable Users
         </div> -->
         <div id="card-body" class="card-body">
-            <a href="/cases/add" type="button" class="btn btn-primary btn-header">
+            <a href="/casos/add" type="button" class="btn btn-primary btn-header">
                 Añadir caso
             </a>
             <table id="datatablesSimple">
@@ -45,10 +44,10 @@
                             <td><%= caso.creado.toLocaleString() %></td>
                             <td><%= caso.modificado.toLocaleString() %></td>
                             <td>
-                                <a href="/cases/case/<%= caso.id %>" type="button" class="btn btn-primary">Editar</a>    
+                                <a href="/casos/caso/<%= caso.id %>" type="button" class="btn btn-primary">Editar</a>    
                             </td>
                             <td>
-                                <a data-id="<%= caso.id %>" data-name="cases" class="btn btn-danger btn-delete">Eliminar</a>
+                                <a data-id="<%= caso.id %>" data-name="casos" class="btn btn-danger btn-delete">Eliminar</a>
                             </td>
                         </tr>
                     <% } %> 

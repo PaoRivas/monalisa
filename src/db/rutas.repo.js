@@ -1,8 +1,8 @@
 const { getConnection, mssql } = require('../database');
 
-class FunctionsRepo {
+class RutasRepo {
 
-  static async getFunctions() {
+  static async getRutas() {
     try {
       const pool = await getConnection();
       const paths = await pool.request().query('SELECT * FROM rutas');
@@ -80,4 +80,4 @@ class FunctionsRepo {
   // }
 }
 
-module.exports = FunctionsRepo
+module.exports = RutasRepo

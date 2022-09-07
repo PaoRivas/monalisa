@@ -6,7 +6,7 @@ const session = require('express-session');
 const passport = require('passport');
 const expressLayouts = require('express-ejs-layouts');
 const fileUpload = require('express-fileupload');
-const {isLoggedIn, checkPermisos} = require('./lib/auth');
+const {isLoggedIn} = require('./lib/auth');
 const storage = require('./lib/storage');
 
 //inizialitations
@@ -42,7 +42,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Check user log in and permitions
 app.use(isLoggedIn);
-//app.use(checkPermisos);
 
 //global variables and set db connection
 app.use((req, res, next) => {

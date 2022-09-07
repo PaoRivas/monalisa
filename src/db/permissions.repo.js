@@ -45,19 +45,19 @@ class PermissionsRepo {
   //   }
   // }
 
-  static async addPermissions(roleId, functions) {
+  static async addPermissions(roleId, rutas) {
     try {
       //const {roleId, functionId} = permission;
       const pool = await getConnection();
       const request = await pool.request();
       request.input('role_id', mssql.Int, roleId);
-      for(let functionId of functions){
-        request.input(`function_id${functionId}`, mssql.Int, functionId);
+      for(let rutaId of rutas){
+        request.input(`ruta_id${rutaId}`, mssql.Int, rutaId);
         await request.query(
           `INSERT INTO permisos
           (rol_id, ruta_id)
           VALUES
-          (@role_id, @ruta_id${functionId})`
+          (@role_id, @ruta_id${rutaId})`
         );
       }
       //return result.recordsets;

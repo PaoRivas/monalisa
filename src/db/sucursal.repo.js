@@ -2,10 +2,25 @@ const { getConnection, mssql } = require('../database');
 
 class SucursalRepo {
 
+  static async getSucursalesCUIS() {
+    try {
+      const pool = await getConnection();
+      const result = await pool.request().query(
+        `SELECT s.id, numero, nombre, municipio, telefono, creado, numero_sucursal, codigo, vigencia 
+        FROM sucursal s inner join cuis c on s.numero = c.numero_sucursal where c.vigencia > GETDATE()`);
+      return result.recordset;
+    }
+    catch (error) {
+      console.log(error);
+      throw(error);
+    }
+  }
+
   static async getSucursales() {
     try {
       const pool = await getConnection();
-      const result = await pool.request().query('SELECT * FROM sucursal');
+      const request = await pool.request();
+      const result = await request.query('SELECT * FROM sucursal');
       return result.recordset;
     }
     catch (error) {
@@ -30,15 +45,17 @@ class SucursalRepo {
 
   static async addSucursal(sucursal) {
     try {
-      const {nombre, descripcion} = sucursal; 
+      const {codigoSucursal, nombre, municipio, telefono} = sucursal; 
       const pool = await getConnection();
       const request = await pool.request();
+      request.input('numero', mssql.Int, codigoSucursal);
       request.input('nombre', mssql.VarChar(50), nombre);
-      request.input('descripcion', mssql.VarChar(100), descripcion);
+      request.input('municipio', mssql.VarChar(30), municipio);
+      request.input('telefono',  mssql.VarChar(20), telefono);
       request.input('creado',  mssql.DateTime, new Date());
       await request.query(
-        `INSERT INTO [dbo].[sucursal] (nombre, descripcion, creado) 
-        VALUES (@nombre, @descripcion, @creado)`
+        `INSERT INTO [dbo].[sucursal] (numero, nombre, municipio, telefono, creado) 
+        VALUES (@numero, @nombre, @municipio, @telefono, @creado)`
       );
     }
     catch (error) {
@@ -63,15 +80,17 @@ class SucursalRepo {
 
   static async updateSucursal(sucursal) {
     try {
-      const {id, nombre, descripcion} = sucursal;
+      const {id, numero, nombre, municipio, telefono} = sucursal;
       const pool = await getConnection();
       const request = await pool.request();
       request.input('id', mssql.Int, id);
+      request.input('numero', mssql.Int, numero);
       request.input('nombre', mssql.VarChar(50), nombre);
-      request.input('descripcion', mssql.VarChar(100), descripcion);
+      request.input('municipio', mssql.VarChar(30), municipio);
+      request.input('telefono',  mssql.VarChar(20), telefono);
       await request.query(
         `UPDATE sucursal SET 
-        nombre = @nombre, descripcion = @descripcion
+        numero = @numero, nombre = @nombre, municipio = @municipio, telefono = @telefono
         WHERE id = @id`
       );
     } 

@@ -6,14 +6,14 @@ router.get('/', (req, res) => {
 })
 
 router.use(require('./authentication'));
-router.use('/user', require('./user'));
-router.use('/role', require('./role'));
-// router.use('/function', require('./function'));
+router.use('/usuarios', require('./user'));
+router.use('/roles', require('./role'));
 // router.use('/permission', require('./permission'));
-router.use('/types', require('./typesofcases'));
-router.use('/cases', require('./cases'));
+router.use('/tipos', require('./typesofcases'));
+router.use('/casos', require('./cases'));
 router.use('/activities', require('./activities'));
-router.use('/sucursal', require('./sucursal'));
-router.use('/puntoventa', require('./pventa'))
+router.use('/sucursales', require('./sucursal'));
+router.use('/recepcion', require('./factura'));
+router.use('/productos', require('./producto'));
 
 module.exports = router;

@@ -60,15 +60,15 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[funciones](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[path] [nvarchar](max) NULL
- CONSTRAINT [PK_funciones] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
+-- CREATE TABLE [dbo].[funciones](
+-- 	[id] [int] IDENTITY(1,1) NOT NULL,
+-- 	[path] [nvarchar](max) NULL
+--  CONSTRAINT [PK_funciones] PRIMARY KEY CLUSTERED 
+-- (
+-- 	[id] ASC
+-- )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+-- ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+-- GO
 /****** Object:  Table [dbo].[Permisos]    Script Date: 28/ene./2022 17:26:24 p. m. ******/
 SET ANSI_NULLS ON
 GO
@@ -77,7 +77,7 @@ GO
 CREATE TABLE [dbo].[permisos](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[rol_id] [int] NOT NULL,
-	[funcion_id] [int] NOT NULL,
+	[ruta_id] [int] NOT NULL,
  CONSTRAINT [PK_permisos] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -125,8 +125,10 @@ CREATE TABLE [dbo].[usuarios](
 	[password] [nvarchar](max) NOT NULL,
 	[celular] [nvarchar](15) NULL,
 	[c_identidad] [nvarchar](15) NULL,
-	[nit_factura] [nvarchar](15) NULL,
-	[nombre_factura] [nvarchar](50) NULL,
+	[nit] [nvarchar](15) NULL,
+	[razon_social] [nvarchar](50) NULL,
+	[sucursal_id] [int] NOT NULL,
+	[tipo_documento_id] [int] NOT NULL,
 	[datos] [nvarchar](max) NULL,
 	[intentos] [int] NOT NULL,
 	[inactivo] [bit] NOT NULL,
@@ -135,6 +137,8 @@ CREATE TABLE [dbo].[usuarios](
 	[creador] [int] NOT NULL,
 	[modificado] [datetime] NOT NULL,
 	[modificador] [int] NOT NULL,
+	[sucursal_id] [int] NULL,
+	[tipo_documento_id] [int] NULL,
  CONSTRAINT [PK_usuarios] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -178,17 +182,6 @@ GO
 SET IDENTITY_INSERT [dbo].[usuarios] OFF
 GO
 
-USE [monalisa_inicio]
-
-CREATE TABLE [dbo].[nombres_db](
-       [nit] [nchar](25) NOT NULL,
-       [nombre] [nchar](10) NULL,
-CONSTRAINT [PK_nombres_db] PRIMARY KEY CLUSTERED 
-(
-       [nit] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
 CREATE TABLE archivos (
     id INT PRIMARY KEY IDENTITY (1, 1),
 		caso_id INT NOT NULL,
@@ -215,4 +208,105 @@ INSERT INTO [dbo].[estados]
            ([nombre])
      VALUES
            ('CONCLUIDO')
+GO
+
+USE [monalisa_inicio]
+
+-- CREATE TABLE [dbo].[nombres_db](
+--        [nit] [nchar](25) NOT NULL,
+--        [nombre] [nchar](10) NULL,
+-- CONSTRAINT [PK_nombres_db] PRIMARY KEY CLUSTERED 
+-- (
+--        [nit] ASC
+-- )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+-- ) ON [PRIMARY]
+-- GO
+CREATE TABLE [dbo].[databases](
+	[nit] [int] NOT NULL,
+	[name] [varchar](255) NOT NULL,
+	[db_name] [varchar](100) NOT NULL,
+	[db_host] [varchar](255) NULL,
+	[db_username] [varchar](100) NULL,
+	[db_password] [text] NULL,
+	[db_port] [int] NOT NULL,
+	[created_at] [datetime] NULL,
+	[updated_at] [datetime] NULL,
+ CONSTRAINT [PK_databases] PRIMARY KEY CLUSTERED 
+(
+	[nit] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[db_name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[databases] ADD  DEFAULT ((5432)) FOR [db_port]
+GO
+
+ALTER TABLE [dbo].[databases] ADD  DEFAULT (getdate()) FOR [created_at]
+GO
+
+ALTER TABLE [dbo].[databases] ADD  DEFAULT (getdate()) FOR [updated_at]
+GO
+
+-- Lo de Pruebas --
+
+CREATE TABLE [dbo].[sucursal](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[numero] [int] NOT NULL,
+	[nombre] [nvarchar](50) NOT NULL,
+	[municipio] [nvarchar](30) NOT NULL,
+	[telefono] [nvarchar](20) NOT NULL,
+	[creado] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[cuis](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[sucursal_id] [int] NOT NULL,
+	[codigo] [nvarchar](10) NOT NULL,
+	[vigencia] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[cufd](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[cuis] [nvarchar](10) NOT NULL,
+	[codigo] [nvarchar](60) NULL,
+	[codigo_control] [nvarchar](50) NOT NULL,
+	[direccion] [text] NOT NULL,
+	[vigencia] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[productos](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[codigo] [int] NOT NULL,
+	[descripción] [nvarchar](50) NOT NULL,
+	[precio] [int] NOT NULL,
+	[unidad_id] [int] NOT NULL,
+	[catalogo_id] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
 GO

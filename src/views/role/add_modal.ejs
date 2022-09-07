@@ -11,10 +11,10 @@
                 <input type="text" class="form-control" name="description" placeholder="Nombre Rol">
               </div>
               <div class="mb-3">
-                <% for (let funcion of functions) { %>
+                <% for (let ruta of rutas) { %>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="check" value="<%= funcion.id %>">
-                    <label class="form-check-label" for="inlineCheckbox1"><%= funcion.controlador + "/" + funcion.accion %> </label>
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="check" value="<%= ruta.id %>" checked>
+                    <label class="form-check-label" for="inlineCheckbox1"><%= ruta.descripcion %></label>
                   </div>
                 <% } %> 
               </div>

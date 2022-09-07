@@ -2,18 +2,29 @@ const time = require('../lib/time');
 const path = require('path');
 const express = require('express');
 const router = express.Router();
+const {checkPermisos} = require('../lib/auth');
 const CasesRepo = require('../db/cases.repo');
 const TypesofCasesRepo = require('../db/typesofcases.repo');
 const UsersRepo = require('../db/users.repo');
 const ActivitiesRepo = require('../db/activities.repo');
 const RolesRepo = require('../db/roles.repo');
+const SucursalRepo = require('../db/sucursal.repo')
+
+router.get('/', checkPermisos, async (req, res) => {
+  const cases = await CasesRepo.getAllCases();
+  const types = await TypesofCasesRepo.getTypes();
+  const users = await UsersRepo.getUsers();
+  const roles = await RolesRepo.getRoles();
+  res.render('cases/index', {cases, types, users, roles});
+})
 
 router.get('/add', async (req, res) => {
   const caso = '';
   const roles = await RolesRepo.getRoles();
+  const sucursales = await SucursalRepo.getSucursales();
   const types = await TypesofCasesRepo.getTypes();
   const users = await UsersRepo.getUsers();
-  res.render('cases/add_edit_case', {caso, roles, types, users});
+  res.render('cases/add_edit_case', {caso, roles, sucursales, types, users});
 })
 
 router.post('/add', async (req, res) => {
@@ -26,29 +37,22 @@ router.post('/add', async (req, res) => {
     }
 })
 
-router.get('/', async (req, res) => {
-  const cases = await CasesRepo.getAllCases();
-  const types = await TypesofCasesRepo.getTypes();
-  const users = await UsersRepo.getUsers();
-  const roles = await RolesRepo.getRoles();
-  res.render('cases/index', {cases, types, users, roles});
-})
-
-router.get('/case/:id', async (req, res) => {
+router.get('/caso/:id', async (req, res) => {
   const { id } = req.params;
   const caso = await CasesRepo.getCase(id);
   const activities = await ActivitiesRepo.getActivitiesbyCase(id);
   const roles = await RolesRepo.getRoles();
+  const sucursales = await SucursalRepo.getSucursales();
   const types = await TypesofCasesRepo.getTypes();
   const users = await UsersRepo.getUsers();
-  res.render('cases/add_edit_case', {caso:caso[0], activities, roles, types, users});
+  res.render('cases/add_edit_case', {caso:caso[0], activities, roles, sucursales, types, users});
 })
 
 router.get('/delete/:id', async (req, res) => {
   const { id } = req.params;
   await CasesRepo.deleteCase(id);
   req.flash('success', 'Removed Successfully');
-  res.redirect('/cases');
+  res.redirect('/casos');
 
 })
 
@@ -66,7 +70,7 @@ router.post('/edit/:id', async (req, res) => {
   const caso = {type, user, subject, description, id};
   await CasesRepo.updateCase(caso);
   req.flash('success', 'Updated Successfully');
-  res.redirect(`/cases/case/${id}`);
+  res.redirect(`/casos/caso/${id}`);
 })
 
 router.post('/upload/:id', async (req, res) => {
@@ -94,7 +98,7 @@ router.post('/upload/:id', async (req, res) => {
 
   await CasesRepo.addFile(file);
   req.flash('success', 'Updated Successfully');
-  res.redirect(`/cases/case/${id}`);
+  res.redirect(`/casos/caso/${id}`);
 })
 
 module.exports = router;

@@ -2,22 +2,27 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addModalLabel">Añadir sucursal</h5>
+        <h5 class="modal-title" id="addModalLabel">Añadir producto</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="/sucursales/add" method="POST">
+        <form action="/productos/add" method="POST">
             <div class="mb-3">
-              <input type="text" class="form-control" name="codigoSucursal" placeholder="Número de Sucursal">
+              <input type="text" class="form-control" name="codigo" placeholder="Código producto">
             </div>
             <div class="mb-3">
-              <input type="text" class="form-control" name="nombre" placeholder="Nombre de sucursal">
+              <input type="text" class="form-control" name="descripcion" placeholder="Descripción">
             </div>
             <div class="mb-3">
-              <input type="text" class="form-control" name="municipio" placeholder="Municipio">
+              <input type="text" class="form-control" name="precio" placeholder="Precio">
             </div>
             <div class="mb-3">
-              <input type="text" class="form-control" name="telefono" placeholder="Teléfono">
+              <select class="form-select" name="catalogo_id"> 
+                <option selected hidden>Código catálogo</option>
+                <% for (let codigo of codigos) { %>
+                <option value="<%= codigo.id %>"><%= codigo.codigo_producto %></option>
+                <% } %> 
+              </select>
             </div>
             <div class="mb-3">
               <button class="btn btn-success btn-block">

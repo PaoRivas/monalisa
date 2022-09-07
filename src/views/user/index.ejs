@@ -1,7 +1,7 @@
 <div class="container-fluid px-4">
     <h1 class="mt-4">Usuarios/Clientes</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
         <li class="breadcrumb-item active">Usuarios</li>
     </ol>
     <%- include('../partials/message') %>
@@ -22,11 +22,14 @@
                         <th>Email</th>
                         <th>Celular</th>
                         <th>Carnet de identidad</th>
-                        <th>Cambio de contraseña</th>
+                        <th>Sucursal</th>
+                        <th>NIT</th>
+                        <th>Razón Social</th>
+                        <!-- <th>Cambio de contraseña</th>
                         <th>Creado</th>
                         <th>Creador</th>
                         <th>Modificado</th>
-                        <th>Modificador</th>
+                        <th>Modificador</th> -->
                     </tr>
                 </thead>
                 <tfoot>
@@ -36,37 +39,42 @@
                         <th>Email</th>
                         <th>Celular</th>
                         <th>Carnet de identidad</th>
-                        <th>Cambio de contraseña</th>
+                        <th>Sucursal</th>
+                        <th>NIT</th>
+                        <th>Razón Social</th>
+                        <!-- <th>Cambio de contraseña</th>
                         <th>Creado</th>
                         <th>Creador</th>
                         <th>Modificado</th>
-                        <th>Modificador</th>
+                        <th>Modificador</th> -->
                     </tr>
                 </tfoot>
                 <tbody>
                     <% for (let user of users) { %>
                         <tr>
-                            <td><%= user.descripcion %></td>
+                            <td><%= user.rol %></td>
                             <td><%= user.nombre %></td>
                             <td><%= user.email %></td>
                             <td><%= user.celular %></td>
                             <td><%= user.c_identidad %></td>
-                            <td><%= user.fecha_password.toLocaleString() %></td>
+                            <td><%= user.sucursal %></td>
+                            <td><%= user.nit %></td>
+                            <td><%= user.razon_social %></td>
+                            <!-- <td><%= user.fecha_password.toLocaleString() %></td>
                             <td><%= user.creado.toLocaleString() %></td>
-                            <td><%= user.creador %></td>
+                            <td><%= user.userC %></td>
                             <td><%= user.modificado.toLocaleString() %></td>
-                            <td><%= user.modificador%></td>
+                            <td><%= user.userM%></td> -->
                             <td>
-                                <a href="/user/cases/<%= user.id %>" class="btn btn-primary">Casos</a>
+                                <a href="/usuarios/casos/<%= user.id %>" class="btn btn-primary">Casos</a>
                             </td>
                             <td>
-                                <button data-id="<%= user.id %>" data-name="user" type="button" class="btn btn-primary editbtn" data-bs-toggle="modal" data-bs-target="#editModal">
+                                <button data-id="<%= user.id %>" data-name="usuarios" type="button" class="btn btn-primary editbtn" data-bs-toggle="modal" data-bs-target="#editModal">
                                     Editar
                                 </button>
-                                
                             </td>
                             <td>
-                                <button data-id="<%= user.id %>" data-name="user" type="button" class="btn btn-danger btn-delete">Eliminar</button>
+                                <button data-id="<%= user.id %>" data-name="usuarios" type="button" class="btn btn-danger btn-delete">Eliminar</button>
                             </td>
                         </tr>
                     <% } %> 
@@ -78,7 +86,7 @@
 
 <script src="/js/crud.js"></script>
 <script src="/js/user.js"></script>
-<%- include('./add_modal', roles) %>
+<%- include('./add_modal', roles, sucursales) %>
 <!-- Edit Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

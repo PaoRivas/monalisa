@@ -1,7 +1,7 @@
 <div class="container-fluid px-4">
   <h1 class="mt-4">Sucursales</h1>
   <ol class="breadcrumb mb-4">
-      <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+      <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
       <li class="breadcrumb-item active">Sucursal</li>
   </ol>
   <%- include('../partials/message') %>
@@ -16,35 +16,46 @@
           </button>
           <table id="datatablesSimple">
               <thead>
-                  <tr>
-                      <th>Nombre</th>
-                      <th>Descripción</th>
-                      <th>Creado</th>
-                  </tr>
+                    <tr>
+                        <th>Número</th>
+                        <th>Nombre</th>
+                        <th>Municipio</th>
+                        <th>Teléfono</th>
+                        <th>Creado</th>
+                        <th>CUIS</th>
+                        <th>Vigencia CUIS</th>
+                    </tr>
               </thead>
               <tfoot>
-                  <tr>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Creado</th>
-                  </tr>
+                    <tr>
+                        <th>Número de sucursal</th>
+                        <th>Nombre</th>
+                        <th>Municipio</th>
+                        <th>Teléfono</th>
+                        <th>Creado</th>
+                        <th>CUIS</th>
+                        <th>Vigencia CUIS</th>
+                    </tr>
               </tfoot>
               <tbody>
                   <% for (let resultado of resultados) { %>
-                      <tr>
-                          <td><%= resultado.nombre %></td>
-                          <td><%= resultado.descripcion %></td>
-                          <td><%= resultado.creado.toLocaleString() %></td>
-                          <td>
-                              <button data-id="<%= resultado.id %>" data-name="sucursal" type="button" class="btn btn-primary editbtn" data-bs-toggle="modal" data-bs-target="#editModal">
-                                  Editar
-                              </button>
-                              
-                          </td>
-                          <td>
-                              <a data-id="<%= resultado.id %>" data-name="sucursal" class="btn btn-danger btn-delete">Eliminar</a>
-                          </td>
-                      </tr>
+                        <tr>
+                            <td><%= resultado.numero %></td>
+                            <td><%= resultado.nombre %></td>
+                            <td><%= resultado.municipio %></td>
+                            <td><%= resultado.telefono %></td>
+                            <td><%= resultado.creado.toLocaleString() %></td>
+                            <td><%= resultado.codigo %></td>
+                            <td><%= resultado.vigencia.toLocaleString() %></td>
+                            <td>
+                                <button data-id="<%= resultado.id %>" data-name="sucursales" type="button" class="btn btn-primary editbtn" data-bs-toggle="modal" data-bs-target="#editModal">
+                                    Editar
+                                </button>
+                            </td>
+                            <td>
+                                <button data-id="<%= resultado.id %>" data-name="sucursales" type="button" class="btn btn-danger btn-delete">Eliminar</button>
+                            </td>
+                        </tr>
                   <% } %> 
               </tbody>
           </table>

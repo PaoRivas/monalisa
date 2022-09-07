@@ -1,7 +1,13 @@
 <% const action = caso ? 'edit/'+caso.id : 'add' %> 
 <div class="container-fluid px-4">
+  <h1 class="mt-4"><%= caso ? 'Editar' : 'Añadir' %> Caso</h1>
+  <ol class="breadcrumb mb-4">
+      <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+      <li class="breadcrumb-item"><a href="/casos">Casos</a></li>
+      <li class="breadcrumb-item active"><%= caso ? 'Editar' : 'Añadir'%> Caso</li>
+  </ol>
   <%- include('../partials/message') %>
-  <form id="formIndividual" class="mt-4 row g-3" action="/cases/<%= action %> " method="POST">
+  <form id="formIndividual" class="mt-4 row g-3" action="/casos/<%= action %> " method="POST">
     <label class="col-md-1 form-label">Tipo</label>
     <div class="col-md-4">
       <select class="form-select" name="type" aria-label="Default select example"> 
@@ -83,7 +89,7 @@
   </div> 
   <% } %> 
 </div>
-<%- include('../user/add_modal', roles) %>
+<%- include('../user/add_modal', roles, sucursales) %>
 <%- include('./upload_modal') %>
 <script src="/js/upload.js"></script>
 <script src="/js/cases.js"></script>
