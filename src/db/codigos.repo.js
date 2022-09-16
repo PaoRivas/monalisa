@@ -7,8 +7,10 @@ class CodigosRepo {
       const pool = await getConnection();
       const request = await pool.request();
       request.input('sucursal', mssql.Int, sucursal);
-      const result = await request.query('SELECT * FROM cuis WHERE vigencia > GETDATE() AND sucursal_id = @sucursal');
-      return result.recordset;
+      const result = await request.query(`SELECT numero, codigo FROM sucursal s 
+                                          inner join cuis a ON a.numero_sucursal = s.numero
+                                          WHERE a.vigencia > GETDATE() AND s.id = @sucursal`);
+      return result.recordset[0];
     }
     catch (error) {
       console.log(error);
@@ -35,16 +37,19 @@ class CodigosRepo {
     }
   }
 
-  static async getCUFDbyCUIS(cuis) {
+  static async getCUFDbySucursal(sucursal) {
     try {
       const pool = await getConnection();
       const request = await pool.request();
-      request.input('cuis',  mssql.Int, cuis);
-      const response = await request.query(`SELECT codigo, codigo_control FROM cufd WHERE vigencia > GETDATE() AND cuis = @cuis`);
+      request.input('sucursal',  mssql.Int, sucursal);
+      const response = await request.query(`SELECT municipio, telefono, a.codigo, b.codigo, b.codigo_control, b.direccion FROM sucursal s 
+                                            inner join cuis a ON a.numero_sucursal = s.numero
+                                            inner join cufd b ON b.cuis = a.codigo
+                                            WHERE a.vigencia > GETDATE() AND b.vigencia > GETDATE() AND s.id = @sucursal`);
       var lastcufd = response.recordset[0];
-      if (!lastcufd){
-        lastcufd = {codigo: 'No existe CUFD vigente'};
-      }
+      // if (!lastcufd){
+      //   lastcufd = {codigo: 'No existe CUFD vigente'};
+      // }
       return lastcufd;
     }
       catch (error) {
@@ -53,9 +58,8 @@ class CodigosRepo {
     }
   }
 
-  static async addCUFD(form, xmlresponse) {
+  static async addCUFD(cuis, xmlresponse) {
     try {
-      const {cuis} = form;
       const {codigo, codigoControl, direccion, fechaVigencia} = xmlresponse;
       const pool = await getConnection();
       const request = await pool.request();

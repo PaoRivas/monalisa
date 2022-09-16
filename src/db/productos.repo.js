@@ -6,8 +6,8 @@ class ProductosRepo {
   static async getProducts() {
     try {
       const pool = await getConnection();
-      const users = await pool.request().query('SELECT * FROM productos');
-      return users.recordset;
+      const products = await pool.request().query('SELECT * FROM productos');
+      return products.recordset;
     }
     catch (error) {
       console.log(error);
@@ -20,8 +20,28 @@ class ProductosRepo {
       const pool = await getConnection();
       const request = await pool.request();
       request.input('id', mssql.Int, id);
-      const user = await request.query('SELECT * FROM productos WHERE id = @id');
-      return user.recordset;
+      const product = await request.query('SELECT * FROM productos WHERE id = @id');
+      return product.recordset;
+    }
+    catch (error) {
+      console.log(error);
+      throw(error);
+    }
+  }
+
+  static async getProductsIN(ids) {
+    try {
+      const pool = await getConnection();
+      const request = await pool.request();
+      var select = 'SELECT * FROM productos WHERE id in ('
+      ids.forEach((res, i) => {
+        request.input(`id${i}`, mssql.Int, res);
+        select += `@id${i},`;
+      });
+      select += '0)';
+      const products = await request.query(select);
+      //console.log(products.recordset)
+      return products.recordset;
     }
     catch (error) {
       console.log(error);

@@ -6,6 +6,50 @@ const nitInput  = document.getElementById("nit");
 const userSelect  = document.getElementById("user");
 const totalInput  = document.getElementById("total");
 var total = 0
+const recepcionForm = document.getElementById('recepcionForm');
+const facturarBtn = document.getElementById('facturarBtn');
+
+document.getElementById('date').valueAsDate = new Date();
+
+const createFactura = async () =>{
+  const formData = new FormData(recepcionForm);
+  const response = await fetch('/productos/getproducts', {
+    method: "POST",
+    body: formData
+  });
+  const detalle = await response.json();
+  //console.log(detalle.productos)
+
+  const option = document.querySelector('#user');
+  const opSelected = userSelect.querySelector(`[value="${option.value}"]`);
+  const tipo = opSelected.getAttribute('data-tipo');
+  const razon = option.getDisplayValue();
+  formData.append('tipo', tipo);
+  formData.append('razon', razon);
+  // for (let producto of detalle.productos){
+  //   formData.append('detalle', JSON.stringify(producto));
+  // }
+  formData.append('detalle', JSON.stringify(detalle.productos));
+  console.log(JSON.parse(formData.get('detalle')))
+  const data = await fetch('/recepcion/add', {
+    method: "POST",
+    body: formData
+  });
+
+
+  // const response = await data.json();
+  //setTimeout(function () { location.reload() }, 2000);
+  // if (response.ok) {
+  //   location.reload()
+  // } else if (response.error) {
+  //   response.error
+  // } 
+}
+
+facturarBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    createFactura();
+})
 
 function changeCodigoValue(data) {
 
@@ -50,14 +94,19 @@ function childrenRow() {
   var cell2 = row.insertCell(1);
   var cell3 = row.insertCell(2);
   var cell4 = row.insertCell(3);
+  var cell5 = row.insertCell(4);
+  cell5.style.visibility = 'hidden';
+  cell5.style.display = 'none';
+  //console.log(cell5);
   cell1.innerHTML = `<input type="text" name="codigo" class="form-control" readonly value='${inputs[0].value}'/>`;
   cell2.innerHTML = `<input type="text" name="descripcion" class="form-control" readonly value='${inputs[1].getDisplayValue()}'/>`;
   cell3.innerHTML = `<input type="text" name="precio" class="form-control" readonly value='${inputs[2].value}'/>`;
   cell4.innerHTML = '<i class="fa-solid fa-xmark my-2 iconDelete" id="deleteProduct"></i>'; 
+  cell5.innerHTML = `<input type="text" name="id" class="form-control" readonly value='${inputs[1].value}'/>`;
 
   totalInput.value = parseInt(total) + parseInt(precio.value);
   total = parseInt( totalInput.value);
-
+  //inputs[1].reset();
   inputs.forEach(input => {
     input.value = '';
   });
@@ -98,19 +147,24 @@ VirtualSelect.init({
   hideClearButton: true,
   searchPlaceholderText: 'Buscar...',
   noSearchResultsText: 'No se encontraron resultados',
+  //silentInitialValueSet: true,
+  autoSelectFirstOption: false,
+  selectedValue: 2,
 });
+
+//document.querySelector('#descripcion').setValue('');
 
 document.querySelector('#user').addEventListener('change', (e) => {
     e.preventDefault();
     let dato = e.target.value;
-    //console.log(dato)
+    //console.log(e.target)
     changeNitValue(dato);
 });
 
 document.querySelector('#descripcion').addEventListener('change', (e) => {
   e.preventDefault();
   let dato = e.target.value;
-  //console.log(dato)
+  //console.log(e.target.getSelectedOptions().label)
   changeCodigoValue(dato);
 });
 

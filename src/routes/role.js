@@ -5,7 +5,7 @@ const RolesRepo = require('../db/roles.repo');
 const RutasRepo = require('../db/rutas.repo');
 const PermissionsRepo = require('../db/permissions.repo');
 
-router.get('/', checkPermisos , async (req, res) => {
+router.get('/', checkPermisos, async (req, res) => {
   const roles = await RolesRepo.getRoles();
   const rutas = await RutasRepo.getRutas();
   res.render('role/index', {roles, rutas});
@@ -17,7 +17,7 @@ router.post('/add', async (req, res) => {
       const rolId = await RolesRepo.addRol(req.body);
       await PermissionsRepo.addPermissions(rolId, check);
       req.flash('success', 'Saved Successfully');
-      res.redirect('/role');
+      res.redirect('/roles');
     } catch (ex) {
       res.status(500).send(ex);
     }

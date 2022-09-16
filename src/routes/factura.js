@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const UsersRepo = require('../db/users.repo');
 const ProductosRepo = require('../db/productos.repo');
-// const SucursalRepo = require('../db/sucursal.repo')
-// const operacionesApi = require('../api/operaciones.api');
-//const EmpresaRepo = require('../db/empresa.repo')
+const CodigosRepo = require('../db/codigos.repo')
+const EmpresaRepo = require('../db/empresa.repo')
+const CodigosApi = require('../api/codigos.api');
 
 router.get('/', async (req, res) => {
   const users = await UsersRepo.getUsersbyRazon();
@@ -14,7 +14,18 @@ router.get('/', async (req, res) => {
 
 router.post('/add', async (req, res) => {
     try {
-      console.log(req.body);
+      // var cufd = await CodigosRepo.getCUFDbySucursal(req.user.sucursal_id);
+      // if (!cufd){
+      //   const datos = await CodigosRepo.getCUISbySucursal(req.user.sucursal_id);
+      //   const empresa = await EmpresaRepo.getEmpresa();
+      //   const body = {nit:empresa.nit, token:empresa.token, codigoSistema:empresa.codigo, codigoSucursal:datos.numero , cuis:datos.codigo, codigoAmbiente:2, codigoModalidad:2, codigoPuntoVenta:0};
+      //   const result = await CodigosApi.getcufd(body);
+      //   console.log(result);
+      //   await CodigosRepo.addCUFD(datos.codigo, result);
+      //   cufd = await CodigosRepo.getCUFDbySucursal(req.user.sucursal_id);
+      //   console.log(cufd);
+      // }
+      console.log(req.body, JSON.parse(req.body.detalle));
       // const empresa = await EmpresaRepo.getEmpresa();
       // const xmlResult = await operacionesApi.addpventa(req.body, empresa);
       // await PuntoVentaRepo.addPuntoVenta(req.body, xmlResult);
