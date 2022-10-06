@@ -297,6 +297,19 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 
+CREATE TABLE [dbo].[empresa](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[r_social] [nvarchar](50) NOT NULL,
+	[nit] [int] NOT NULL,
+	[codigo] [nvarchar](100) NOT NULL,
+	[token] [nvarchar](max) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
 CREATE TABLE [dbo].[productos](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[codigo] [int] NOT NULL,
@@ -304,6 +317,34 @@ CREATE TABLE [dbo].[productos](
 	[precio] [int] NOT NULL,
 	[unidad_id] [int] NOT NULL,
 	[catalogo_id] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[factura](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[numero] [int] NOT NULL,
+	[cuf] [nvarchar](100) NOT NULL,
+	[cufd] [nvarchar](100) NOT NULL,
+	[fecha_emision] [datetime] NOT NULL,
+	[cliente_id] [int] NOT NULL,
+	[monto_total] [int] NOT NULL,
+	[usuario] [nvarchar](40) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[detalle](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[numero_factura] [int] NOT NULL,
+	[producto_id] [int] NOT NULL,
+	[cantidad] [int] NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[id] ASC

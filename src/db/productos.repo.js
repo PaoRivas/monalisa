@@ -8,8 +8,7 @@ class ProductosRepo {
       const pool = await getConnection();
       const products = await pool.request().query('SELECT * FROM productos');
       return products.recordset;
-    }
-    catch (error) {
+    }catch (error) {
       console.log(error);
       throw(error);
     }
@@ -22,8 +21,24 @@ class ProductosRepo {
       request.input('id', mssql.Int, id);
       const product = await request.query('SELECT * FROM productos WHERE id = @id');
       return product.recordset;
+    }catch (error) {
+      console.log(error);
+      throw(error);
     }
-    catch (error) {
+  }
+
+  static async getProductsbyActivity(actividad) {
+    try {
+      const pool = await getConnection();
+      const request = await pool.request();
+      request.input('actividad', mssql.Int, actividad);
+      var select = `SELECT p.id, codigo, p.descripcion, precio
+                    FROM productos p inner join sinc_lista_productos s on s.codigo_producto = p.catalogo_id 
+                    where codigo_actividad = @actividad`
+      const products = await request.query(select);
+      //console.log(products.recordset)
+      return products.recordset;
+    }catch (error) {
       console.log(error);
       throw(error);
     }
@@ -33,8 +48,12 @@ class ProductosRepo {
     try {
       const pool = await getConnection();
       const request = await pool.request();
-      var select = 'SELECT * FROM productos WHERE id in ('
-      ids.forEach((res, i) => {
+      //const arr = Array.isArray(ids) ? ids : [ids];
+      const arrIds= [].concat(ids)
+      var select = `SELECT p.[id], [codigo], p.[descripcion], [precio], [unidad_id], [catalogo_id], [codigo_actividad] 
+                    FROM productos p inner join sinc_lista_productos s on codigo_producto = catalogo_id
+                    WHERE p.id in (`
+      arrIds.forEach((res, i) => {
         request.input(`id${i}`, mssql.Int, res);
         select += `@id${i},`;
       });
@@ -42,8 +61,7 @@ class ProductosRepo {
       const products = await request.query(select);
       //console.log(products.recordset)
       return products.recordset;
-    }
-    catch (error) {
+    }catch (error) {
       console.log(error);
       throw(error);
     }
@@ -65,8 +83,7 @@ class ProductosRepo {
         (@codigo,@descripcion,@precio,58,@catalogo_id)`
       );
       return result.recordsets;
-    }
-    catch (error) {
+    }catch (error) {
       console.log(error);
       throw (error);
     }

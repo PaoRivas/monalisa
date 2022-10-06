@@ -20,7 +20,7 @@
               <select class="form-select" name="catalogo_id"> 
                 <option selected hidden>Código catálogo</option>
                 <% for (let codigo of codigos) { %>
-                <option value="<%= codigo.id %>"><%= codigo.codigo_producto %></option>
+                <option value="<%= codigo.codigo_producto %>"><%= codigo.descripcion %></option>
                 <% } %> 
               </select>
             </div>

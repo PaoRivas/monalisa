@@ -6,7 +6,7 @@ class SucursalRepo {
     try {
       const pool = await getConnection();
       const result = await pool.request().query(
-        `SELECT s.id, numero, nombre, municipio, telefono, creado, numero_sucursal, codigo, vigencia 
+        `SELECT s.id, numero, nombre, municipio, telefono, creado, codigo, vigencia 
         FROM sucursal s inner join cuis c on s.numero = c.numero_sucursal where c.vigencia > GETDATE()`);
       return result.recordset;
     }

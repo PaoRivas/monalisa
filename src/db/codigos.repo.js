@@ -7,8 +7,8 @@ class CodigosRepo {
       const pool = await getConnection();
       const request = await pool.request();
       request.input('sucursal', mssql.Int, sucursal);
-      const result = await request.query(`SELECT numero, codigo FROM sucursal s 
-                                          inner join cuis a ON a.numero_sucursal = s.numero
+      const result = await request.query(`SELECT numero as codigoSucursal, codigo as cuis FROM cuis a 
+                                          inner join sucursal s ON s.numero = a.numero_sucursal
                                           WHERE a.vigencia > GETDATE() AND s.id = @sucursal`);
       return result.recordset[0];
     }
@@ -18,12 +18,12 @@ class CodigosRepo {
     }
   }
 
-  static async addCUIS(codigoSucursal, xmlresponse) {
+  static async addCUIS(xmlresponse) {
     try {
-      const {codigo, fechaVigencia} = xmlresponse;
+      const {codigo, fechaVigencia, numero} = xmlresponse;
       const pool = await getConnection();
       const request = await pool.request();
-      request.input('sucursal',  mssql.Int, codigoSucursal);
+      request.input('sucursal',  mssql.Int, numero);
       request.input('codigo',  mssql.VarChar(10), codigo);
       request.input('vigencia', mssql.DateTime, fechaVigencia);
       await request.query(
@@ -42,10 +42,11 @@ class CodigosRepo {
       const pool = await getConnection();
       const request = await pool.request();
       request.input('sucursal',  mssql.Int, sucursal);
-      const response = await request.query(`SELECT municipio, telefono, a.codigo, b.codigo, b.codigo_control, b.direccion FROM sucursal s 
-                                            inner join cuis a ON a.numero_sucursal = s.numero
-                                            inner join cufd b ON b.cuis = a.codigo
-                                            WHERE a.vigencia > GETDATE() AND b.vigencia > GETDATE() AND s.id = @sucursal`);
+      const response = await request.query(`SELECT cuis, a.codigo as cufd, codigo_control, direccion, numero as codigoSucursal, 
+                                            municipio, telefono FROM cufd a
+                                            inner join cuis b ON b.codigo = a.cuis
+                                            inner join sucursal s ON s.numero = b.numero_sucursal
+                                            WHERE a.vigencia > GETDATE() AND s.id = @sucursal`);
       var lastcufd = response.recordset[0];
       // if (!lastcufd){
       //   lastcufd = {codigo: 'No existe CUFD vigente'};
@@ -58,9 +59,9 @@ class CodigosRepo {
     }
   }
 
-  static async addCUFD(cuis, xmlresponse) {
+  static async addCUFD(xmlresponse) {
     try {
-      const {codigo, codigoControl, direccion, fechaVigencia} = xmlresponse;
+      const {cuis, codigo, codigoControl, direccion, fechaVigencia} = xmlresponse;
       const pool = await getConnection();
       const request = await pool.request();
       request.input('cuis',  mssql.VarChar(10), cuis);

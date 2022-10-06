@@ -5,7 +5,7 @@ class EmpresaRepo {
   static async getEmpresa() {
     try {
       const pool = await getConnection();
-      const result = await pool.request().query('SELECT * FROM empresa');
+      const result = await pool.request().query('SELECT r_social, nit, codigo as codigoSistema, token FROM empresa');
       return result.recordset[0];
     }
     catch (error) {

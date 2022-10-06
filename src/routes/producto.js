@@ -44,13 +44,13 @@ router.post('/edit/:id', async (req, res) => {
   res.redirect('/productos');
 })
 
-router.post('/getproducts', async (req, res) => {
-  //console.log(req.body);
-  const productos = await ProductosRepo.getProductsIN(req.body.id);
-  console.log(productos)
-  res.json({productos});
-  // req.flash('success', 'Editado satisfactoriamente');
-  // res.redirect('/productos');
-})
+// router.post('/getproducts', async (req, res) => {
+//   //console.log(req.body);
+//   const productos = await ProductosRepo.getProductsIN(req.body.id);
+//   console.log(productos)
+//   res.json({productos});
+//   // req.flash('success', 'Editado satisfactoriamente');
+//   // res.redirect('/productos');
+// })
 
 module.exports = router;

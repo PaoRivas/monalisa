@@ -1,36 +1,44 @@
 const express = require('express');
 const router = express.Router();
 const UsersRepo = require('../db/users.repo');
+const SincronizacionRepo = require('../db/sincro.repo');
 const ProductosRepo = require('../db/productos.repo');
-const CodigosRepo = require('../db/codigos.repo')
-const EmpresaRepo = require('../db/empresa.repo')
+const CodigosRepo = require('../db/codigos.repo');
+const EmpresaRepo = require('../db/empresa.repo');
+const FacturaRepo = require('../db/factura.repo');
 const CodigosApi = require('../api/codigos.api');
+const RecepcionApi = require('../api/recepcion.api');
 
 router.get('/', async (req, res) => {
+  const resultados = await FacturaRepo.getFacturas();
+  res.render('factura/index', {resultados});
+})
+
+router.get('/recepcion', async (req, res) => {
+  res.render('factura/recepcion');
+})
+
+router.get('/datos', async (req, res) => {
   const users = await UsersRepo.getUsersbyRazon();
-  const products = await ProductosRepo.getProducts();
-  res.render('factura/recepcion', {users, products});
+  const activities = await SincronizacionRepo.getActividades();
+  res.json({users, activities});
+})
+
+router.get('/productos/:id', async (req, res) => {
+  const { id } = req.params;
+  const products = await ProductosRepo.getProductsbyActivity(id);
+  res.json({products});
 })
 
 router.post('/add', async (req, res) => {
     try {
-      // var cufd = await CodigosRepo.getCUFDbySucursal(req.user.sucursal_id);
-      // if (!cufd){
-      //   const datos = await CodigosRepo.getCUISbySucursal(req.user.sucursal_id);
-      //   const empresa = await EmpresaRepo.getEmpresa();
-      //   const body = {nit:empresa.nit, token:empresa.token, codigoSistema:empresa.codigo, codigoSucursal:datos.numero , cuis:datos.codigo, codigoAmbiente:2, codigoModalidad:2, codigoPuntoVenta:0};
-      //   const result = await CodigosApi.getcufd(body);
-      //   console.log(result);
-      //   await CodigosRepo.addCUFD(datos.codigo, result);
-      //   cufd = await CodigosRepo.getCUFDbySucursal(req.user.sucursal_id);
-      //   console.log(cufd);
-      // }
-      console.log(req.body, JSON.parse(req.body.detalle));
-      // const empresa = await EmpresaRepo.getEmpresa();
-      // const xmlResult = await operacionesApi.addpventa(req.body, empresa);
-      // await PuntoVentaRepo.addPuntoVenta(req.body, xmlResult);
-      // req.flash('success', 'Guardado satisfactoriamente');
-      // res.redirect('/puntoventa');
+      const {sucursal_id, id} = req.user;
+      const data = {...req.body, sucursal_id, usuario: id}
+      const xmlResult = await RecepcionApi.addfactura(data);
+      await FacturaRepo.addFactura(data, xmlResult);
+      await FacturaRepo.addDetalle(data, xmlResult);
+      await FacturaRepo.addRecepcion(xmlResult);
+      res.redirect('/facturas');
     } catch (ex) {
       res.status(500).send(ex);
     }
@@ -46,18 +54,26 @@ router.post('/add', async (req, res) => {
 //   }
 // })
 
-// router.get('/edit/:id', async (req, res) => {
-//   const { id } = req.params;
-//   const resultado = await PuntoVentaRepo.getPuntoVenta(id);
-//   res.render('pventa/edit_modal', {resultado, layout: false});
-// })
+router.get('/anular/:id', async (req, res) => {
+  const { id } = req.params;
+  const resultado = await FacturaRepo.getFactura(id);
+  const motivos = await SincronizacionRepo.getMotivosAnulacion();
+  res.render('factura/anular_modal', {resultado, motivos, layout: false});
+})
 
-// router.post('/edit/:id', async (req, res) => {
-//   const { id } = req.params;
-//   const data = {...req.body, id};
-//   await PuntoVentaRepo.updatePuntoVenta(data);
-//   req.flash('success', 'Editado satisfactoriamente');
-//   res.redirect('/pventa');
-// })
+router.post('/anular/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {cuf} = await FacturaRepo.getFactura(id);
+    const {sucursal_id} = req.user;
+    const {codigoMotivo} = req.body;
+    const data = {codigoMotivo, cuf, sucursal_id};
+    const xmlresult = await RecepcionApi.anularfactura(data);
+    await FacturaRepo.addAnulacion(xmlresult);
+    res.json({ok: "Se anulo la factura."});
+  } catch (error) {
+    res.json({error: "Ocurrio un error al anular la factura."});
+  }
+})
 
 module.exports = router;

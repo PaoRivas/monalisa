@@ -12,19 +12,26 @@
             </div>
             <div class="col-md-3">
                 <label class="form-label">NIT</label>
-                <input type="text" class="form-control" id="nit" name="nit" placeholder="NIT o CI del cliente">
+                <div class="mb-3">
+                    <div id="selectNit">
+
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <label class="form-label">Razón Social</label>
                 <div class="mb-3">
-                    <!-- <input type="text" class="form-control" id='user' name='user' list="datalistUsers" placeholder="Selecciona un cliente"/>
-                    <datalist id="datalistUsers"> -->
-                    <select id="user" name='user'>
-                        <% for (let user of users) { %>
-                            <option value="<%= user.id %>" data-nit="<%= user.nit %>" data-tipo="<%= user.tipo_documento_id %>"><%= user.razon_social %></option>
-                        <% } %> 
-                    </select>
-                    <!-- </datalist> -->
+                    <div id="selectUser" name='cliente'>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Actividad</label>
+                <div class="mb-3">
+                    <div id="selectActivity">
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -37,18 +44,19 @@
                             <th>Descripción</th>
                             <th>Precio</th>
                             <th>Acción</th>
-                            <th style="display:none;">ID</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><input type="text" class="form-control" id='codigo' placeholder="Escriba el código"/></td>
                             <td>
-                                <select id="descripcion">
-                                    <% for (let product of products) { %>
-                                        <option value="<%= product.id %>" data-codigo="<%= product.codigo %>" data-precio="<%= product.precio %>"><%= product.descripcion %></option>
-                                    <% } %> 
-                                </select> 
+                                <div id="selectCode">
+
+                                </div>
+                            </td>
+                            <td>
+                                <div id="selectDescription">
+
+                                </div> 
                             </td>
                             <td><input type="text" class="form-control" id='precio' readonly/></td>
                             <td><i class="fa-solid fa-check iconCheck" id="addProduct"></i></td>

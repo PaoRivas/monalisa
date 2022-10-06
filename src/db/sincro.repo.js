@@ -5,8 +5,32 @@ class SincronizacionRepo {
   static async getProductos() {
     try {
       const pool = await getConnection();
-      const result = await pool.request().query('SELECT * FROM sinc_productos');
-      return result.recordsets;
+      const result = await pool.request().query('SELECT * FROM sinc_lista_productos');
+      return result.recordset;
+    }
+    catch (error) {
+      console.log(error);
+      throw(error);
+    }
+  }
+
+  static async getActividades() {
+    try {
+      const pool = await getConnection();
+      const result = await pool.request().query('SELECT * FROM sinc_actividades');
+      return result.recordset;
+    }
+    catch (error) {
+      console.log(error);
+      throw(error);
+    }
+  }
+
+  static async getMotivosAnulacion() {
+    try {
+      const pool = await getConnection();
+      const result = await pool.request().query('SELECT * FROM sinc_motivo_anulacion');
+      return result.recordset;
     }
     catch (error) {
       console.log(error);

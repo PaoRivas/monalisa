@@ -1,0 +1,12 @@
+<div class="mb-3">
+  <p class="card-text"><strong>Número de Factura:</strong> <%= resultado.numero %></p>
+  <p class="card-text"><strong>Fecha Emisión:</strong> <%= resultado.fecha_emision.toLocaleString() %></p>
+  <p class="card-text"><strong>Monto Total:</strong> <%= resultado.monto_total %></p>
+  <p class="card-text"><strong>Usuario:</strong> <%= resultado.usuario %></p>
+  <label><strong>Motivo Anulación</strong></label>
+  <select id='codigoMotivo' class="form-select">
+    <% for (let motivo of motivos) { %>
+    <option value="<%= motivo.codigo_clasificador %>"><%= motivo.descripcion %></option>
+    <% } %> 
+  </select>
+</div>

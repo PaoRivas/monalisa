@@ -1,95 +1,161 @@
-const addBtn  = document.getElementById("addProduct");
-const descSelect  = document.getElementById("descripcion");
-const codigoInput  = document.getElementById("codigo");
-const precioInput  = document.getElementById("precio");
-const nitInput  = document.getElementById("nit");
-const userSelect  = document.getElementById("user");
-const totalInput  = document.getElementById("total");
-var total = 0
-const recepcionForm = document.getElementById('recepcionForm');
-const facturarBtn = document.getElementById('facturarBtn');
+window.addEventListener('load', async (event) => {
+  //console.log('page is fully loaded', event);
+  const response = await fetch('/facturas/datos', {
+    method: "GET"
+  });
+  const datos = await response.json();
 
+  const optionsNit = [];
+  const optionsUser = [];
+  const optionsActivity = [];
+  
+  for (let user of datos.users){
+    var optionU = {label: user.razon_social, value: user.id};
+    var optionN = {label: user.numero_documento, value: user.id};
+    optionsUser.push(optionU);
+    optionsNit.push(optionN);
+    
+  }
+
+  for (let activity of datos.activities){
+    var option = {label: activity.descripcion, value: activity.codigo_caeb}
+    optionsActivity.push(option);
+  }
+
+  VirtualSelect.init({
+    ele: '#selectNit',
+    search: true,
+    placeholder: 'NIT o CI del cliente',
+    searchPlaceholderText: 'Buscar...',
+    noOptionsText: 'No se encontraron resultados',
+    noSearchResultsText: 'No se encontraron resultados',
+    maxWidth: 'inherit',
+    searchByStartsWith: true,
+    markSearchResults: true,
+    options: optionsNit,
+  });
+
+  VirtualSelect.init({
+    ele: '#selectUser',
+    search: true,
+    placeholder: 'Seleccione un cliente',
+    searchPlaceholderText: 'Buscar...',
+    noOptionsText: 'No se encontraron resultados',
+    noSearchResultsText: 'No se encontraron resultados',
+    maxWidth: 'inherit',
+    searchByStartsWith: true,
+    markSearchResults: true,
+    options: optionsUser,
+  });
+
+  VirtualSelect.init({
+    ele: '#selectActivity',
+    search: true,
+    placeholder: 'Seleccione una actividad',
+    searchPlaceholderText: 'Buscar...',
+    noOptionsText: 'No se encontraron resultados',
+    noSearchResultsText: 'No se encontraron resultados',
+    maxWidth: 'inherit',
+    hideClearButton: true,
+    autoSelectFirstOption:true,
+    options: optionsActivity,
+  });
+
+  VirtualSelect.init({
+    ele: '#selectCode',
+    search: true,
+    placeholder: 'Código del producto',
+    searchPlaceholderText: 'Buscar...',
+    noOptionsText: 'No se encontraron resultados',
+    noSearchResultsText: 'No se encontraron resultados',
+    maxWidth: 'inherit',
+  });
+
+  VirtualSelect.init({
+    ele: '#selectDescription',
+    search: true,
+    placeholder: 'Seleccione un producto',
+    searchPlaceholderText: 'Buscar...',
+    noOptionsText: 'No se encontraron resultados',
+    noSearchResultsText: 'No se encontraron resultados',
+    maxWidth: 'inherit',
+  });
+
+});
+
+const recepcionForm = document.getElementById('recepcionForm');
+const selectNit = document.querySelector('#selectNit')
+const selectUser = document.querySelector('#selectUser')
+const selectActivity = document.querySelector('#selectActivity')
+const selectCode = document.querySelector('#selectCode')
+const selectProduct = document.querySelector('#selectDescription')
+const inputPrecio = document.querySelector('#precio')
+const addBtn  = document.getElementById("addProduct");
+const facturarBtn = document.getElementById('facturarBtn');
+const inputTotal  = document.getElementById("total");
+inputTotal.value = 0;
 document.getElementById('date').valueAsDate = new Date();
 
-const createFactura = async () =>{
-  const formData = new FormData(recepcionForm);
-  const response = await fetch('/productos/getproducts', {
-    method: "POST",
-    body: formData
+selectNit.addEventListener('change', (e) => {
+  e.preventDefault();
+  //if (e.target === document.activeElement.parentElement){
+    selectUser.setValue(e.target.value, true);
+    //console.log(e.target.value);
+  //}
+});
+
+selectUser.addEventListener('change', (e) => {
+  e.preventDefault();
+  //console.log(e.target.value);
+  selectNit.setValue(e.target.value, true);
+});
+
+selectActivity.addEventListener('change', async (e) => {
+  e.preventDefault();
+  const id = e.target.value;
+  const response = await fetch(`/facturas/productos/${id}`, {
+    method: "GET"
   });
-  const detalle = await response.json();
-  //console.log(detalle.productos)
+  const datos = await response.json();
 
-  const option = document.querySelector('#user');
-  const opSelected = userSelect.querySelector(`[value="${option.value}"]`);
-  const tipo = opSelected.getAttribute('data-tipo');
-  const razon = option.getDisplayValue();
-  formData.append('tipo', tipo);
-  formData.append('razon', razon);
-  // for (let producto of detalle.productos){
-  //   formData.append('detalle', JSON.stringify(producto));
-  // }
-  formData.append('detalle', JSON.stringify(detalle.productos));
-  console.log(JSON.parse(formData.get('detalle')))
-  const data = await fetch('/recepcion/add', {
-    method: "POST",
-    body: formData
-  });
+  const optionsDescription = [];
+  const optionsCode = [];
 
+  for (let product of datos.products){
+    var optionC = {label: product.codigo, value: product.id};
+    var optionD = {label: product.descripcion, value: product.id, customData: product.precio};
+    optionsCode.push(optionC);
+    optionsDescription.push(optionD);
+  }
 
-  // const response = await data.json();
-  //setTimeout(function () { location.reload() }, 2000);
-  // if (response.ok) {
-  //   location.reload()
-  // } else if (response.error) {
-  //   response.error
-  // } 
-}
+  selectCode.setOptions(optionsCode, true);
+  selectProduct.setOptions(optionsDescription, true);
+  selectProduct.reset();
+  //console.log(e.target.getDisplayValue());
+});
 
-facturarBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    createFactura();
-})
+selectCode.addEventListener('change', (e) => {
+  e.preventDefault();
+  //console.log(e.target.value);
+  selectProduct.setValue(e.target.value, true);
+  const option = selectProduct.getSelectedOptions();
+  inputPrecio.value = option ? option.customData : '';
+});
 
-function changeCodigoValue(data) {
-
-  const opSelected = descSelect.querySelector(`[value="${data}"]`);
-  codigoInput.value = opSelected.getAttribute('data-codigo');
-  precioInput.value = opSelected.getAttribute('data-precio');
-}
-
-function changeDescValue(data) {
-
-  const opSelected = descSelect.querySelector(`[data-codigo="${data}"]`);
-  const valor = opSelected.getAttribute('value');
-  document.querySelector('#descripcion').setValue(valor);
-  precioInput.value = opSelected.getAttribute('data-precio');
-}
-
-function changeNitValue(data) {
-
-  //const nit = elem.options[elem.selectedIndex];
-  const opSelected = userSelect.querySelector(`[value="${data}"]`);
-  nitInput.value = opSelected.getAttribute('data-nit');
-}
-
-function changeUserValue(data) {
-
-  const opSelected = userSelect.querySelector(`[data-nit="${data}"]`);
-  const valor = opSelected.getAttribute('value');
-  document.querySelector('#user').setValue(valor);
-  //console.log(valor)
-}
+selectProduct.addEventListener('change', (e) => {
+  e.preventDefault();
+  //console.log(e.target.value);
+  const option = selectProduct.getSelectedOptions();
+  inputPrecio.value = option ? option.customData : '';
+  selectCode.setValue(e.target.value, true);
+});
 
 function childrenRow() {
 
+  console.log(selectCode.value, selectProduct.value)
+
   const table = document.getElementById("tablaDetalle");
-  const inputs = document.querySelectorAll('#codigo, #descripcion, #precio');
-  // GET TOTAL NUMBER OF ROWS 
-  var x =table.rows.length;
-  //var id = "tbl"+x;
-  var row = table.insertRow(x-1);
-  //row.id=id;
+  var row = table.insertRow(2);
   var cell1 = row.insertCell(0);
   var cell2 = row.insertCell(1);
   var cell3 = row.insertCell(2);
@@ -97,20 +163,16 @@ function childrenRow() {
   var cell5 = row.insertCell(4);
   cell5.style.visibility = 'hidden';
   cell5.style.display = 'none';
-  //console.log(cell5);
-  cell1.innerHTML = `<input type="text" name="codigo" class="form-control" readonly value='${inputs[0].value}'/>`;
-  cell2.innerHTML = `<input type="text" name="descripcion" class="form-control" readonly value='${inputs[1].getDisplayValue()}'/>`;
-  cell3.innerHTML = `<input type="text" name="precio" class="form-control" readonly value='${inputs[2].value}'/>`;
+  // //console.log(cell5);
+  cell1.innerHTML = `<input type="text" class="form-control" readonly value='${selectCode.getDisplayValue()}'/>`;
+  cell2.innerHTML = `<input type="text" class="form-control" readonly value='${selectProduct.getDisplayValue()}'/>`;
+  cell3.innerHTML = `<input type="text" class="form-control data-precio" readonly value='${inputPrecio.value}'/>`;
   cell4.innerHTML = '<i class="fa-solid fa-xmark my-2 iconDelete" id="deleteProduct"></i>'; 
-  cell5.innerHTML = `<input type="text" name="id" class="form-control" readonly value='${inputs[1].value}'/>`;
+  cell5.innerHTML = `<input type="text" name="productsid" class="form-control" readonly value='${selectProduct.value}'/>`;
 
-  totalInput.value = parseInt(total) + parseInt(precio.value);
-  total = parseInt( totalInput.value);
-  //inputs[1].reset();
-  inputs.forEach(input => {
-    input.value = '';
-  });
-  //console.log(codigo, desc, precio)
+  inputTotal.value = parseInt(inputTotal.value) + parseInt(inputPrecio.value);
+  selectProduct.reset();
+
   cell4.addEventListener("click", (e) => {
     if (e.target && e.target.matches("#deleteProduct")) {
       e.preventDefault();
@@ -122,9 +184,9 @@ function childrenRow() {
 
 function deleteRow(ele) {
   //ele.parentNode.parentNode.remove();
-  const precioRow = ele.querySelector(`[name="precio"]`);
-  totalInput.value = parseInt(totalInput.value) - parseInt(precioRow.value);
-  total = parseInt( totalInput.value);
+  const precioRow = ele.querySelector('.data-precio');
+  inputTotal.value = parseInt(inputTotal.value) - parseInt(precioRow.value);
+  //total = parseInt( totalInput.value);
   ele.remove();
 }
 
@@ -133,81 +195,17 @@ addBtn.addEventListener("click", (e) => {
   childrenRow();
 });
 
-VirtualSelect.init({ 
-  ele: '#user', 
-  search: true,
-  hideClearButton: true,
-  searchPlaceholderText: 'Buscar...',
-  noSearchResultsText: 'No se encontraron resultados',
-});
+const createFactura = async () =>{
+  const formData = new FormData(recepcionForm);
+  const response = await fetch('/facturas/add', {
+    method: "POST",
+    body: formData
+  });
+  // const detalle = await response.json();
+  // console.log();
+}
 
-VirtualSelect.init({ 
-  ele: '#descripcion',
-  search: true,
-  hideClearButton: true,
-  searchPlaceholderText: 'Buscar...',
-  noSearchResultsText: 'No se encontraron resultados',
-  //silentInitialValueSet: true,
-  autoSelectFirstOption: false,
-  selectedValue: 2,
-});
-
-//document.querySelector('#descripcion').setValue('');
-
-document.querySelector('#user').addEventListener('change', (e) => {
-    e.preventDefault();
-    let dato = e.target.value;
-    //console.log(e.target)
-    changeNitValue(dato);
-});
-
-document.querySelector('#descripcion').addEventListener('change', (e) => {
+facturarBtn.addEventListener("click", (e) => {
   e.preventDefault();
-  let dato = e.target.value;
-  //console.log(e.target.getSelectedOptions().label)
-  changeCodigoValue(dato);
-});
-
-codigoInput.addEventListener("change", (e) => {
-  e.preventDefault();
-  let dato = e.target.value;
-  changeDescValue(dato);
-});
-
-nitInput.addEventListener("change", (e) => {
-  e.preventDefault();
-  let dato = e.target.value;
-  changeUserValue(dato);
-});
-
-// function childrenRow(){
-//   const inputs = document.querySelectorAll('#codigo, #descripcion, #precio');
-//   var table = document.getElementById("tablaDetalle");
-//   var rowCount = table.rows.length;
-//   var cellCount = table.rows[0].cells.length; 
-//   var row = table.insertRow(rowCount-1);
-//   for(var i =0; i < cellCount; i++){
-//     var cell = row.insertCell(i);
-//     if(i < cellCount-1){
-//         cell.innerHTML=`<input type="text" name="${inputs[i].id}" class="form-control" readonly value="${inputs[i].value}"/>`;
-//     }else{
-//         cell.innerHTML ='<i class="fa-solid fa-xmark my-2 iconDelete" id="deleteProduct"></i>';
-//     }
-//   }
-
-//   totalInput.value = parseInt(total) + parseInt(precio.value);
-//   total = parseInt(totalInput.value);
-
-//   inputs.forEach(input => {
-//     input.value = '';
-//   });
-
-//   //const deleteBtn = document.getElementById("deleteProduct");
-//   cell.addEventListener("click", (e) => {
-//     if (e.target && e.target.matches("#deleteProduct")) {
-//       e.preventDefault();
-//       console.log(row);
-//       deleteRow(row);
-//     }
-//   });
-// }
+  createFactura();
+})
