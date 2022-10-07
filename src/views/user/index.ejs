@@ -1,7 +1,7 @@
 <div class="container-fluid px-4">
     <h1 class="mt-4">Usuarios/Clientes</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/">Inicio</a></li>
         <li class="breadcrumb-item active">Usuarios</li>
     </ol>
     <%- include('../partials/message') %>
@@ -23,7 +23,7 @@
                         <th>Celular</th>
                         <th>Carnet de identidad</th>
                         <th>Sucursal</th>
-                        <th>NIT</th>
+                        <th>Numero Documento</th>
                         <th>Razón Social</th>
                         <!-- <th>Cambio de contraseña</th>
                         <th>Creado</th>
@@ -86,7 +86,7 @@
 
 <script src="/js/crud.js"></script>
 <script src="/js/user.js"></script>
-<%- include('./add_modal', roles, sucursales) %>
+<%- include('./add_modal', roles, sucursales, tipos) %>
 <!-- Edit Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

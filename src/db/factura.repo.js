@@ -6,8 +6,11 @@ class FacturaRepo {
     try {
       const pool = await getConnection();
       const result = await pool.request().query(
-        `SELECT f.id, numero, fecha_emision, monto_total, usuario, razon_social, numero_documento, tipo_documento_id FROM factura f
-        INNER JOIN usuarios u ON u.id = f.usuario`);
+        `SELECT f.id, numero, fecha_emision, monto_total, usuario, razon_social, numero_documento, t.descripcion, a.id as anulado FROM factura f
+        INNER JOIN usuarios u ON u.id = f.usuario
+        INNER JOIN sinc_tipo_documento_identidad t on t.codigo_clasificador = u.tipo_documento_id
+        LEFT JOIN anulacion a on a.cuf = f.cuf
+        WHERE fecha_emision > GETDATE() - DAY(GETDATE())`);
       return result.recordset;
     }
     catch (error) {

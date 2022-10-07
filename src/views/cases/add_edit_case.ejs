@@ -2,7 +2,7 @@
 <div class="container-fluid px-4">
   <h1 class="mt-4"><%= caso ? 'Editar' : 'Añadir' %> Caso</h1>
   <ol class="breadcrumb mb-4">
-      <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+      <li class="breadcrumb-item"><a href="/">Inicio</a></li>
       <li class="breadcrumb-item"><a href="/casos">Casos</a></li>
       <li class="breadcrumb-item active"><%= caso ? 'Editar' : 'Añadir'%> Caso</li>
   </ol>
@@ -76,10 +76,10 @@
       <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Actividades</button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Documentos</button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Instrucciones</button>
     </li>
   </ul>
   <div class="tab-content" id="myTabContent">
@@ -89,7 +89,7 @@
   </div> 
   <% } %> 
 </div>
-<%- include('../user/add_modal', roles, sucursales) %>
+<%- include('../user/add_modal', roles, sucursales, tipos) %>
 <%- include('./upload_modal') %>
 <script src="/js/upload.js"></script>
 <script src="/js/cases.js"></script>

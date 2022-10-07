@@ -1,7 +1,7 @@
 <div class="container-fluid px-4">
     <h1 class="mt-4">Casos</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="/">Inicio</a></li>
         <li class="breadcrumb-item active">Casos</li>
     </ol>
     <div class="card mb-4">
@@ -20,8 +20,6 @@
                         <th>Cliente</th>
                         <th>Asunto</th>
                         <th>Descripción</th>
-                        <th>Creado</th>
-                        <th>Modificado</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -30,8 +28,6 @@
                         <th>Cliente</th>
                         <th>Asunto</th>
                         <th>Descripción</th>
-                        <th>Creado</th>
-                        <th>Modificado</th>
                     </tr>
                 </tfoot>
                 <tbody>
@@ -41,10 +37,8 @@
                             <td><%= caso.nombre %></td>
                             <td><%= caso.asunto %></td>
                             <td><%= caso.descripcion %></td>
-                            <td><%= caso.creado.toLocaleString() %></td>
-                            <td><%= caso.modificado.toLocaleString() %></td>
                             <td>
-                                <a href="/casos/caso/<%= caso.id %>" type="button" class="btn btn-primary">Editar</a>    
+                                <a href="/casos/caso/<%= caso.id %>" type="button" class="btn btn-primary">Abrir</a>    
                             </td>
                             <td>
                                 <a data-id="<%= caso.id %>" data-name="casos" class="btn btn-danger btn-delete">Eliminar</a>

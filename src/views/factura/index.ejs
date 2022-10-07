@@ -1,7 +1,7 @@
 <div class="container-fluid px-4">
   <h1 class="mt-4">Facturas</h1>
   <ol class="breadcrumb mb-4">
-      <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+      <li class="breadcrumb-item"><a href="/">Inicio</a></li>
       <li class="breadcrumb-item active">Facturas</li>
   </ol>
   <div class="card mb-4">
@@ -39,14 +39,20 @@
                             <td><%= resultado.fecha_emision.toLocaleString() %></td>
                             <td><%= resultado.razon_social %></td>
                             <td><%= resultado.numero_documento %></td> 
-                            <td><%= resultado.tipo_documento_id %></td>
+                            <td><%= resultado.descripcion %></td>
                             <td><%= resultado.monto_total %></td>
                             <td><%= resultado.usuario %></td>
+                            <% if (!resultado.anulado) { %>
                             <td>
                                 <button data-id="<%= resultado.id %>" type="button" class="btn btn-danger anularbtn">
                                     Anular
                                 </button>
                             </td>
+                            <% } else {%> 
+                            <td>
+                                Anulado
+                            </td>
+                            <% } %>
                         </tr>
                   <% } %> 
               </tbody>

@@ -6,7 +6,9 @@ class ProductosRepo {
   static async getProducts() {
     try {
       const pool = await getConnection();
-      const products = await pool.request().query('SELECT * FROM productos');
+      const products = await pool.request().query(`SELECT p.id, codigo, p.descripcion, precio, s.descripcion as producto, a.descripcion as actividad FROM productos p
+                                                    inner join sinc_lista_productos s on s.codigo_producto = p.catalogo_id
+                                                    inner join sinc_actividades a on a.codigo_caeb = s.codigo_actividad`);
       return products.recordset;
     }catch (error) {
       console.log(error);
@@ -20,7 +22,7 @@ class ProductosRepo {
       const request = await pool.request();
       request.input('id', mssql.Int, id);
       const product = await request.query('SELECT * FROM productos WHERE id = @id');
-      return product.recordset;
+      return product.recordset[0];
     }catch (error) {
       console.log(error);
       throw(error);
@@ -72,13 +74,13 @@ class ProductosRepo {
       const {codigo, descripcion, precio, catalogo_id} = product;
       const pool = await getConnection();
       const request = await pool.request();
-      request.input('codigo',  mssql.Int, codigo);
+      request.input('codigo',  mssql.VarChar(10), codigo);
       request.input('descripcion', mssql.VarChar(100), descripcion);
       request.input('precio', mssql.Int, precio);
       request.input('catalogo_id',  mssql.Int, catalogo_id);
       const result = await request.query(
         `INSERT INTO [dbo].[productos]
-        ([codigo],[descripción],[precio],[unidad_id],[catalogo_id])
+        ([codigo],[descripcion],[precio],[unidad_id],[catalogo_id])
           VALUES
         (@codigo,@descripcion,@precio,58,@catalogo_id)`
       );
@@ -109,7 +111,7 @@ class ProductosRepo {
       const pool = await getConnection();
       const request = await pool.request();
       request.input('id', mssql.Int, id);
-      request.input('codigo',  mssql.Int, codigo);
+      request.input('codigo',  VarChar(10), codigo);
       request.input('descripcion', mssql.VarChar(100), descripcion);
       request.input('precio', mssql.Int, precio);
       request.input('catalogo_id',  mssql.Int, catalogo_id);

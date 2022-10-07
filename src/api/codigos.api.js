@@ -5,10 +5,9 @@ const { getClient } = require('../clientsoap');
 const url = 'https://pilotosiatservicios.impuestos.gob.bo/v2/FacturacionCodigos?wsdl';
 //const helpers = require('../lib/helpers');
 
-const getcuis = async (sucursal) => {
+const getcuis = async (codigoSucursal) => {
   const {nit, codigoSistema, token} = await EmpresaRepo.getEmpresa();
-  const {numero} = await SucursalRepo.getSucursal(sucursal);
-  const body = {nit, codigoSistema, codigoSucursal: numero,
+  const body = {nit, codigoSistema, codigoSucursal,
                 codigoAmbiente:2, codigoModalidad:2, codigoPuntoVenta:0};
   const args = {SolicitudCuis: body};
   const client = await getClient(url);

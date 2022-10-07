@@ -8,7 +8,8 @@ const TypesofCasesRepo = require('../db/typesofcases.repo');
 const UsersRepo = require('../db/users.repo');
 const ActivitiesRepo = require('../db/activities.repo');
 const RolesRepo = require('../db/roles.repo');
-const SucursalRepo = require('../db/sucursal.repo')
+const SucursalRepo = require('../db/sucursal.repo');
+const SincronizacionRepo = require('../db/sincro.repo')
 
 router.get('/', checkPermisos, async (req, res) => {
   const cases = await CasesRepo.getAllCases();
@@ -24,7 +25,8 @@ router.get('/add', async (req, res) => {
   const sucursales = await SucursalRepo.getSucursales();
   const types = await TypesofCasesRepo.getTypes();
   const users = await UsersRepo.getUsers();
-  res.render('cases/add_edit_case', {caso, roles, sucursales, types, users});
+  const tipos = await SincronizacionRepo.getTiposDocumento();
+  res.render('cases/add_edit_case', {caso, roles, sucursales, types, users, tipos});
 })
 
 router.post('/add', async (req, res) => {
@@ -45,7 +47,8 @@ router.get('/caso/:id', async (req, res) => {
   const sucursales = await SucursalRepo.getSucursales();
   const types = await TypesofCasesRepo.getTypes();
   const users = await UsersRepo.getUsers();
-  res.render('cases/add_edit_case', {caso:caso[0], activities, roles, sucursales, types, users});
+  const tipos = await SincronizacionRepo.getTiposDocumento();
+  res.render('cases/add_edit_case', {caso:caso[0], activities, roles, sucursales, types, users, tipos});
 })
 
 router.get('/delete/:id', async (req, res) => {

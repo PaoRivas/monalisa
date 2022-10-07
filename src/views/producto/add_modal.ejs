@@ -17,6 +17,14 @@
               <input type="text" class="form-control" name="precio" placeholder="Precio">
             </div>
             <div class="mb-3">
+              <select class="form-select" name="actividad"> 
+                <option selected hidden>Actividad</option>
+                <% for (let actividad of actividades) { %>
+                <option value="<%= actividad.codigo_caeb %>"><%= actividad.descripcion %></option>
+                <% } %> 
+              </select>
+            </div>
+            <div class="mb-3">
               <select class="form-select" name="catalogo_id"> 
                 <option selected hidden>Código catálogo</option>
                 <% for (let codigo of codigos) { %>

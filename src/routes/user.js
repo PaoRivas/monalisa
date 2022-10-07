@@ -7,10 +7,12 @@ const RolesRepo = require('../db/roles.repo');
 const SucursalRepo = require('../db/sucursal.repo')
 const CasesRepo = require('../db/cases.repo');
 const TypesofCasesRepo = require('../db/typesofcases.repo');
+const SincronizacionRepo = require('../db/sincro.repo');
 
 router.get('/', checkPermisos, async (req, res) => {
   const roles = await RolesRepo.getRoles();
   const sucursales = await SucursalRepo.getSucursales();
+  const tipos = await SincronizacionRepo.getTiposDocumento();
   const usersU = await UsersRepo.getUsers();
   const users = usersU.map((user) => {
     const rol = roles.filter(x => x.id === user.rol_id)[0]?.descripcion;
@@ -25,7 +27,7 @@ router.get('/', checkPermisos, async (req, res) => {
       userM
     }
   });
-  res.render('user/index', {users, roles, sucursales});
+  res.render('user/index', {users, roles, sucursales, tipos});
 })
 
 router.post('/add', async (req, res) => {
@@ -56,7 +58,8 @@ router.get('/edit/:id', async (req, res) => {
   const user = await UsersRepo.getUser(id);
   const roles = await RolesRepo.getRoles();
   const sucursales = await SucursalRepo.getSucursales();
-  res.render('user/edit_modal', {user: user[0], roles, sucursales, layout: false});
+  const tipos = await SincronizacionRepo.getTiposDocumento();
+  res.render('user/edit_modal', {user, roles, sucursales, tipos, layout: false});
 })
 
 router.post('/edit/:id', async (req, res) => {

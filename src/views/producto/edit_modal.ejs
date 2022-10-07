@@ -1,18 +1,29 @@
 <form action="/productos/edit/<%= resultado.id %>" method="POST">
   <div class="mb-3">
-    <input type="text" class="form-control" name="codigo" placeholder="Código producto">
+    <input type="text" value="<%= resultado.codigo %>" class="form-control" name="codigo" placeholder="Código producto">
   </div>
   <div class="mb-3">
-    <input type="text" class="form-control" name="descripcion" placeholder="Descripción">
+    <input type="text" value="<%= resultado.descripcion %>" class="form-control" name="descripcion" placeholder="Descripción">
   </div>
   <div class="mb-3">
-    <input type="text" class="form-control" name="precio" placeholder="Precio">
+    <input type="text" value="<%= resultado.precio %>" class="form-control" name="precio" placeholder="Precio">
   </div>
   <div class="mb-3">
-    <select class="form-select" name="catalogo_id"> 
-      <option selected value="">Código catálogo</option>
+    <select class="form-select" name="actividad"> 
+      <option selected hidden>Actividad</option>
+      <% for (let actividad of actividades) { %>
+      <option value="<%= actividad.codigo_caeb %>"><%= actividad.descripcion %></option>
+      <% } %> 
+    </select>
+  </div>
+  <div class="mb-3">
+    <select class="form-select" name="catalogo_id">
       <% for (let codigo of codigos) { %>
-      <option value="<%= codigo.id %>"><%= codigo.codigo_producto %></option>
+        <% if (resultado.catalogo_id === codigo.codigo_producto) { %>
+            <option value="<%= codigo.codigo_producto %>" selected><%= codigo.descripcion %></option>
+          <% } else { %> 
+            <option value="<%= codigo.codigo_producto %>"><%= codigo.descripcion %></option>
+          <% } %>
       <% } %> 
     </select>
   </div>

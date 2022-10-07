@@ -23,7 +23,18 @@
         <input type="text" value="<%= user.c_identidad %>" class="form-control" name="identity" placeholder="Carnet de identidad">
     </div>
     <div class="mb-3">
-        <input type="text" value="<%= user.nit %>" class="form-control" name="nit" placeholder="NIT">
+        <select class="form-select" name="tipo"> 
+        <% for (let tipo of tipos) { %>
+            <% if (user.tipo_documento_id === tipo.codigo_clasificador) { %>
+                <option value="<%= tipo.codigo_clasificador %>" selected><%= tipo.descripcion %></option>
+                <% } else { %> 
+                <option value="<%= tipo.codigo_clasificador %>"><%= tipo.descripcion %></option>
+            <% } %>
+        <% } %> 
+        </select>
+    </div>
+    <div class="mb-3">
+        <input type="text" value="<%= user.numero_documento %>" class="form-control" name="nit" placeholder="Número Documento">
     </div>
     <div class="mb-3">
         <input type="text" value="<%= user.razon_social %>" class="form-control" name="razon_social" placeholder="Razón Social">

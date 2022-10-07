@@ -2,7 +2,7 @@ const userForm = document.getElementById('userForm');
 
 const createUser = async () =>{
   const formData = new FormData(userForm);
-  const data = await fetch('/user/add', {
+  const data = await fetch('/usuarios/add', {
     method: "POST",
     body: formData
   });

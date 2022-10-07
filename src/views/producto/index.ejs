@@ -1,7 +1,7 @@
 <div class="container-fluid px-4">
   <h1 class="mt-4">Productos</h1>
   <ol class="breadcrumb mb-4">
-      <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+      <li class="breadcrumb-item"><a href="/">Inicio</a></li>
       <li class="breadcrumb-item active">Productos</li>
   </ol>
   <%- include('../partials/message') %>
@@ -13,18 +13,20 @@
           <table id="datatablesSimple">
               <thead>
                     <tr>
-                        <th>Código</th>
+                        <th>Código interno</th>
                         <th>Descripción</th>
-                        <th>Precio</th>
-                        <th>Código catálogo</th>
+                        <th>Precio Bs</th>
+                        <th>Producto catálogo</th>
+                        <th>Actividad</th>
                     </tr>
               </thead>
               <tfoot>
                     <tr>
                         <th>Código</th>
                         <th>Descripción</th>
-                        <th>Precio</th>
-                        <th>Código catálogo</th>
+                        <th>Precio Bs</th>
+                        <th>Producto catálogo</th>
+                        <th>Actividad</th>
                     </tr>
               </tfoot>
               <tbody>
@@ -33,7 +35,8 @@
                             <td><%= resultado.codigo %></td>
                             <td><%= resultado.descripcion %></td>
                             <td><%= resultado.precio %></td>
-                            <td><%= resultado.catalogo_id %></td>
+                            <td><%= resultado.producto %></td>
+                            <td><%= resultado.actividad %></td>
                             <td>
                                 <button data-id="<%= resultado.id %>" data-name="productos" type="button" class="btn btn-primary editbtn" data-bs-toggle="modal" data-bs-target="#editModal">
                                     Editar
@@ -50,7 +53,7 @@
   </div>
 </div>
 <script src="/js/crud.js"></script>
-<%- include('./add_modal', codigos) %>
+<%- include('./add_modal', actividades, codigos) %>
 
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">

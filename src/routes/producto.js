@@ -7,7 +7,8 @@ const SincronizacionRepo = require('../db/sincro.repo');
 router.get('/',  async (req, res) => {
   const resultados = await ProductosRepo.getProducts();
   const codigos = await SincronizacionRepo.getProductos();
-  res.render('producto/index', {resultados, codigos});
+  const actividades = await SincronizacionRepo.getActividades();
+  res.render('producto/index', {resultados, codigos, actividades});
 })
 
 router.post('/add', async (req, res) => {
@@ -33,7 +34,9 @@ router.get('/delete/:id', async (req, res) => {
 router.get('/edit/:id', async (req, res) => {
   const { id } = req.params;
   const resultado = await ProductosRepo.getProduct(id);
-  res.render('producto/edit_modal', {resultado, layout: false});
+  const codigos = await SincronizacionRepo.getProductos();
+  const actividades = await SincronizacionRepo.getActividades();
+  res.render('producto/edit_modal', {resultado, codigos, actividades, layout: false});
 })
 
 router.post('/edit/:id', async (req, res) => {

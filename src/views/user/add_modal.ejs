@@ -31,7 +31,15 @@
                 <input type="text" class="form-control" name="identity" placeholder="Carnet de identidad">
             </div>
             <div class="mb-3">
-              <input type="text" class="form-control" name="nit" placeholder="NIT">
+              <select class="form-select" name="tipo"> 
+                <option selected value="">Tipo Documento de Identidad</option>
+                <% for (let tipo of tipos) { %>
+                <option value="<%= tipo.codigo_clasificador %>"><%= tipo.descripcion %></option>
+                <% } %> 
+              </select>
+            </div>
+            <div class="mb-3">
+              <input type="text" class="form-control" name="nit" placeholder="Número Documento">
             </div>
             <div class="mb-3">
                 <input type="text" class="form-control" name="razon_social" placeholder="Razón Social">

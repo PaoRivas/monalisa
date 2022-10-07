@@ -13,9 +13,9 @@ router.get('/', checkPermisos, async (req, res) => {
 
 router.post('/add', async (req, res) => {
     try {
-      await SucursalRepo.addSucursal(req.body);
-      const result = await CodigosApi.getcuis(req.user.sucursal_id)
+      const result = await CodigosApi.getcuis(req.body.codigoSucursal)
       await CodigosRepo.addCUIS(result);
+      await SucursalRepo.addSucursal(req.body);
       req.flash('success', 'Guardado satisfactoriamente');
       res.redirect('/sucursales');
     } catch (ex) {
