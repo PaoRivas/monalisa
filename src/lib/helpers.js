@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const libxmljs = require('libxmljs');
+const libxmljs = require('libxmljs2');
 const fs = require('fs');
 const crypto = require('crypto');
 

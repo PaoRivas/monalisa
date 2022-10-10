@@ -351,3 +351,100 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+
+CREATE TABLE [dbo].[recepcion_factura](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[numero_factura] [int] NOT NULL,
+	[documento_sector] [int] NOT NULL,
+	[emision] [int] NOT NULL,
+	[tipo_factura] [int] NOT NULL,
+	[fecha_envio] [datetime] NOT NULL,
+	[archivo] [nvarchar](max) NOT NULL,
+	[hash] [nvarchar](200) NOT NULL,
+	[codigo_recepcion] [nvarchar](80) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[anulacion](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[cufd] [nvarchar](100) NOT NULL,
+	[documento_sector] [int] NOT NULL,
+	[emision] [int] NOT NULL,
+	[tipo_factura] [int] NOT NULL,
+	[codigo_motivo] [int] NOT NULL,
+	[cuf] [nvarchar](100) NOT NULL,
+	[descripcion] [nvarchar](40) NOT NULL,
+	[codigo_estado] [int] NOT NULL,
+	[creado] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[sinc_actividades](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[ambiente] [int] NOT NULL,
+	[sucursal] [int] NOT NULL,
+	[pventa] [int] NOT NULL,
+	[cuis] [nvarchar](10) NOT NULL,
+	[codigo_caeb] [nvarchar](100) NOT NULL,
+	[descripcion] [nvarchar](max) NOT NULL,
+	[tipo_actividad] [nvarchar](10) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[sinc_lista_productos](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[ambiente] [int] NOT NULL,
+	[sucursal] [int] NOT NULL,
+	[pventa] [int] NOT NULL,
+	[cuis] [nvarchar](10) NOT NULL,
+	[codigo_actividad] [nvarchar](10) NOT NULL,
+	[codigo_producto] [int] NOT NULL,
+	[descripcion] [nvarchar](max) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[sinc_motivo_anulacion](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[ambiente] [int] NOT NULL,
+	[sucursal] [int] NOT NULL,
+	[pventa] [int] NOT NULL,
+	[cuis] [nvarchar](10) NOT NULL,
+	[codigo_clasificador] [int] NOT NULL,
+	[descripcion] [nvarchar](max) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[sinc_tipo_documento_identidad](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[ambiente] [int] NOT NULL,
+	[sucursal] [int] NOT NULL,
+	[pventa] [int] NOT NULL,
+	[cuis] [nvarchar](10) NOT NULL,
+	[codigo_clasificador] [int] NOT NULL,
+	[descripcion] [nvarchar](max) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
