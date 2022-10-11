@@ -42,7 +42,7 @@ const addfactura = async (data) => {
 
   const xml = createXML(datos, productos);
   fs.writeFileSync(xml_path, xml);
-  const validate = helpers.validationXmlXsd(xml, xsd_path);
+  // const validate = helpers.validationXmlXsd(xml, xsd_path);
 
   if (validate) {
     await pipeline(

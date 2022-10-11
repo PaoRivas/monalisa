@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const libxmljs = require('libxmljs2');
+// const libxmljs = require('libxmljs2');
 const fs = require('fs');
 const crypto = require('crypto');
 
@@ -104,14 +104,14 @@ helpers.dateToTimestamp = (fecha) => {
   //new Date(f.toString().split('-')[0]).toJSON().replace('Z','');
 }
 
-helpers.validationXmlXsd = (xml, xsd_path) => {
-  //const xml = fs.readFileSync(xml_path, 'utf8');
-  const xmlDoc = libxmljs.parseXmlString(xml);
-  const xsd = fs.readFileSync(xsd_path, 'utf8');
-  const xsdDoc = libxmljs.parseXmlString(xsd);
-  const result = xmlDoc.validate(xsdDoc);
-  return result;
-}
+// helpers.validationXmlXsd = (xml, xsd_path) => {
+//   //const xml = fs.readFileSync(xml_path, 'utf8');
+//   const xmlDoc = libxmljs.parseXmlString(xml);
+//   const xsd = fs.readFileSync(xsd_path, 'utf8');
+//   const xsdDoc = libxmljs.parseXmlString(xsd);
+//   const result = xmlDoc.validate(xsdDoc);
+//   return result;
+// }
 
 helpers.getHashCode = (fileBuffer) => {
   //const fileBuffer = fs.readFileSync(gz_path);
