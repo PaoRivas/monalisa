@@ -7,69 +7,90 @@
       <li class="breadcrumb-item active"><%= caso ? 'Editar' : 'Añadir'%> Caso</li>
   </ol>
   <%- include('../partials/message') %>
-  <form id="formIndividual" class="mt-4 row g-3" action="/casos/<%= action %> " method="POST">
-    <label class="col-md-1 form-label">Tipo</label>
-    <div class="col-md-4">
-      <select class="form-select" name="type" aria-label="Default select example"> 
-        <option selected>--- Elige el tipo de caso ---</option>
-        <% for (let type of types) { %>
-          <% if (type.id === caso.tipo_caso_id) { %>
-            <option value="<%= type.id %>" selected><%= type.tipo %></option>
-          <% } else { %> 
-            <option value="<%= type.id %>"><%= type.tipo %></option>
+  <div class="card card-body">
+    <form id="formIndividual" class="mt-2 row g-3" action="/casos/<%= action %> " method="POST">
+      <div class="col-md-5 px-5">
+        <label class="form-label">Tipo de Caso</label>
+        <select class="form-select" name="type" aria-label="Default select example"> 
+          <option selected>--- Elige el tipo de caso ---</option>
+          <% for (let type of types) { %>
+            <% if (type.id === caso.tipo_caso_id) { %>
+              <option value="<%= type.id %>" selected><%= type.tipo %></option>
+            <% } else { %> 
+              <option value="<%= type.id %>"><%= type.tipo %></option>
+            <% } %> 
           <% } %> 
-        <% } %> 
-      </select>
-    </div>
-    <label class="col-md-1 form-label">Usuario</label>
-    <div class="col-md-4">
-      <select class="form-select" id="selectUser" name="user" aria-label="Default select example">
-        <option selected>--- Elige un usuario ---</option>
-        <% for (let user of users) { %>
-          <% if (user.id === caso.usuario_id) { %>
-            <option value="<%= user.id %>" selected><%= user.nombre %></option>
-          <% } else { %> 
-            <option value="<%= user.id %>"><%= user.nombre %></option>
-          <% } %> 
-        <% } %> 
-      </select>
-    </div> 
-    <div class="col-md-2">
-      <% if (!caso) {%>
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModaluser">
-        Crear usuario
-      </button>
+        </select>
+      </div>
+      <div class="col-md-7 px-5">
+        <label class="form-label">Nombre Cliente</label>
+        <div class="row">
+          <div class="col-md-10">
+            <select class="form-select" id="selectUser" name="user" aria-label="Default select example">
+              <option selected>--- Elige un usuario ---</option>
+              <% for (let user of users) { %>
+                <% if (user.id === caso.usuario_id) { %>
+                  <option value="<%= user.id %>" selected><%= user.nombre %></option>
+                <% } else { %> 
+                  <option value="<%= user.id %>"><%= user.nombre %></option>
+                <% } %> 
+              <% } %> 
+            </select>
+          </div>
+          <% if (!caso) {%>
+          <div class="col-md-2">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModaluser">
+              +
+            </button>
+          </div>
+          <% } %>
+        </div> 
+      </div> 
+      <div class="col-md-5 px-5">
+        <label class="form-label">Asunto</label>
+        <input type="text" class="form-control" name="subject" value="<%= caso?.asunto %>">
+      </div>
+      <div class="col-md-6 px-5">
+        <label class="form-label">Descripción</label>
+        <textarea type="text" class="form-control" name="description" value="<%= caso?.descripcion %>"><%= caso?.descripcion %></textarea>
+      </div>
+      <div class="col-md-5 px-5">
+        <label class="form-label">Honorarios</label>
+        <div class="row">
+          <div class="col-md-6">
+            <input type="text" class="form-control" name="honorarios">
+          </div>
+          <div class="col-md-6">
+            <select class="form-select" id="selectUser" name="moneda" aria-label="Default select example">
+              <option selected>--- Elige moneda ---</option>
+              <option value="<%= user.id %>">BOB</option>
+              <option value="<%= user.id %>">SUS</option>
+            </select>
+          </div>
+        </div> 
+      </div>
+      <% if (caso) {%> 
+      <!-- <div class="col-md-5 px-5">
+        <label for="inputCity" class="form-label">Creado</label>
+        <input readonly type="text" class="form-control" id="inputCity" value="<%= caso?.creado?.toLocaleString() %> ">
+      </div>
+      <div class="col-md-6 px-5">
+        <label for="inputZip" class="form-label">Modificado</label>
+        <input readonly type="text" class="form-control" id="inputZip" value="<%= caso?.modificado?.toLocaleString() %> ">
+      </div>
+      <div class="col-md-1">
+        <button data-id="<%= caso?.id %>" type="button" class="btn btn-primary upldbtn" data-bs-toggle="modal" data-bs-target="#uploadModal">
+          Upload
+        </button>
+      </div>   -->
       <% } %>
-    </div> 
-    <label class="col-md-1 form-label">Asunto</label>
-    <div class="col-md-4">
-      <input type="text" class="form-control" name="subject" value="<%= caso?.asunto %>">
-    </div>
-    <label class="col-md-1 form-label">Descripción</label>
-    <div class="col-md-6">
-      <textarea type="text" class="form-control" name="description" value="<%= caso?.descripcion %>"><%= caso?.descripcion %></textarea>
-    </div>
-    <% if (caso) {%> 
-    <label for="inputCity" class="col-md-1 form-label">Creado</label>
-    <div class="col-md-4">
-      <input readonly type="text" class="form-control" id="inputCity" value="<%= caso?.creado?.toLocaleString() %> ">
-    </div>
-    <label for="inputZip" class="col-md-1 form-label">Modificado</label>
-    <div class="col-md-4">
-      <input readonly type="text" class="form-control" id="inputZip" value="<%= caso?.modificado?.toLocaleString() %> ">
-    </div>
-    <div class="col-md-1">
-      <button data-id="<%= caso?.id %>" type="button" class="btn btn-primary upldbtn" data-bs-toggle="modal" data-bs-target="#uploadModal">
-        Upload
-      </button>
-    </div> 
-    <% } %>
-    <div class="col-md-1">
-      <button class="btn btn-success btn-block">
-        Guardar
-      </button>
-    </div>
-  </form>
+      <div class="ps-5 mb-2">
+        <button class="btn btn-success btn-block">
+          Guardar
+        </button>
+      </div>
+    </form>
+  </div>
   <% if (caso) {%> 
   <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
@@ -84,12 +105,10 @@
   </ul>
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"><%- include('../activities/index', activities, caso?.id) %></div>
-    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
-    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"><%- include('../documents/index', activities, caso?.id) %></div>
+    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"><%- include('../instructions/index', activities) %></div>
   </div> 
   <% } %> 
 </div>
 <%- include('../user/add_modal', roles, sucursales, tipos) %>
-<%- include('./upload_modal') %>
-<script src="/js/upload.js"></script>
 <script src="/js/cases.js"></script>

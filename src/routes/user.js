@@ -30,6 +30,18 @@ router.get('/', checkPermisos, async (req, res) => {
   res.render('user/index', {users, roles, sucursales, tipos});
 })
 
+router.get('/clientes', async (req, res) => {
+  const roles = await RolesRepo.getRoles();
+  const sucursales = await SucursalRepo.getSucursales();
+  const tipos = await SincronizacionRepo.getTiposDocumento();
+  const users = await UsersRepo.getUsersbyRazon();
+  res.render('user/clients', {users, roles, sucursales, tipos});
+})
+
+router.get('/addclient', async (req, res) => {
+  res.render('user/add_client');
+})
+
 router.post('/add', async (req, res) => {
     try {
       const user = {...req.body, creador:req.user.id}

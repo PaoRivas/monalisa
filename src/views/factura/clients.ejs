@@ -1,0 +1,53 @@
+<div class="container-fluid px-4">
+  <h1 class="mt-4">Clientes</h1>
+  <ol class="breadcrumb mb-4">
+      <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+      <li class="breadcrumb-item active">Clientes</li>
+  </ol>
+  <%- include('../partials/message') %>
+  <div class="card mb-4">
+      <!-- <div class="card-header">
+          <i class="fas fa-table me-1"></i>
+          DataTable Users
+      </div> -->
+      <div id="card-body" class="card-body">
+          <table id="datatablesSimple">
+              <thead>
+                  <tr>
+                      <th>Nombre</th>
+                      <th>Carnet de identidad</th>
+                      <th>Razón Social</th>
+                      <th>Numero Documento</th>
+                      <th>Tipo Documento</th>
+                  </tr>
+              </thead>
+              <tfoot>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Carnet de identidad</th>
+                    <th>Razón Social</th>
+                    <th>Numero Documento</th>
+                    <th>Tipo Documento</th>
+                  </tr>
+              </tfoot>
+              <tbody>
+                  <% for (let user of users) { %>
+                      <tr>
+                          <td><%= user.nombre %></td>
+                          <td><%= user.c_identidad %></td>
+                          <td><%= user.razon_social %></td>
+                          <td><%= user.numero_documento %></td>
+                          <td><%= user.descripcion %></td>
+                          <!-- <td>
+                              <a href="/usuarios/casos/<%= user.id %>" class="btn btn-primary">Casos</a>
+                          </td> -->
+                          <td>
+                              <button data-id="<%= user.id %>" type="button" class="btn btn-primary">Facturar</button>
+                          </td>
+                      </tr>
+                  <% } %> 
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>

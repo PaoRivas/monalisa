@@ -1,0 +1,30 @@
+<div class="modal fade" id="addModalIns" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">Añadir actividad</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/activities/add/<%= caso.id %>" method="POST">
+            <div class="mb-3">
+              <input type="text" class="form-control" name="activity" placeholder="Instrucción">
+            </div>
+            <div class="mb-3 input-group date" id="datepicker">
+              <input type="text" class="form-control" id="date" name="nextDate" placeholder="Fecha Plazo"/>
+              <span class="input-group-append">
+                <span class="input-group-text bg-light d-block">
+                  <i class="fa fa-calendar"></i>
+                </span>
+              </span>
+            </div>
+            <div class="mb-3">
+              <button class="btn btn-success btn-block">
+                Guardar
+              </button>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>

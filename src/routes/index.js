@@ -14,5 +14,6 @@ router.use('/activities', require('./activities'));
 router.use('/sucursales', require('./sucursal'));
 router.use('/facturas', require('./factura'));
 router.use('/productos', require('./producto'));
+router.use('/empresa', require('./empresa'));
 
 module.exports = router;

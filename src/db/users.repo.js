@@ -50,7 +50,9 @@ class UsersRepo {
   static async getUsersbyRazon() {
     try {
       const pool = await getConnection();
-      const users = await pool.request().query("SELECT id, numero_documento, razon_social FROM usuarios where razon_social <> ''");
+      const users = await pool.request().query(
+        `SELECT u.id, nombre, c_identidad, numero_documento, razon_social, SUBSTRING(t.[descripcion],1,3) as descripcion FROM usuarios u
+         INNER JOIN sinc_tipo_documento_identidad t ON t.id = u.tipo_documento_id WHERE razon_social <> ''`);
       //console.log(users.recordset)
       return users.recordset;
     }

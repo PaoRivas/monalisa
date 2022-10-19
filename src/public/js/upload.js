@@ -1,4 +1,4 @@
-const formcase = document.getElementById("formIndividual");
+const formcase = document.getElementById("card-body");
 
 formcase.addEventListener("click", (e) => {
   if (e.target && e.target.matches(".upldbtn")) {

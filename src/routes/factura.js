@@ -6,6 +6,8 @@ const ProductosRepo = require('../db/productos.repo');
 const CodigosRepo = require('../db/codigos.repo');
 const EmpresaRepo = require('../db/empresa.repo');
 const FacturaRepo = require('../db/factura.repo');
+const RolesRepo = require('../db/roles.repo');
+const SucursalRepo = require('../db/sucursal.repo');
 const CodigosApi = require('../api/codigos.api');
 const RecepcionApi = require('../api/recepcion.api');
 
@@ -15,7 +17,8 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/recepcion', async (req, res) => {
-  res.render('factura/recepcion');
+  const users = await UsersRepo.getUsersbyRazon();
+  res.render('factura/clients', {users});
 })
 
 router.get('/datos', async (req, res) => {

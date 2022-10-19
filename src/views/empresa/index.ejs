@@ -1,0 +1,31 @@
+<div class="container-fluid px-4">
+  <h1 class="mt-4">Empresa</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+    <li class="breadcrumb-item active"><a>Empresa</a></li>
+  </ol>
+  <%- include('../partials/message') %>
+  <div class="card card-body">
+    <form class="my-2 row g-3" action="/empresa/edit" method="POST">
+      <div class="col-md-4 ps-5">
+        <label for="razonSocial" class="form-label">Razón Social</label>
+        <input type="text" class="form-control" name="razonSocial" value="<%= empresa.r_social %>">
+      </div>
+      <div class="col-md-3 px-4">
+        <label for="nit" class="form-label">NIT</label>
+        <input type="text" class="form-control" name="nit" value="<%= empresa.nit %>">
+      </div>
+      <div class="col-md-5 pe-5">
+          <label for="codigo" class="form-label">Código de Sistema</label>
+          <input type="text" class="form-control" name="codigo" value="<%= empresa.codigoSistema %>">
+      </div>
+      <div class="col-12 px-5">
+        <label for="token" class="form-label">Token</label>
+        <textarea type="text" class="form-control" name="token"><%= empresa.token %></textarea>
+      </div>
+      <div class="ps-5">
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+      </div>
+    </form>
+  </div>
+</div>

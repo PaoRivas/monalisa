@@ -1,0 +1,67 @@
+<div class="container-fluid px-4">
+  <div class="card mb-4 mt-4">
+      <!-- <div class="card-header">
+          <i class="fas fa-table me-1"></i>
+          DataTable Users
+      </div> -->
+      <div id="card-body" class="card-body">
+          <button type="button" class="btn btn-primary btn-header" data-bs-toggle="modal" data-bs-target="#addModalIns">
+              Añadir Instrucción
+          </button>
+          <table id="datatablesSimple">
+              <thead>
+                  <tr>
+                    <th>Fecha creación</th>
+                    <th>Actividad</th>
+                    <th>Fecha próximo paso</th>
+                    <th>Próximo paso</th>
+                  </tr>
+              </thead>
+              <tfoot>
+                  <tr>
+                    <th>Fecha creación</th>
+                    <th>Actividad</th>
+                    <th>Fecha próximo paso</th>
+                    <th>Próximo paso</th>
+                  </tr>
+              </tfoot>
+              <tbody>
+                  <% for (let activity of activities) { %>
+                      <tr>
+                          <td><%= activity.fecha.toLocaleString() %></td>
+                          <td><%= activity.actividad %></td>
+                          <td><%= activity.fecha_proximo.toLocaleString() %></td>
+                          <td><%= activity.proximo_paso %></td>
+                          <td>
+                              <!-- <button data-id="<%= activity.id %>" data-name="user" type="button" class="btn btn-primary editbtn" data-bs-toggle="modal" data-bs-target="#editModal">
+                                  Editar
+                              </button> -->
+                              
+                          </td>
+                          <td>
+                              <a data-id="<%= activity.id %>" data-name="user" class="btn btn-danger btn-delete">Eliminar</a>
+                          </td>
+                      </tr>
+                  <% } %> 
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
+
+<script src="/js/crud.js"></script>
+<%- include('./add_modal', caso.id) %>
+<!-- Edit Modal -->
+<!-- <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="addModalLabel">Editar Actividad</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div id="editModalBody" class="modal-body">
+
+          </div>
+      </div>
+  </div> 
+</div> -->
