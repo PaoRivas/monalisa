@@ -5,42 +5,51 @@
       <li class="breadcrumb-item"><a href="/usuarios/clientes">Clientes</a></li>
       <li class="breadcrumb-item active"><a>Nuevo Cliente</a></li>
   </ol>
+  <%- include('../partials/message') %>
   <div class="card card-body">
-      <form class="mt-2 row g-3">
+      <form id="userForm" class="mt-2 row g-3">
           <div class="col-md-6 px-5">
-            <label for="inputEmail4" class="form-label">Nombre</label>
-            <input type="email" class="form-control" id="inputEmail4">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre">
           </div>
           <div class="col-md-6 px-5">
-            <label for="inputPassword4" class="form-label">Carnet de Identidad</label>
-            <input type="password" class="form-control" id="inputPassword4">
+            <label for="carnet" class="form-label">Carnet de Identidad</label>
+            <input type="text" class="form-control" id="carnet">
           </div>
           <div class="col-md-6 px-5">
-              <label for="inputEmail4" class="form-label">Email</label>
-              <input type="email" class="form-control" id="inputEmail4">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email">
           </div>
           <div class="col-md-6 px-5">
-              <label for="inputPassword4" class="form-label">Celular</label>
-              <input type="password" class="form-control" id="inputPassword4">
+            <label for="celular" class="form-label">Celular</label>
+            <input type="password" class="form-control" id="celular">
+          </div>
+          <div class="col-md-12 px-5">
+            <h4>Datos Factura</h4>
           </div>
           <div class="col-md-4 ps-5">
-            <label for="inputCity" class="form-label">Razón Social</label>
-            <input type="text" class="form-control" id="inputCity">
+            <label for="razon_social" class="form-label">Razón Social</label>
+            <input type="text" class="form-control" id="razon_social">
           </div>
           <div class="col-md-4 px-4">
-            <label for="inputState" class="form-label">Tipo de Documento</label>
-            <input type="text" class="form-control" id="inputCity">
+            <label for="tipo" class="form-label">Tipo de Documento</label>
+            <select class="form-select" name="tipo"> 
+              <!-- <option selected value="">Tipo Documento de Identidad</option> -->
+              <% for (let tipo of tipos) { %>
+              <option value="<%= tipo.codigo_clasificador %>"><%= tipo.descripcion %></option>
+              <% } %> 
+            </select>
           </div>
           <div class="col-md-4 pe-5">
-            <label for="inputZip" class="form-label">Número Documento</label>
-            <input type="text" class="form-control" id="inputZip">
+            <label for="numero_documento" class="form-label">Número Documento</label>
+            <input type="text" class="form-control" id="numero_documento">
           </div>
           <div class="col-12 px-5">
-            <label for="inputAddress" class="form-label">Datos Adicionales</label>
-            <textarea type="text" class="form-control" id="inputAddress"></textarea>
+            <label for="datos" class="form-label">Datos Adicionales</label>
+            <textarea type="text" class="form-control" id="datos"></textarea>
           </div>
           <div class="mb-2 col-12 ps-5">
-            <button type="submit" class="btn btn-primary">Agregar</button>
+            <button type="submit" class="btn btn-primary save-user">Agregar</button>
           </div>
       </form>
   </div>

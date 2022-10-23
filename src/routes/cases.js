@@ -33,7 +33,7 @@ router.post('/add', async (req, res) => {
     try {
       await CasesRepo.addCase(req.body)
       req.flash('success', 'Saved Successfully');
-      res.redirect('/cases');
+      res.redirect('/casos');
     } catch (ex) {
       res.status(500).send(ex);
     }

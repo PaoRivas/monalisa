@@ -39,7 +39,8 @@ router.get('/clientes', async (req, res) => {
 })
 
 router.get('/addclient', async (req, res) => {
-  res.render('user/add_client');
+  const tipos = await SincronizacionRepo.getTiposDocumento();
+  res.render('user/add_client',{tipos});
 })
 
 router.post('/add', async (req, res) => {

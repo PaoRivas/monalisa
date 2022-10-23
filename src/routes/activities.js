@@ -11,7 +11,7 @@ router.post('/add/:caseid', async (req, res) => {
       const actividad = {activity, nextDate, nextStep, id, caseid};
       await ActivitiesRepo.addActivity(actividad);
       req.flash('success', 'Saved Successfully');
-      res.redirect(`/cases/case/${caseid}`);
+      res.redirect(`/casos/case/${caseid}`);
     } catch (ex) {
       res.status(500).send(ex);
     }

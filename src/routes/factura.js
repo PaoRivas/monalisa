@@ -79,4 +79,8 @@ router.post('/anular/:id', async (req, res) => {
   }
 })
 
+router.get('/inst', async (req, res) => {
+  res.render('factura/recepcion');
+})
+
 module.exports = router;
